@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body><!-- Ostatní HTML nad formulářem -->
+
+<form action="/calculator" method="post">
+  <label>
+    First number:
+    <input type="number" id="number1" name="number1" th:field="${calculatorDTO.number1}"/>
+  </label><br/>
+
+  <label>Operation:
+    <select id="operation" name="operation" th:field="${calculatorDTO.operation}">
+      <option value="+">Plus</option>
+      <option value="-">Minus</option>
+      <option value="*">Times</option>
+      <option value="/">Divide by</option>
+    </select>
+  </label><br/>
+
+  <label>
+    Second number:
+    <input type="number" id="number2" name="number2" th:field="${calculatorDTO.number2}"/>
+  </label><br/>
+
+  <input type="submit" value="Submit"/> <input type="reset" value="Reset"/>
+</form>
+
+<!-- Ostatní HTML pod formulářem -->
+
+</body>
+</html>
