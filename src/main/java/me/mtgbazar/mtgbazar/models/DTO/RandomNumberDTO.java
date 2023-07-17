@@ -1,4 +1,4 @@
-package me.mtgbazar.mtgbazar.models;
+package me.mtgbazar.mtgbazar.models.DTO;
 
 public class RandomNumberDTO {
     public int number1;

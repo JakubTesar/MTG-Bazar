@@ -1,7 +1,7 @@
 package me.mtgbazar.mtgbazar.controllers;
 
-import me.mtgbazar.mtgbazar.models.RandomNumberDTO;
-import me.mtgbazar.mtgbazar.models.RandomNumberService;
+import me.mtgbazar.mtgbazar.models.DTO.RandomNumberDTO;
+import me.mtgbazar.mtgbazar.models.service.RandomNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

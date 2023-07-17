@@ -1,4 +1,4 @@
-package me.mtgbazar.mtgbazar.models;
+package me.mtgbazar.mtgbazar.models.DTO;
 
 public class CalculatorDTO {
     private float number1;

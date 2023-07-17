@@ -1,7 +1,7 @@
 package me.mtgbazar.mtgbazar.controllers;
 
-import me.mtgbazar.mtgbazar.models.CalculatorDTO;
-import me.mtgbazar.mtgbazar.models.CalculatorService;
+import me.mtgbazar.mtgbazar.models.DTO.CalculatorDTO;
+import me.mtgbazar.mtgbazar.models.service.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

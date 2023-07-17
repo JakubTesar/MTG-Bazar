@@ -1,4 +1,4 @@
-package me.mtgbazar.mtgbazar.models;
+package me.mtgbazar.mtgbazar.models.service;
 
 import org.springframework.stereotype.Service;
 

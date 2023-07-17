@@ -1,5 +1,6 @@
-package me.mtgbazar.mtgbazar.models;
+package me.mtgbazar.mtgbazar.models.service;
 
+import me.mtgbazar.mtgbazar.models.DTO.CalculatorDTO;
 import org.springframework.stereotype.Service;
 
 @Service
