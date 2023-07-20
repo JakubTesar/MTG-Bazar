@@ -9,21 +9,15 @@
 <body class="bg-dark mx-3 text-white">
 <nav  class="navbar navbar-expand-lg navbar-dark bg-nav-dark-light text-white mb-5 border-white border-bottom">
     <ul class="d-flex list-unstyled align-items-center m-2">
-        <li><a class="text-decoration-none text-white mx-2" th:href="@{cards}">All cards</a></li>
+        <li><a class="text-decoration-none text-white mx-2" th:href="@{/cards}">All cards</a></li>
         <li><a class="text-decoration-none text-white mx-2" th:href="@{cards/createCard}">Create card</a></li>
     </ul>
 </nav>
 <h1>MTG Cards</h1>
 
-<div class="d-flex flex-wrap gap-3">
-    <div th:each="c: ${cards}" class="card bg-dark border-white" style="width: 18rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title" th:text="${c.getName()}"></h5>
-            <p class="card-text" th:text="${c.getCost()}"></p>
-            <a th:href="@{'cards/' + ${c.cardId}}" class="btn btn-primary">Detail</a>
-        </div>
-    </div>
+<div class="d-flex justify-content-center m-5">
+    <div th:text="${card.name}"></div>
+    <div th:text="${card.cost}"></div>
 </div>
 
 </body>

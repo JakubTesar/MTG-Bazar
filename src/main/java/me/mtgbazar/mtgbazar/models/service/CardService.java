@@ -9,5 +9,7 @@ import java.util.List;
 public interface CardService {
     void createCard(CardDTO cardDTO);
     List<CardDTO> getAll();
+    CardDTO getCardById(long cardId);
+
 
 }

@@ -29,4 +29,12 @@ public class CardServiceImpl implements CardService {
                 .map(i -> cardMapper.toDTO(i))
                 .toList();
     }
+
+    @Override
+    public CardDTO getCardById(long cardId) {
+        CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
+        return cardMapper.toDTO(card);
+    }
+
+
 }
