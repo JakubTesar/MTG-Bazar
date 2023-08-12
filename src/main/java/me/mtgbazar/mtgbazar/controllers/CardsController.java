@@ -1,44 +1,42 @@
 package me.mtgbazar.mtgbazar.controllers;
 
-import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
-import me.mtgbazar.mtgbazar.models.service.CardService;
+import me.mtgbazar.mtgbazar.models.service.cards.CardLoadService;
+import me.mtgbazar.mtgbazar.models.service.cards.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.BindException;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/cards")
 public class CardsController {
     @Autowired
     CardService cardService;
+    @Autowired
+    CardLoadService cardLoadService;
     @GetMapping
-    public String getAllcards(Model model){
-        model.addAttribute("cards", cardService.getAll());
+    public String getAllCards(Model model) throws IOException {
+        model.addAttribute("cards", cardService.getAll().subList(0,10));
         return "cards/allCards";
     }
 
     @GetMapping("createCard")
-    public String createCardRender(@ModelAttribute CardDTO cardDTO){
-        return "cards/createCard";
+    public String createCardsDBS() throws IOException {
+        cardLoadService.getAllCardsCSV();
+        return "cards/allCards";
     }
 
-    @PostMapping("createCard")
+  /*  @PostMapping("createCard")
     public String createCard(@Valid @ModelAttribute CardDTO cardDTO, BindingResult result){
         if (result.hasErrors())
             return createCardRender(cardDTO);
 
         cardService.createCard(cardDTO);
-        System.out.println(cardDTO.getName() + " – " + cardDTO.getCost());
         return "redirect:/cards";
-    }
+    }*/
 
     @GetMapping("{cardId}")
     public String getCardDetail(@PathVariable long cardId, Model model){
@@ -46,4 +44,6 @@ public class CardsController {
         model.addAttribute("card",cardDTO);
         return "cards/detail";
     }
+
+
 }
