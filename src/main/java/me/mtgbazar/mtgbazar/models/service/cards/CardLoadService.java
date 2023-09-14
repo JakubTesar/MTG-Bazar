@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @Service
 public class CardLoadService {
@@ -62,11 +63,11 @@ public class CardLoadService {
             cE.setOracleText(c.getOracleText());
             cE.setPower(c.getPower());
             cE.setToughness(c.getToughness());
-            if (c.getColors() != null) cE.setColors(c.getColors().stream().map(i -> i + ",").toString());
+            if (c.getColors() != null) cE.setColors(c.getColors().stream().map(i -> i + ",").collect(Collectors.joining()));
             else cE.setColors("Colorless");
-            if (c.getColorIdentity() != null) cE.setColorIdentity(c.getColorIdentity().stream().map(i -> i + ",").toString());
+            if (c.getColorIdentity() != null) cE.setColorIdentity(c.getColorIdentity().stream().map(i -> i + ",").collect(Collectors.joining()));
             else cE.setColorIdentity("Colorless");
-            if (c.getKeywords() != null) cE.setKeywords(c.getKeywords().stream().map(i -> i + ",").toString());
+            if (c.getKeywords() != null) cE.setKeywords(c.getKeywords().stream().map(i -> i + ",").collect(Collectors.joining()));
             else cE.setKeywords("");
             cE.setReserved(c.isReserved());
             cE.setFoil(c.isFoil());

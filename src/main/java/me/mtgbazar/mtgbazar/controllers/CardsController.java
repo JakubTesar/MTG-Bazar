@@ -19,7 +19,7 @@ public class CardsController {
     CardLoadService cardLoadService;
     @GetMapping
     public String getAllCards(Model model) throws IOException {
-        model.addAttribute("cards", cardService.getAll().subList(0,10));
+        model.addAttribute("cards", cardService.getAll());
         return "cards/allCards";
     }
 

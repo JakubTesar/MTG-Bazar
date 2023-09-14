@@ -17,6 +17,8 @@ public class AccessServiceImpl implements AccessService{
     @Override
     public void registerUser(UserDTO userDTO) {
         UserEntity user = userMapper.toEntity(userDTO);
+        
+
         usersRepositories.save(user);
     }
 
