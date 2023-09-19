@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../style.css">
 
 </head>
 <body class="bg-dark mx-3 text-white">
-<nav  class="navbar navbar-expand-lg navbar-dark bg-nav-dark-light text-white mb-5 border-white border-bottom">
+<nav class="navbar navbar-expand-lg navbar-dark bg-nav-dark-light text-white mb-5 border-white border-bottom">
     <ul class="d-flex list-unstyled align-items-center m-2">
         <li><a class="text-decoration-none text-white mx-2" th:href="@{/cards}">All cards</a></li>
         <li><a class="text-decoration-none text-white mx-2" th:href="@{cards/createCard}">Create card</a></li>
@@ -15,9 +16,22 @@
 </nav>
 <h1>MTG Cards</h1>
 
-<div class="d-flex justify-content-center m-5">
-    <div th:text="${card.name}"></div>
-    <div th:text="${card.isFunny}"></div>
+<div class="d-flex flex-column justify-content-center m-5 gap-2">
+    <div class="d-flex gap-1">
+        <p>Name: </p>
+        <p th:text="${card.getName()}"></p>
+    </div>
+    <div class="d-flex gap-1">
+        <p>Colors: </p>
+        <p th:text="${card.getColors()}"></p>
+    </div>
+    <div class="d-flex gap-1">
+        <p>Rarity: </p>
+        <p th:text="${card.getRarity()}"></p>
+    </div>
+    <div>
+        <img class="img-size" th:src="${card.imageUri}" alt="Card image cap">
+    </div>
 </div>
 
 </body>

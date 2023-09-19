@@ -1,6 +1,7 @@
 package me.mtgbazar.mtgbazar.data.entities;
 
 import jakarta.persistence.*;
+import org.mapstruct.control.MappingControl;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,10 @@ public class CardEntity {
 
     @Column
     private String id;
+
+    @ManyToMany
+    private List<UserEntity> ownedUsers;
+
     @Column
     private String oracleId;
     @Column

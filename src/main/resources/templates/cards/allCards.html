@@ -12,6 +12,7 @@
         <li><a class="text-decoration-none text-white mx-2" th:href="@{cards}">All cards</a></li>
         <!--<li><a class="text-decoration-none text-white mx-2" th:href="@{cards/createCard}">Create DBS</a></li>-->
         <li><a class="text-decoration-none text-white mx-2" th:href="@{cards/createCard}">Create DBS</a></li>
+        <li><a class="text-decoration-none text-white mx-2" th:href="@{cards/addCardToAccount}">Add card to account</a></li>
     </ul>
     <ul class="d-flex list-unstyled align-items-center m-2 ">
         <li><a class="text-decoration-none text-white mx-2" th:href="@{access/login}">Login</a></li>
@@ -20,7 +21,7 @@
 </nav>
 <h1>MTG Cards</h1>
 
-<div class="d-flex flex-wrap gap-3">
+<div class="d-flex flex-wrap gap-3 justify-content-center">
     <div th:each="c: ${cards}" class="card bg-dark border-white" style="width: 18rem;">
         <div class="card-body">
             <img class="card-img-top" th:src="${c.imageUri}" alt="Card image cap">

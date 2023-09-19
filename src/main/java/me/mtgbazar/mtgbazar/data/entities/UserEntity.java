@@ -10,19 +10,17 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column
+    @Column(nullable = false)
     private String username;
-
-    @Column
+    @Column(nullable = false, unique = true)
     private String email;
-
-    @Column
+    @Column(nullable = false)
     private String password;
 
-//    @ManyToMany(mappedBy = "user")
-//    private List<CardEntity> cards;
-
+    @ManyToMany(mappedBy = "ownedUsers")
+    private List<CardEntity> cards;
+//    @Column
+//    private long InventoryId;
 
     public long getId() {
         return id;
@@ -54,5 +52,13 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<CardEntity> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<CardEntity> cards) {
+        this.cards = cards;
     }
 }

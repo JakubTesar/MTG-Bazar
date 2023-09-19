@@ -11,5 +11,7 @@ public interface CardService {
     List<CardDTO> getAll();
     CardDTO getCardById(long cardId);
 
+    void addCardToAccount();
+
 
 }

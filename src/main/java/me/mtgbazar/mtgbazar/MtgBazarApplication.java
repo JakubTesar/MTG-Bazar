@@ -4,11 +4,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import java.io.IOException;
 
 @SpringBootApplication
 @EnableJpaRepositories
+@EnableWebSecurity
 public class MtgBazarApplication implements CommandLineRunner {
 
     public static void main(String[] args)  {

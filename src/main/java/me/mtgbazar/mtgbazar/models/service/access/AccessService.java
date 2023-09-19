@@ -4,6 +4,7 @@ import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 
 public interface AccessService {
     void registerUser(UserDTO userDTO);
-
     UserDTO getUserById(long userId);
+
+    void verifyUser(UserDTO userDTO);
 }

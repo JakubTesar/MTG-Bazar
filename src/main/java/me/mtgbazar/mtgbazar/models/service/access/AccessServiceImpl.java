@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AccessServiceImpl implements AccessService{
+public class AccessServiceImpl implements AccessService {
     @Autowired
     private UsersRepositories usersRepositories;
     @Autowired
@@ -26,4 +26,10 @@ public class AccessServiceImpl implements AccessService{
     public UserDTO getUserById(long userId) {
         return userMapper.toDTO(usersRepositories.findById(userId).orElseThrow());
     }
+
+    @Override
+    public void verifyUser(UserDTO userDTO) {
+        
+    }
+
 }

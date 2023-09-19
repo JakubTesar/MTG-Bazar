@@ -19,13 +19,18 @@ public class CardsController {
     CardLoadService cardLoadService;
     @GetMapping
     public String getAllCards(Model model) throws IOException {
-        model.addAttribute("cards", cardService.getAll());
+        model.addAttribute("cards", cardService.getAll().subList(0,36));
         return "cards/allCards";
     }
 
     @GetMapping("createCard")
     public String createCardsDBS() throws IOException {
         cardLoadService.getAllCardsCSV();
+        return "cards/allCards";
+    }
+    @GetMapping("addCard")
+    public String addCard(){
+        cardService.addCardToAccount();
         return "cards/allCards";
     }
 

@@ -10,7 +10,20 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ApplicationSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.build();
+        return http
+                .authorizeHttpRequests(registry -> {
+                    registry.requestMatchers(
+                            ""
+                    ).authenticated().requestMatchers("").permitAll()
+                            .anyRequest() // Ostatní stránky jako např. `/articles/**` budou pouze pro přihlášené uživatele
+                            .authenticated();
+
+                    try {
+                        http.formLogin(formConfigurer -> {}); // Pokud uživatel není přihlášen, přesměrujeme ho na login formulář
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }).build();
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
