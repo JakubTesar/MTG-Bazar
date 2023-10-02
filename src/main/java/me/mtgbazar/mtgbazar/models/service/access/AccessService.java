@@ -1,10 +1,9 @@
 package me.mtgbazar.mtgbazar.models.service.access;
 
+import me.mtgbazar.mtgbazar.models.DTO.UserAccessDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 
 public interface AccessService {
-    void registerUser(UserDTO userDTO);
+    void registerUser(UserAccessDTO userDTO) throws DuplicateEmailException;
     UserDTO getUserById(long userId);
-
-    void verifyUser(UserDTO userDTO);
 }

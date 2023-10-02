@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>All cards</title>
+    <title>All users</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"/>
 
 </head>
@@ -21,16 +21,8 @@
 <h1>MTG Cards</h1>
 
 <div class="d-flex flex-wrap gap-3 justify-content-center">
-    <div th:each="c: ${cards}" class="card bg-dark border-white" style="width: 18rem;">
-        <div class="card-body">
-            <img class="card-img-top" th:src="${c.imageUri}" alt="Card image cap">
-            <h5 class="card-title" th:text="${c.artist}"></h5>
-            <h5 class="card-title" th:text="${c.name}"></h5>
-            <h5 class="card-title" th:text="${c.getKeywords()}"></h5>
-            <p class="card-text" th:text="${c.cardId}"></p>
-            <a th:href="@{'cards/' + ${c.cardId}}" class="btn btn-primary">Detail</a>
-        </div>
-    </div>
+
+
 </div>
 
 </body>

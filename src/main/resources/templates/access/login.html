@@ -8,69 +8,49 @@
 </head>
 <body class="bg-dark mx-3 text-white">
 
-<nav  class="navbar navbar-expand-lg navbar-dark bg-nav-dark-light text-white mb-5 border-white border-bottom justify-content-between" >
+<nav class="navbar navbar-expand-lg navbar-dark bg-nav-dark-light text-white mb-5 border-white border-bottom justify-content-between">
     <ul class="d-flex list-unstyled align-items-center m-2 ">
         <li><a class="text-decoration-none text-white mx-2" th:href="@{cards}">All cards</a></li>
         <!--<li><a class="text-decoration-none text-white mx-2" th:href="@{cards/createCard}">Create DBS</a></li>-->
     </ul>
     <ul class="d-flex list-unstyled align-items-center m-2 ">
-        <li><a class="text-decoration-none text-white mx-2" th:href="@{access/login}">Login</a></li>
-        <li><a class="text-decoration-none text-white mx-2" th:href="@{access/register}">Register</a></li>
+        <li><a class="text-decoration-none text-white mx-2" th:href="@{login}">Login</a></li>
+        <li><a class="text-decoration-none text-white mx-2" th:href="@{register}">Register</a></li>
     </ul>
 </nav>
 <h1>Login</h1>
 <div class="d-flex justify-content-center">
-    <form>
+    <form th:action="@{/access/login2}" method="post">
         <!-- Email input -->
         <div class="form-outline mb-4">
-            <input type="email" id="form2Example1" class="form-control" />
+            <input type="email" id="form2Example1" class="form-control" name="email"/>
             <label class="form-label" for="form2Example1">Email address</label>
         </div>
 
         <!-- Password input -->
         <div class="form-outline mb-4">
-            <input type="password" id="form2Example2" class="form-control" />
+            <input type="password" id="form2Example2" class="form-control" name="password"/>
             <label class="form-label" for="form2Example2">Password</label>
         </div>
 
         <!-- 2 column grid layout for inline styling -->
         <div class="row mb-4">
-            <div class="col d-flex justify-content-center">
-                <!-- Checkbox -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-                    <label class="form-check-label" for="form2Example31"> Remember me </label>
-                </div>
-            </div>
+            <div class="col d-flex gap-2">
+                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
 
-            <div class="col">
                 <!-- Simple link -->
-                <a href="#!">Forgot password?</a>
+                <div class="d-flex align-items-center">
+                    <a href="#">Forgot password?</a>
+                </div>
             </div>
         </div>
 
         <!-- Submit button -->
-        <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
 
         <!-- Register buttons -->
-        <div class="text-center">
-            <p>Not a member? <a href="#!">Register</a></p>
-            <p>or sign up with:</p>
-            <button type="button" class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-facebook-f"></i>
-            </button>
-
-            <button type="button" class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-google"></i>
-            </button>
-
-            <button type="button" class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-twitter"></i>
-            </button>
-
-            <button type="button" class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-github"></i>
-            </button>
+        <div class="d-flex justify-content-between">
+            <p>Not a member? </p>
+            <a th:href="@{/account/register}">Register</a>
         </div>
     </form>
 </div>
