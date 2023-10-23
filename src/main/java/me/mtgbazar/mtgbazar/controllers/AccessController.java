@@ -1,11 +1,9 @@
 package me.mtgbazar.mtgbazar.controllers;
 
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import me.mtgbazar.mtgbazar.models.DTO.UserAccessDTO;
-import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 import me.mtgbazar.mtgbazar.models.service.access.AccessService;
 import me.mtgbazar.mtgbazar.models.service.access.DuplicateEmailException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,18 +46,16 @@ public class AccessController {
         return "access/login";
     }
 
+    @PostMapping("/login")
+    public String login(@ModelAttribute("email") String email,
+                        @ModelAttribute("password") String password,
+                        HttpServletRequest req) {
 
-    @PostMapping("/login2")
-    public String login(
-            @ModelAttribute("email") String email,
-            @ModelAttribute("password") String password,
-            HttpServletRequest req
-    ) {
         try {
             req.login(email, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "access/login";
+        return "/cards";
     }
 }

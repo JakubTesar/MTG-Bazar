@@ -7,7 +7,7 @@
 
 </head>
 <body class="bg-dark mx-3 text-white">
-<nav  class="navbar navbar-expand-lg navbar-dark bg-nav-dark-light text-white mb-5 border-white border-bottom justify-content-between" >
+<nav class="navbar navbar-expand-lg navbar-dark bg-nav-dark-light text-white mb-5 border-white border-bottom justify-content-between">
     <ul class="d-flex list-unstyled align-items-center m-2 ">
         <li><a class="text-decoration-none text-white mx-2" th:href="@{cards}">All cards</a></li>
         <!--<li><a class="text-decoration-none text-white mx-2" th:href="@{cards/createCard}">Create DBS</a></li>-->
@@ -21,7 +21,7 @@
 <h1>MTG Cards</h1>
 
 <div class="d-flex flex-wrap gap-3 justify-content-center">
-    <div th:each="c: ${cards}" class="card bg-dark border-white" style="width: 18rem;">
+    <div th:each="c: ${cardsPage.getContent()}" class="card bg-dark border-white" style="width: 18rem;">
         <div class="card-body">
             <img class="card-img-top" th:src="${c.imageUri}" alt="Card image cap">
             <h5 class="card-title" th:text="${c.artist}"></h5>
@@ -31,6 +31,14 @@
             <a th:href="@{'cards/' + ${c.cardId}}" class="btn btn-primary">Detail</a>
         </div>
     </div>
+
+</div>
+<div class="d-flex justify-content-center flex-wrap gap-1 mt-5">
+    <a class="btn btn-success " th:href="@{/cards(size=${cardsPage.size}, page=${1})}" th:text=${'<<'}></a>
+    <div class="pagination" th:each="pageNumber : ${pageNumbers}">
+        <a class="btn btn-primary " th:href="@{/cards(size=${cardsPage.size}, page=${pageNumber})}" th:text=${pageNumber}></a>
+    </div>
+    <a class="btn btn-danger " th:href="@{/cards(size=${cardsPage.size}, page=${totalPages})}" th:text=${'>>'}></a>
 </div>
 
 </body>

@@ -29,7 +29,6 @@ public class AccessServiceImpl implements AccessService, UserDetailsService {
         userEntity.setUsername(user.getUsername());
         userEntity.setEmail(user.getEmail());
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
-
         try {
             usersRepository.save(userEntity);
         } catch (DataIntegrityViolationException e) {

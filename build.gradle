@@ -18,6 +18,9 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '0.11.0'
+
     //Security
     implementation "org.springframework.boot:spring-boot-starter-security"
 

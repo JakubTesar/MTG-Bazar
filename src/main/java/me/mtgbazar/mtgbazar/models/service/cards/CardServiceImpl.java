@@ -7,10 +7,14 @@ import me.mtgbazar.mtgbazar.data.repositories.UsersRepositories;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -29,10 +33,20 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<CardDTO> getAll() {
-        return StreamSupport.stream(cardsRepositories.findAll().spliterator(), false)
-                .map(i -> cardMapper.toDTO(i))
-                .toList();
+    public Page<CardDTO> getAll(Pageable pageable) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<CardEntity> cardEntities = (List<CardEntity>) cardsRepositories.findAll();
+        List<CardDTO> cardDTOS;
+
+        if (cardEntities.size() < startItem) {
+            cardDTOS = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, cardEntities.size());
+            cardDTOS = cardEntities.subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
+        }
+        return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
 
     @Override

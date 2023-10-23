@@ -1,6 +1,8 @@
 package me.mtgbazar.mtgbazar.data.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.mapstruct.control.MappingControl;
 
 import java.util.List;
