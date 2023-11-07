@@ -1,12 +1,8 @@
 package me.mtgbazar.mtgbazar.data.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.mapstruct.control.MappingControl;
 
 import java.util.List;
-import java.util.Map;
 
 //artist,artistIds,asciiName,attractionLights,availability,boosterTypes,borderColor,cardParts,colorIdentity,
 // colorIndicator,colors,defense,duelDeck,edhrecRank,edhrecSaltiness,faceConvertedManaCost,faceFlavorName,
@@ -579,5 +575,13 @@ public class CardEntity {
 
     public void setPennyRank(int pennyRank) {
         this.pennyRank = pennyRank;
+    }
+
+    public List<UserEntity> getOwnedUsers() {
+        return ownedUsers;
+    }
+
+    public void setOwnedUsers(List<UserEntity> ownedUsers) {
+        this.ownedUsers = ownedUsers;
     }
 }

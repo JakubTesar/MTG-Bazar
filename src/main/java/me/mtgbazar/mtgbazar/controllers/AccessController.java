@@ -2,11 +2,14 @@ package me.mtgbazar.mtgbazar.controllers;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import me.mtgbazar.mtgbazar.models.DTO.UserAccessDTO;
 import me.mtgbazar.mtgbazar.models.service.access.AccessService;
 import me.mtgbazar.mtgbazar.models.service.access.DuplicateEmailException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +26,7 @@ public class AccessController {
 
     @Autowired
     AccessService accessService;
+    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
     @GetMapping("/register")
     public String renderRegisterForm(@ModelAttribute UserAccessDTO userDTO) throws IOException {
@@ -50,12 +54,23 @@ public class AccessController {
     public String login(@ModelAttribute("email") String email,
                         @ModelAttribute("password") String password,
                         HttpServletRequest req) {
-
         try {
             req.login(email, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "/cards";
+        return "redirect:../cards";
     }
+
+    @PostMapping("/logout")
+    public String performLogout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+        // perform logout
+        this.logoutHandler.logout(request, response, authentication);
+        return "redirect:../cards";
+    }
+
+//    @GetMapping("/logout")
+//    public String logout() {
+//        return "redirect:../cards";
+//    }
 }

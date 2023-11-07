@@ -16,21 +16,16 @@ public class ApplicationSecurityConfiguration {
                         registry -> {
                             registry.requestMatchers("/users", "/users/detail")
                                     .authenticated()
-                                    .requestMatchers("/cards", "/access/register", "/access/login")
+                                    .requestMatchers("/cards", "/access/register", "/access/login", "/access/logout")
                                     .permitAll()
                                     .anyRequest() // Ostatní stránky jako např. `/articles/**` budou pouze pro přihlášené uživatele
                                     .authenticated();
                             try {
-                                http.formLogin(form -> {
-                                    form
-                                            .loginPage("/access/login")
-                                            .loginProcessingUrl("/access/login")
-                                            .successForwardUrl("/cards");
-                                });
+                                http.formLogin(form -> {});
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
-                        }).build();
+                        }).logout((logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/cards"))).build();
     }
 
     @Bean
