@@ -26,6 +26,10 @@ public class UserEntity implements UserDetails {
         return id;
     }
 
+    public List<CardEntity> getCardsForSale(){
+        return cards.stream().filter(CardEntity::getForSale).toList();
+    }
+
     public void setId(long id) {
         this.id = id;
     }

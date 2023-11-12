@@ -9,6 +9,7 @@ import me.mtgbazar.mtgbazar.data.repositories.UsersRepositories;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardMapper;
+import me.mtgbazar.mtgbazar.models.DTO.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,6 +31,8 @@ public class CardServiceImpl implements CardService {
     private UsersRepositories usersRepositories;
     @Autowired
     private CardMapper cardMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public void createCard(CardDTO cardDTO) {
@@ -45,9 +48,8 @@ public class CardServiceImpl implements CardService {
         List<CardEntity> cardEntities = (List<CardEntity>) cardsRepositories.findAll();
         List<CardDTO> cardDTOS;
 
-        if (cardEntities.size() < startItem) {
-            cardDTOS = Collections.emptyList();
-        } else {
+        if (cardEntities.size() < startItem) cardDTOS = Collections.emptyList();
+        else {
             int toIndex = Math.min(startItem + pageSize, cardEntities.size());
             cardDTOS = cardEntities.subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
         }
@@ -61,9 +63,8 @@ public class CardServiceImpl implements CardService {
         int startItem = currentPage * pageSize;
         List<CardDTO> cardDTOS = userDTO.getCards();
 
-        if (cardDTOS.size() < startItem) {
-            cardDTOS = Collections.emptyList();
-        } else {
+        if (cardDTOS.size() < startItem) cardDTOS = Collections.emptyList();
+        else {
             int toIndex = Math.min(startItem + pageSize, cardDTOS.size());
             cardDTOS = cardDTOS.subList(startItem, toIndex);
         }
@@ -75,6 +76,13 @@ public class CardServiceImpl implements CardService {
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
         return cardMapper.toDTO(card);
     }
+
+    @Override
+    public List<UserDTO> getCardOwnersByCardId(long cardId) {
+        CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
+        return card.getOwnedUsers().stream().filter(u -> u.getCardsForSale().contains(card)).map(i -> userMapper.toDTO(i)).toList();
+    }
+
 
     @Override
     @Transactional

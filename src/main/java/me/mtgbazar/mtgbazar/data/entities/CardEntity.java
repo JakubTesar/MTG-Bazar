@@ -22,6 +22,9 @@ public class CardEntity {
 
     @Column
     private String oracleId;
+
+    @Column
+    private Boolean forSale;
     @Column
     private int mtgoId;
     @Column
@@ -128,6 +131,35 @@ public class CardEntity {
     @Column
     private int pennyRank;
 
+    @Column
+    private double cost;
+
+    @Column
+    private String quality;
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public String getQuality() {
+        return quality;
+    }
+
+    public void setQuality(String quality) {
+        this.quality = quality;
+    }
+
+    public Boolean getForSale() {
+        return forSale;
+    }
+
+    public void setForSale(Boolean forSale) {
+        this.forSale = forSale;
+    }
 
     public long getCardId() {
         return CardId;

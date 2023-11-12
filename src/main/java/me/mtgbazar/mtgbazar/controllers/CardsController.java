@@ -3,6 +3,7 @@ package me.mtgbazar.mtgbazar.controllers;
 import jakarta.transaction.Transactional;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
+import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 import me.mtgbazar.mtgbazar.models.service.cards.CardLoadService;
 import me.mtgbazar.mtgbazar.models.service.cards.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,9 @@ public class CardsController {
     @GetMapping("{cardId}")
     public String getCardDetail(@PathVariable long cardId, Model model) {
         CardDTO cardDTO = cardService.getCardById(cardId);
+        List<UserDTO> sellingUsersForCard = cardService.getCardOwnersByCardId(cardId);
         model.addAttribute("card", cardDTO);
+        model.addAttribute("sellingUsersForCard", sellingUsersForCard);
         return "cards/detail";
     }
 }

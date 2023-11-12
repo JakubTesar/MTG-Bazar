@@ -17,6 +17,7 @@ public interface CardsRepositories extends CrudRepository<CardEntity, Long> {
 //            "WHERE ou.owned_users_id = :#{ownerId}"
 //            , nativeQuery = true)
   //  List<CardEntity> findAllByOwnerId(@Param("ownerId") long ownerId);
+
 //    @Query(value = "SELECT c FROM card_entity c WHERE" +
 //            "    (:#{#filter.power} is null OR c.power >= :#{#filter.getPower()}) " +
 //            " AND (:#{#filter.toughness} is null OR c.toughness = :#{#filter.getToughness()}) " +

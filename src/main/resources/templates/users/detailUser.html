@@ -22,9 +22,8 @@
     </ul>
     <ul class="d-flex list-unstyled align-items-center m-2 ">
         <li>
-            <div sec:authorize="isAuthenticated()">
-                Authenticated as <a th:href="@{users/myProfile}"><span class="text-info"
-                                                                       sec:authentication="name"></span></a></div>
+            <div sec:authorize="isAuthenticated()">Authenticated as
+                <a th:href="@{users/myProfile}"><span class="text-info" sec:authentication="name"></span></a></div>
         </li>
         <li sec:authorize="isAnonymous()"><a class="text-decoration-none text-white mx-2" th:href="@{access/login}">Login</a>
         </li>
@@ -49,13 +48,12 @@
                 <h5 class="card-title" th:text="${c.keywords}"></h5>
                 <p class="card-text" th:text="${c.cardId}"></p>
                 <div class="d-flex gap-2">
-                    <a th:href="@{'cards/' + ${c.cardId}}" class="btn btn-primary">Detail</a>
-                    <form method="post" th:action="@{/cards/} + ${c.cardId}">
-                        <button class="btn btn-danger text-white" sec:authorize="isAuthenticated()">Sell</button>
-                    </form>
+                    <a th:href="@{'../cards/' + ${c.cardId}}" class="btn btn-primary">Detail</a>
+                    <a th:href="@{'../trade/forSale/'+${c.cardId}}" class="btn btn-primary">Sell</a>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <div class="d-flex justify-content-center flex-wrap gap-1 mt-5">
