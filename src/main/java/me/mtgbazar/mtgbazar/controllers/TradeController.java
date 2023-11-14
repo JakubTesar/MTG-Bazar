@@ -18,12 +18,12 @@ public class TradeController {
     @Autowired
     TradeService tradeService;
 
-    @GetMapping("/forSale")
+    @GetMapping("/forSale/{cardId}")
     public String renderForSaleForm(@ModelAttribute CardForSaleDTO cardForSaleDTO, @PathVariable long cardId) {
         return "trade/sell";
     }
 
-    @PostMapping("/forSale")
+    @PostMapping("/forSale/{cardId}")
     public String forSaleCard(@Valid @ModelAttribute CardForSaleDTO cardForSaleDTO,
                            @PathVariable long cardId,
                            BindingResult result,
@@ -31,8 +31,9 @@ public class TradeController {
     ) throws IOException, DuplicateEmailException {
         if (result.hasErrors())
             return renderForSaleForm(cardForSaleDTO, cardId);
+
         redirectAttributes.addFlashAttribute("success", "Card placed on a market.");
         tradeService.forSaleCard(cardId, cardForSaleDTO);
-        return "redirect: cards/detail/" + cardId;
+        return "redirect: /../../../cards";
     }
 }

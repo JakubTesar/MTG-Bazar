@@ -8,6 +8,15 @@ public class UserDTO {
     private String email;
     private String password;
     private List<CardDTO> cards;
+    private List<CardForSaleDTO> cardsForSale;
+
+    public List<CardForSaleDTO> getCardsForSale() {
+        return cardsForSale;
+    }
+
+    public void setCardsForSale(List<CardForSaleDTO> cardsForSale) {
+        this.cardsForSale = cardsForSale;
+    }
 
     public String getUsername() {
         return username;

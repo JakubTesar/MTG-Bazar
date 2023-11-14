@@ -80,7 +80,7 @@ public class CardServiceImpl implements CardService {
     @Override
     public List<UserDTO> getCardOwnersByCardId(long cardId) {
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
-        return card.getOwnedUsers().stream().filter(u -> u.getCardsForSale().contains(card)).map(i -> userMapper.toDTO(i)).toList();
+        return card.getOwnedUsers().stream().filter(u -> u.getCards().contains(card)).map(i -> userMapper.toDTO(i)).toList();
     }
 
 

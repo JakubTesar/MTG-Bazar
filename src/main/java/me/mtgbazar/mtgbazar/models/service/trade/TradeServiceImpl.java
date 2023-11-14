@@ -1,10 +1,13 @@
 package me.mtgbazar.mtgbazar.models.service.trade;
 
 import me.mtgbazar.mtgbazar.data.entities.CardEntity;
+import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
 import me.mtgbazar.mtgbazar.data.entities.UserEntity;
+import me.mtgbazar.mtgbazar.data.repositories.CardsForSaleRepositories;
 import me.mtgbazar.mtgbazar.data.repositories.CardsRepositories;
 import me.mtgbazar.mtgbazar.data.repositories.UsersRepositories;
 import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
+import me.mtgbazar.mtgbazar.models.DTO.mappers.CardForSaleMapper;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,6 +20,10 @@ public class TradeServiceImpl implements TradeService {
     UsersRepositories usersRepositories;
     @Autowired
     CardsRepositories cardsRepositories;
+    @Autowired
+    CardForSaleMapper cardForSaleMapper;
+    @Autowired
+    CardsForSaleRepositories cardsForSaleRepositories;
 
     @Override
     public void forSaleCard(long cardId, CardForSaleDTO cardForSaleDTO) {
@@ -24,11 +31,11 @@ public class TradeServiceImpl implements TradeService {
         String singedUserEmail = authentication.getName();
         UserEntity user = usersRepositories.findByEmail(singedUserEmail).orElseThrow();
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
-        user.getCards().remove(card);
-        card.setCost(cardForSaleDTO.getCost());
-        card.setQuality(cardForSaleDTO.getQuality());
-        card.setForSale(true);
-        user.getCards().add(card);
-        usersRepositories.save(user);
+        CardForSaleEntity cardForSale = cardForSaleMapper.toEntity(cardForSaleDTO);
+        cardForSale.setCard(card);
+        user.getCardsForSale().add(cardForSale);
+        cardForSale.setSellingUser(user);
+        cardsForSaleRepositories.save(cardForSale);
+        //usersRepositories.save(user);
     }
 }

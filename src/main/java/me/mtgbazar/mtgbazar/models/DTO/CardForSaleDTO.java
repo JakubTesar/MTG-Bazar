@@ -1,10 +1,18 @@
 package me.mtgbazar.mtgbazar.models.DTO;
 
+import jakarta.persistence.OneToMany;
+import me.mtgbazar.mtgbazar.data.entities.CardEntity;
+import me.mtgbazar.mtgbazar.data.entities.UserEntity;
+
+import java.util.List;
+
 public class CardForSaleDTO {
     private Double cost;
     private String quality;
-    private String email;
-    private int amount;
+
+    private UserEntity sellingUser;
+
+    private CardEntity card;
 
     public Double getCost() {
         return cost;
@@ -22,19 +30,19 @@ public class CardForSaleDTO {
         this.quality = quality;
     }
 
-    public String getEmail() {
-        return email;
+    public UserEntity getSellingUser() {
+        return sellingUser;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSellingUser(UserEntity sellingUser) {
+        this.sellingUser = sellingUser;
     }
 
-    public int getAmount() {
-        return amount;
+    public CardEntity getCard() {
+        return card;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setCard(CardEntity card) {
+        this.card = card;
     }
 }

@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity(name = "user")
+@Entity
+@Table(name = "users")
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +22,19 @@ public class UserEntity implements UserDetails {
     @ManyToMany(mappedBy = "ownedUsers")
     private List<CardEntity> cards;
 
-    public long getId() {
-        return id;
+    @OneToMany(mappedBy = "sellingUser")
+    private List<CardForSaleEntity> cardsForSale;
+
+    public List<CardForSaleEntity> getCardsForSale() {
+        return cardsForSale;
     }
 
-    public List<CardEntity> getCardsForSale(){
-        return cards.stream().filter(CardEntity::getForSale).toList();
+    public void setCardsForSale(List<CardForSaleEntity> cardsForSale) {
+        this.cardsForSale = cardsForSale;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public void setId(long id) {

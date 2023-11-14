@@ -1,5 +1,6 @@
 package me.mtgbazar.mtgbazar.models.DTO;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -76,6 +77,7 @@ public class CardDTO {//Jméno karty; Cena v Kč; Edice; Typ; Rarita; Počet
     private boolean storySpotlight;
     private int edhrecRank;
     private int pennyRank;
+
 
     public long getCardId() {
         return cardId;
