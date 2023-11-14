@@ -39,40 +39,45 @@
 </nav>
 <h1>User Detail</h1>
 <div class="d-flex justify-content-center">
-    <h2>Inventory</h2>
-    <div class="d-flex flex-wrap gap-3 justify-content-center">
-        <div th:each="c: ${user.getCards()}" class="card bg-dark border-white" style="width: 18rem;">
-            <div class="card-body">
-                <img class="card-img-top" th:src="${c.getImageUri()}" alt="Card image cap">
-                <h5 class="card-title" th:text="${c.artist}"></h5>
-                <h5 class="card-title" th:text="${c.name}"></h5>
-                <h5 class="card-title" th:text="${c.keywords}"></h5>
-                <p class="card-text" th:text="${c.cardId}"></p>
-                <div class="d-flex gap-2">
-                    <a th:href="@{'../cards/' + ${c.cardId}}" class="btn btn-primary">Detail</a>
-                    <a th:href="@{'../trade/forSale/'+${c.cardId}}" class="btn btn-primary">Sell</a>
+    <div class="d-flex flex-column">
+        <h2>Inventory</h2>
+        <div class="d-flex flex-wrap gap-3 justify-content-center">
+            <div th:each="c: ${user.getCards()}" class="card bg-dark border-white" style="width: 18rem;">
+                <div class="card-body">
+                    <img class="card-img-top" th:src="${c.getImageUri()}" alt="Card image cap">
+                    <h5 class="card-title" th:text="${c.artist}"></h5>
+                    <h5 class="card-title" th:text="${c.name}"></h5>
+                    <h5 class="card-title" th:text="${c.keywords}"></h5>
+                    <p class="card-text" th:text="${c.cardId}"></p>
+                    <div class="d-flex gap-2">
+                        <a th:href="@{'../cards/' + ${c.cardId}}" class="btn btn-primary">Detail</a>
+                        <a th:href="@{'../trade/forSale/'+${c.cardId}}" class="btn btn-primary">Sell</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <h2>Selling cards</h2>
-    <div class="d-flex flex-wrap gap-3 justify-content-center">
-        <div th:each="c: ${user.getCardsForSale()}" class="card bg-dark border-white" style="width: 18rem;">
-            <div class="card-body">
-                <img class="card-img-top" th:src="${c.getCard().getImageUri()}" alt="Card image cap">
-                <h5 class="card-title" th:text="${c.getCard().artist}"></h5>
-                <h5 class="card-title" th:text="${c.getCard().name}"></h5>
-                <h5 class="card-title" th:text="${c.getCard().keywords}"></h5>
-                <p class="card-text" th:text="${c.getCard().cardId}"></p>
-                <p class="card-text" th:text="${c.getCost()}"></p>
-                <p class="card-text" th:text="${c.getQuality()}"></p>
-                <p class="card-text" th:text="${c.getSellingUser().getUsername()}"></p>
-                <div class="d-flex gap-2">
-                    <a th:href="@{'../cards/' + ${c.getCard().cardId}}" class="btn btn-primary">Detail</a>
+    <div class="d-flex flex-column">
+        <h2>Selling cards</h2>
+        <div class="d-flex flex-wrap gap-3 justify-content-center">
+            <div th:each="c: ${user.getCardsForSale()}" class="card bg-dark border-white" style="width: 18rem;">
+                <div class="card-body">
+                    <img class="card-img-top" th:src="${c.getCard().getImageUri()}" alt="Card image cap">
+                    <h5 class="card-title" th:text="${c.getCard().artist}"></h5>
+                    <h5 class="card-title" th:text="${c.getCard().name}"></h5>
+                    <h5 class="card-title" th:text="${c.getCard().keywords}"></h5>
+                    <p class="card-text" th:text="${c.getCard().cardId}"></p>
+                    <p class="card-text" th:text="${c.getCost()}"></p>
+                    <p class="card-text" th:text="${c.getQuality()}"></p>
+                    <p class="card-text" th:text="${c.getSellingUser().getUsername()}"></p>
+                    <div class="d-flex gap-2">
+                        <a th:href="@{'../cards/' + ${c.getCard().cardId}}" class="btn btn-primary">Detail</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 <div class="d-flex justify-content-center flex-wrap gap-1 mt-5">
     <a class="btn btn-success " th:href="@{/users/myProfile(size=${cardsPage.size}, page=${1})}" th:text=${'<<'}></a>
