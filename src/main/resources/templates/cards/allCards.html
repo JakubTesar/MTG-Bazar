@@ -88,6 +88,7 @@
     </div>
     <a class="btn btn-danger " th:href="@{/cards(size=${cardsPage.size}, page=${totalPages})}" th:text=${'>>'}></a>
 </div>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
 
 </body>
 </html>
