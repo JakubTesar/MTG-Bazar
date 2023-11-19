@@ -4,6 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
+
+import java.util.List;
 
 public class CardDTO {//Jméno karty; Cena v Kč; Edice; Typ; Rarita; Počet
     private long cardId;
@@ -78,7 +81,7 @@ public class CardDTO {//Jméno karty; Cena v Kč; Edice; Typ; Rarita; Počet
     private int edhrecRank;
     private int pennyRank;
 
-
+    private List<CardForSaleDTO> cardForSale;
     public long getCardId() {
         return cardId;
     }
@@ -87,7 +90,13 @@ public class CardDTO {//Jméno karty; Cena v Kč; Edice; Typ; Rarita; Počet
         this.cardId = cardId;
     }
 
+    public List<CardForSaleDTO> getCardForSale() {
+        return cardForSale;
+    }
 
+    public void setCardForSale(List<CardForSaleDTO> cardForSale) {
+        this.cardForSale = cardForSale;
+    }
 
     public String getId() {
         return id;

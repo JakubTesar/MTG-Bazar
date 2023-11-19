@@ -4,12 +4,14 @@ import jakarta.transaction.Transactional;
 import me.mtgbazar.mtgbazar.data.entities.CardEntity;
 import me.mtgbazar.mtgbazar.data.entities.UserEntity;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
+import me.mtgbazar.mtgbazar.data.repositories.CardsForSaleRepositories;
 import me.mtgbazar.mtgbazar.data.repositories.CardsRepositories;
 import me.mtgbazar.mtgbazar.data.repositories.UsersRepositories;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardMapper;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.UserMapper;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,6 +31,9 @@ public class CardServiceImpl implements CardService {
 
     @Autowired
     private UsersRepositories usersRepositories;
+
+    @Autowired
+    private CardsForSaleRepositories cardsForSaleRepositories;
     @Autowired
     private CardMapper cardMapper;
     @Autowired
@@ -94,6 +99,12 @@ public class CardServiceImpl implements CardService {
         card.getOwnedUsers().add(user);
         //user.getCards().add(card);
         usersRepositories.save(user);
+    }
+
+    @Override
+    public List<UserDTO> getUsersBySellingCard(long cardId) {
+        List<UserEntity> user = cardsForSaleRepositories.fin;
+        return ;
     }
 
 

@@ -8,6 +8,7 @@ public class UserDTO {
     private String email;
     private String password;
     private List<CardDTO> cards;
+
     private List<CardForSaleDTO> cardsForSale;
 
     public List<CardForSaleDTO> getCardsForSale() {

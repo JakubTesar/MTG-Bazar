@@ -18,5 +18,7 @@ public interface CardService {
 
     void addCardToAccount(long cardId);
 
+    List<UserDTO> getUsersBySellingCard(long cardId);
+
 
 }

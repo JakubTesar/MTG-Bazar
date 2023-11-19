@@ -10,9 +10,9 @@ public class CardForSaleDTO {
     private Double cost;
     private String quality;
 
-    private UserEntity sellingUser;
+//    private UserDTO sellingUser;
 
-    private CardEntity card;
+//    private CardDTO card;
 
     public Double getCost() {
         return cost;
@@ -30,19 +30,19 @@ public class CardForSaleDTO {
         this.quality = quality;
     }
 
-    public UserEntity getSellingUser() {
-        return sellingUser;
-    }
+//    public UserDTO getSellingUser() {
+//        return sellingUser;
+//    }
+//
+//    public void setSellingUser(UserDTO sellingUser) {
+//        this.sellingUser = sellingUser;
+//    }
 
-    public void setSellingUser(UserEntity sellingUser) {
-        this.sellingUser = sellingUser;
-    }
-
-    public CardEntity getCard() {
-        return card;
-    }
-
-    public void setCard(CardEntity card) {
-        this.card = card;
-    }
+//    public CardDTO getCard() {
+//        return card;
+//    }
+//
+//    public void setCard(CardDTO card) {
+//        this.card = card;
+//    }
 }

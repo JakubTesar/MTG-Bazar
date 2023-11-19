@@ -1,43 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../style.css">
+<head th:replace="~{fragments/layout.html :: head}"></head>
 
-</head>
 <body class="bg-dark mx-3 text-white">
-<nav class="navbar navbar-expand-lg navbar-dark bg-nav-dark-light text-white mb-5 border-white border-bottom">
-    <ul class="d-flex list-unstyled align-items-center m-2">
-        <li><a class="text-decoration-none text-white mx-2" th:href="@{/cards}">All cards</a></li>
-        <li><a class="text-decoration-none text-white mx-2" th:href="@{cards/createCard}">Create card</a></li>
-    </ul>
-</nav>
+<header th:replace="~{fragments/layout.html :: header}"></header>
+
 <h1>MTG Cards</h1>
 
 <div class="d-flex flex-column justify-content-center m-5 gap-2">
-    <div class="d-flex gap-1">
-        <p>Name: </p>
-        <p th:text="${card.getName()}"></p>
+    <div class="d-flex gap-1 justify-content-center">
+        <h2>Name: </h2>
+        <h2 th:text="${card.getName()}"></h2>
     </div>
-    <div class="d-flex gap-1">
-        <p>Colors: </p>
-        <p th:text="${card.getColors()}"></p>
+    <div class="d-flex justify-content-center">
+        <img class="img-size w-25 h-50" th:src="${card.imageUri}" alt="Card image cap">
     </div>
-    <div class="d-flex gap-1">
-        <p>Rarity: </p>
-        <p th:text="${card.getRarity()}"></p>
+    <div class="d-flex justify-content-center">
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Quality</th>
+                <th scope="col">Buy</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c, i: ${card.getCardForSale()} ">
+                <th scope="row" th:text="${i.count}"></th>
+                <td th:text="${c.getSellingUser().getUsername()}"></td>
+                <td th:text="${c.getCost()}"></td>
+                <td th:text="${c.getQuality()}"></td>
+                <td><a th:href="@{'../trade/buy/'+${card.id}}" class="btn btn-primary">Buy</a></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <div>
-        <img class="img-size" th:src="${card.imageUri}" alt="Card image cap">
-    </div>
-    <div th:each="su: ${sellingUsersForCard}" class="card bg-dark border-white" style="width: 18rem;">
-        <div class="card-body">
-            <div th:text="${su.getUsername()}"></div>
-        </div>
-    </div>
+
 </div>
+
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
 
 </body>
 </html>
