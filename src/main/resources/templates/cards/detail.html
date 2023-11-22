@@ -29,7 +29,7 @@
             <tbody>
             <tr th:each="c, i: ${card.getCardForSale()} ">
                 <th scope="row" th:text="${i.count}"></th>
-                <td th:text="${c.getSellingUser().getUsername()}"></td>
+                <td th:text="${c.getBasicUserDTO().getUsername()}"></td>
                 <td th:text="${c.getCost()}"></td>
                 <td th:text="${c.getQuality()}"></td>
                 <td><a th:href="@{'../trade/buy/'+${card.id}}" class="btn btn-primary">Buy</a></td>

@@ -8,23 +8,8 @@ import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
 
 import java.util.List;
 
-public class CardDTO {//Jméno karty; Cena v Kč; Edice; Typ; Rarita; Počet
+public class CardDTO{
     private long cardId;
-   /* @NotBlank(message = "Vyplňte název")
-    @NotNull(message = "Vyplňte název")
-    @Size(max = 200, message = "Název je příliš dlouhý")
-    private String name;
-    private double cost;
-    @NotBlank(message = "Vyplňte edici")
-    @NotNull(message = "Vyplňte edici")
-    private String edition;
-    @NotBlank(message = "Vyplňte raritu")
-    @NotNull(message = "Vyplňte raritu")
-    private String rarity;
-    @NotBlank(message = "Vyplňte typ")
-    @NotNull(message = "Vyplňte typ")
-    private String type;
-    private int count;*/
     private String id;
     private String oracleId;
     private int mtgoId;
@@ -80,8 +65,9 @@ public class CardDTO {//Jméno karty; Cena v Kč; Edice; Typ; Rarita; Počet
     private boolean storySpotlight;
     private int edhrecRank;
     private int pennyRank;
+    private List<BasicCardForSaleDTO> cardForSale;
 
-    private List<CardForSaleDTO> cardForSale;
+
     public long getCardId() {
         return cardId;
     }
@@ -90,11 +76,11 @@ public class CardDTO {//Jméno karty; Cena v Kč; Edice; Typ; Rarita; Počet
         this.cardId = cardId;
     }
 
-    public List<CardForSaleDTO> getCardForSale() {
+    public List<BasicCardForSaleDTO> getCardForSale() {
         return cardForSale;
     }
 
-    public void setCardForSale(List<CardForSaleDTO> cardForSale) {
+    public void setCardForSale(List<BasicCardForSaleDTO> cardForSale) {
         this.cardForSale = cardForSale;
     }
 

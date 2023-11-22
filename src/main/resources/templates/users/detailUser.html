@@ -44,7 +44,7 @@
                     <p class="card-text" th:text="${c.getCard().cardId}"></p>
                     <p class="card-text" th:text="${c.getCost()}"></p>
                     <p class="card-text" th:text="${c.getQuality()}"></p>
-                    <p class="card-text" th:text="${c.getSellingUser().getUsername()}"></p>
+                    <p class="card-text" th:text="${user.getUsername()}"></p>
                     <div class="d-flex gap-2">
                         <a th:href="@{'../cards/' + ${c.getCard().cardId}}" class="btn btn-primary">Detail</a>
                     </div>

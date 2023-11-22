@@ -2,6 +2,7 @@ package me.mtgbazar.mtgbazar.models.service.cards;
 
 import jakarta.transaction.Transactional;
 import me.mtgbazar.mtgbazar.data.entities.CardEntity;
+import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
 import me.mtgbazar.mtgbazar.data.entities.UserEntity;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
 import me.mtgbazar.mtgbazar.data.repositories.CardsForSaleRepositories;
@@ -21,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -102,9 +104,10 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<UserDTO> getUsersBySellingCard(long cardId) {
-        List<UserEntity> user = cardsForSaleRepositories.fin;
-        return ;
+    public List<CardDTO> getSellingCardFromUserSellingListByCardId(long cardId, List<CardDTO> cards) {
+        List<CardDTO> sellingCards = new ArrayList<>();
+        sellingCards = cards.stream().filter(c -> c.getCardId() == cardId).toList();
+        return sellingCards;
     }
 
 

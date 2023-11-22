@@ -1,10 +1,17 @@
 package me.mtgbazar.mtgbazar.models.DTO;
 
-public class CardForSaleDTO {
+public class BasicCardForSaleDTO {
     private Double cost;
     private String quality;
     private BasicUserDTO sellingUser;
-    private CardDTO card;
+
+    public BasicUserDTO getSellingUser() {
+        return sellingUser;
+    }
+
+    public void setSellingUser(BasicUserDTO sellingUser) {
+        this.sellingUser = sellingUser;
+    }
 
     public Double getCost() {
         return cost;
@@ -20,21 +27,5 @@ public class CardForSaleDTO {
 
     public void setQuality(String quality) {
         this.quality = quality;
-    }
-
-    public BasicUserDTO getSellingUser() {
-        return sellingUser;
-    }
-
-    public void setSellingUser(BasicUserDTO sellingUser) {
-        this.sellingUser = sellingUser;
-    }
-
-    public CardDTO getCard() {
-        return card;
-    }
-
-    public void setCard(CardDTO card) {
-        this.card = card;
     }
 }

@@ -21,6 +21,8 @@ public class ApplicationSecurityConfiguration {
                                     .anyRequest() // Ostatní stránky jako např. `/articles/**` budou pouze pro přihlášené uživatele
                                     .authenticated();
                             try {
+                                //form.loginPage("/access/login").loginProcessingUrl("/access/login").successForwardUrl("/cards");
+                                // po tomhle nefunguje login. Proč? To ví jen bůh! ☺
                                 http.formLogin(form -> {});
                             } catch (Exception e) {
                                 throw new RuntimeException(e);

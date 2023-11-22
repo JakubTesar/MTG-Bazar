@@ -9,13 +9,13 @@ public class UserDTO {
     private String password;
     private List<CardDTO> cards;
 
-    private List<CardForSaleDTO> cardsForSale;
+    private List<BasicCardForSaleDTO> cardsForSale;
 
-    public List<CardForSaleDTO> getCardsForSale() {
+    public List<BasicCardForSaleDTO> getCardsForSale() {
         return cardsForSale;
     }
 
-    public void setCardsForSale(List<CardForSaleDTO> cardsForSale) {
+    public void setCardsForSale(List<BasicCardForSaleDTO> cardsForSale) {
         this.cardsForSale = cardsForSale;
     }
 
