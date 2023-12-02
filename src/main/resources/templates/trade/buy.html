@@ -1,10 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<head th:replace="~{fragments/layout.html :: head}"></head>
+
+<body class="bg-dark mx-3 text-white">
+<header th:replace="~{fragments/layout.html :: header}"></header>
+
+<h1>Sell your card</h1>
+<div class="d-flex justify-content-center">
+    <form th:action="@{'/trade/forSale/'+${cardId}}" method="post">
+        <!--    <div class="form-outline mb-4">-->
+        <!--      <input type="email" id="form2Example1" class="form-control" name="email"/>-->
+        <!--      <label class="form-label" for="form2Example1">Email address</label>-->
+        <!--    </div>-->
+        <div class="form-outline mb-4">
+            <input type="number" id="form2Example2" class="form-control" name="cost"/>
+            <label class="form-label" for="form2Example2">Cost</label>
+        </div>
+        <div class="form-outline mb-4">
+            <input type="text" id="form2Example3" class="form-control" name="quality"/>
+            <label class="form-label" for="form2Example3">Quality</label>
+        </div>
+        <div class="row mb-4">
+            <div class="col d-flex gap-2">
+                <button type="submit" class="btn btn-primary btn-block">Put card on a market</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
 
 </body>
 </html>

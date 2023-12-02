@@ -41,6 +41,7 @@ public class CardServiceImpl implements CardService {
     @Autowired
     private UserMapper userMapper;
 
+
     @Override
     public void createCard(CardDTO cardDTO) {
         CardEntity card = cardMapper.toEntity(cardDTO);
@@ -107,7 +108,10 @@ public class CardServiceImpl implements CardService {
     public List<CardDTO> getSellingCardFromUserSellingListByCardId(long cardId, List<CardDTO> cards) {
         List<CardDTO> sellingCards = new ArrayList<>();
         sellingCards = cards.stream().filter(c -> c.getCardId() == cardId).toList();
+
+
         return sellingCards;
+
     }
 
 

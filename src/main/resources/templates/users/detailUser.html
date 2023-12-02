@@ -37,16 +37,16 @@
         <div class="d-flex flex-wrap gap-3 justify-content-center">
             <div th:each="c: ${user.getCardsForSale()}" class="card bg-dark border-white" style="width: 18rem;">
                 <div class="card-body">
-                    <img class="card-img-top" th:src="${c.getCard().getImageUri()}" alt="Card image cap">
-                    <h5 class="card-title" th:text="${c.getCard().artist}"></h5>
-                    <h5 class="card-title" th:text="${c.getCard().name}"></h5>
-                    <h5 class="card-title" th:text="${c.getCard().keywords}"></h5>
-                    <p class="card-text" th:text="${c.getCard().cardId}"></p>
+                    <img class="card-img-top" th:src="${c.card.imageUri}" alt="Card image cap">
+                    <h5 class="card-title" th:text="${c.card.artist}"></h5>
+                    <h5 class="card-title" th:text="${c.card.name}"></h5>
+                    <h5 class="card-title" th:text="${c.card.keywords}"></h5>
+                    <p class="card-text" th:text="${c.card.cardId}"></p>
                     <p class="card-text" th:text="${c.getCost()}"></p>
                     <p class="card-text" th:text="${c.getQuality()}"></p>
                     <p class="card-text" th:text="${user.getUsername()}"></p>
                     <div class="d-flex gap-2">
-                        <a th:href="@{'../cards/' + ${c.getCard().cardId}}" class="btn btn-primary">Detail</a>
+                        <a th:href="@{'../cards/' + ${c.card.cardId}}" class="btn btn-primary">Detail</a>
                     </div>
                 </div>
             </div>

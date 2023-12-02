@@ -11,23 +11,29 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ApplicationSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeHttpRequests(
-                        registry -> {
-                            registry.requestMatchers("/users", "/users/detail")
-                                    .authenticated()
-                                    .requestMatchers("/cards", "/access/register", "/access/login", "/access/logout")
-                                    .permitAll()
-                                    .anyRequest() // Ostatní stránky jako např. `/articles/**` budou pouze pro přihlášené uživatele
-                                    .authenticated();
-                            try {
-                                //form.loginPage("/access/login").loginProcessingUrl("/access/login").successForwardUrl("/cards");
-                                // po tomhle nefunguje login. Proč? To ví jen bůh! ☺
-                                http.formLogin(form -> {});
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        }).logout((logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/cards"))).build();
+        http.authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/users", "/users/detail")
+                        .authenticated()
+                        .requestMatchers("/cards", "/access/register", "/access/login", "/access/logout", "/cards/**")
+                        .permitAll()
+                        .anyRequest() // Ostatní stránky jako např. `/articles/**` budou pouze pro přihlášené uživatele
+                        .authenticated()
+                )
+                .formLogin((form) -> form
+                                .loginPage("/access/login")
+                                .loginProcessingUrl("/access/login")
+                                .defaultSuccessUrl("/cards", true)
+                                .usernameParameter("email")
+                                .permitAll()
+                )
+                .logout((logout -> logout
+                        .permitAll()
+                        .logoutUrl("/access/logout")
+                        .logoutSuccessUrl("/cards")
+                        .deleteCookies("JSESSIONID")
+                ));
+
+        return http.build();
     }
 
     @Bean

@@ -4,6 +4,15 @@ public class BasicCardForSaleDTO {
     private Double cost;
     private String quality;
     private BasicUserDTO sellingUser;
+    private BasicCardDTO card;
+
+    public BasicCardDTO getCard() {
+        return card;
+    }
+
+    public void setCard(BasicCardDTO card) {
+        this.card = card;
+    }
 
     public BasicUserDTO getSellingUser() {
         return sellingUser;

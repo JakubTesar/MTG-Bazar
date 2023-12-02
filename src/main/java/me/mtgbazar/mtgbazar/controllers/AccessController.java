@@ -1,6 +1,7 @@
 package me.mtgbazar.mtgbazar.controllers;
 
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -47,20 +48,16 @@ public class AccessController {
 
     @GetMapping("/login")
     public String renderLoginForm(@ModelAttribute UserAccessDTO userDTO) {
-        return "access/login";
+        return "/access/login";
     }
 
-    @PostMapping("/login")
-    public String login(@ModelAttribute("email") String email,
-                        @ModelAttribute("password") String password,
-                        HttpServletRequest req) {
-        try {
-            req.login(email, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "redirect:../cards";
-    }
+//    @PostMapping("/login")
+//    public String login(@ModelAttribute("email") String email,
+//                        @ModelAttribute("password") String password,
+//                        HttpServletRequest req) throws ServletException {
+//        req.login(email, password);
+//        return "redirect:../cards";
+//    }
 
     @PostMapping("/logout")
     public String performLogout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
