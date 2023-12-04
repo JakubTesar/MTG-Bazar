@@ -2,6 +2,7 @@ package me.mtgbazar.mtgbazar.models.service.cards;
 
 import jakarta.transaction.Transactional;
 import me.mtgbazar.mtgbazar.data.entities.CardEntity;
+import me.mtgbazar.mtgbazar.data.entities.CardEntity_;
 import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
 import me.mtgbazar.mtgbazar.data.entities.UserEntity;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
@@ -47,7 +48,17 @@ public class CardServiceImpl implements CardService {
         CardEntity card = cardMapper.toEntity(cardDTO);
         cardsRepositories.save(card);
     }
-
+//    override fun getPaged(
+//    filter: DocumentFilterFormModel,
+//    authorizationResult: BasicAuthorizationResult
+//    ): PagedViewModel<DocumentViewModel> {
+//
+//        val q = QDocumentEntity.documentEntity
+//        return documentRepository
+//                .findAll(filter.pagination.toPageable(q.documentId.asc()))
+//                .map(mapper::toViewModel)
+//                .toModel()
+//    }
     @Override
     public Page<CardDTO> getAll(Pageable pageable) {
         int pageSize = pageable.getPageSize();

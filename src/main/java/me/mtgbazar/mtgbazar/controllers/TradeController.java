@@ -36,4 +36,23 @@ public class TradeController {
         tradeService.forSaleCard(cardId, cardForSaleDTO);
         return "redirect: /../../../cards";
     }
+
+    @GetMapping("/buy/{cardId}")
+    public String renderBuyForm(@ModelAttribute CardForSaleDTO cardForSaleDTO, @PathVariable long cardId) {
+        return "trade/buy";
+    }
+
+    @PostMapping("/buy/{cardId}")
+    public String buyCard(@Valid @ModelAttribute CardForSaleDTO cardForSaleDTO,
+                              @PathVariable long cardId,
+                              BindingResult result,
+                              RedirectAttributes redirectAttributes
+    ) throws IOException, DuplicateEmailException {
+        if (result.hasErrors())
+            return renderForSaleForm(cardForSaleDTO, cardId);
+
+        redirectAttributes.addFlashAttribute("success", "Card placed on a market.");
+        tradeService.forSaleCard(cardId, cardForSaleDTO);
+        return "redirect: /../../../cards";
+    }
 }

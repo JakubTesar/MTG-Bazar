@@ -27,6 +27,24 @@
         </div>
 
     </form>
+    <div class=" w-50">
+        <div class="d-flex justify-content-end pb-5 me-5">
+            <img class="napiste-nam-img" src="../../assets/Kontakt/Text/Napiste%20nam.png">
+            <form>
+                <label class="mt-3" for="name">Name</label>
+                <input type="text" class="border-bottom bg-transparent text-main " id="name" name="name">
+                <label class="mt-3" for="email">Email</label>
+                <input type="text" class="border-bottom bg-transparent text-main " id="email" name="email">
+                <label class="mt-3" for="telefon">Phone number</label>
+                <input type="text" class="border-bottom bg-transparent text-main " id="telefon" name="telefon">
+                <label for="zpráva" class="mt-3">Message</label>
+                <textarea type="text" class="border bg-transparent text-main my-3" id="zpráva"
+                          name="zpráva"></textarea>
+            </form>
+            <button class="modal-btn my-2 border bg-transparent text-main" id="addStudentButtonModal">ODESLAT
+            </button>
+        </div>
+    </div>
 </div>
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>
 
