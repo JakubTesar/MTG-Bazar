@@ -26,8 +26,6 @@ public class CardEntity {
 
     @Column
     private String oracleId;
-
-
     @Column
     private int mtgoId;
     @Column

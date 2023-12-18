@@ -47,6 +47,29 @@
 <header th:replace="~{fragments/layout.html :: header}"></header>
 <h1>MTG Cards</h1>
 
+<div>
+    <form method="get" th:action="@{/cards}">
+        <div class="d-flex gap-5">
+            <div class="gap-3">
+                <label for="cardName">Card name</label>
+                <input class="form-control" id="cardName" type="text" th:name="cardName">
+                <label for="artistName">Artist name</label>
+                <input class="form-control" id="artistName" type="text" th:name="artistName">
+            </div>
+            <div class="gap-3">
+                <label for="power">Power</label>
+                <input class="form-control w-25" id="power" type="number" th:name="power">
+                <label for="toughness">Toughness</label>
+                <input class="form-control w-25" id="toughness" type="number" th:name="toughness">
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-success text-white d-flex">Search</button>
+        </div>
+    </form>
+</div>
+
 
 <div class="d-flex flex-wrap gap-3 justify-content-center">
     <div th:each="c: ${cardsPage.content}" class="card bg-dark border-white" style="width: 18rem;">
@@ -57,22 +80,28 @@
             <h5 class="card-title" th:text="${c.name}"></h5>
             <h5 class="card-title" th:text="${c.keywords}"></h5>
             <p class="card-text" th:text="${c.cardId}"></p>
+            <p class="card-text" th:text="${c.foil}"></p>
             <div class="d-flex gap-2">
                 <a th:href="@{'cards/' + ${c.cardId}}" class="btn btn-primary">Detail</a>
                 <form method="post" th:action="@{/cards/}+ ${c.cardId}">
-                    <button class="btn btn-success text-white" sec:authorize="isAuthenticated()">Add to inventory</button>
+                    <button class="btn btn-success text-white" sec:authorize="isAuthenticated()">Add to inventory
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<div class="d-flex justify-content-center flex-wrap gap-1 mt-5">
-    <a class="btn btn-success " th:href="@{/cards(size=${cardsPage.size}, page=${1})}" th:text=${'<<'}></a>
-    <div class="pagination" th:each="pageNumber : ${pageNumbers}">
-        <a class="btn btn-primary " th:href="@{/cards(size=${cardsPage.size}, page=${pageNumber})}" th:text=${pageNumber}></a>
-    </div>
-    <a class="btn btn-danger " th:href="@{/cards(size=${cardsPage.size}, page=${totalPages})}" th:text=${'>>'}></a>
-</div>
+<!--<div class="d-flex justify-content-center flex-wrap gap-1 mt-5">-->
+<!--    <form method="get" class="btn btn-success " th:action="@{/cards}+${(size=${cardsPage.size}, page=${1})}"-->
+<!--          th:text=${'<<'}>-->
+<!--        <div class="pagination" th:each="pageNumber : ${pageNumbers}">-->
+<!--            <a class="btn btn-primary " th:href="@{/cards(size=${cardsPage.size}, page=${pageNumber})}"-->
+<!--               th:text=${pageNumber}></a>-->
+<!--        </div>-->
+<!--        <a class="btn btn-danger " th:href="@{/cards(size=${cardsPage.size}, page=${totalPages})}" th:text=${'>>'}></a>-->
+<!--</div>-->
+
+
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>
 
 </body>

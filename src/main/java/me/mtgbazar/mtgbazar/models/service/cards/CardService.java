@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CardService {
     void createCard(CardDTO cardDTO);
-    Page<CardDTO> getAll(Pageable pageable);
+    Page<CardDTO> getAll(Pageable pageable, CardFilter filter);
     Page<CardDTO> getAllByOwnerId(Pageable pageable, UserDTO userDTO);
 
     CardDTO getCardById(long cardId);
@@ -19,6 +19,5 @@ public interface CardService {
     void addCardToAccount(long cardId);
 
     List<CardDTO> getSellingCardFromUserSellingListByCardId(long cardId, List<CardDTO> cards);
-
 
 }

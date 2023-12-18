@@ -1,11 +1,14 @@
 package me.mtgbazar.mtgbazar.models.service.cards;
 
+import com.querydsl.jpa.impl.JPAQuery;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import me.mtgbazar.mtgbazar.data.entities.CardEntity;
-import me.mtgbazar.mtgbazar.data.entities.CardEntity_;
 import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
+import me.mtgbazar.mtgbazar.data.entities.QCardEntity;
 import me.mtgbazar.mtgbazar.data.entities.UserEntity;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
+import me.mtgbazar.mtgbazar.data.repositories.CardRepository;
 import me.mtgbazar.mtgbazar.data.repositories.CardsForSaleRepositories;
 import me.mtgbazar.mtgbazar.data.repositories.CardsRepositories;
 import me.mtgbazar.mtgbazar.data.repositories.UsersRepositories;
@@ -31,42 +34,29 @@ import java.util.List;
 public class CardServiceImpl implements CardService {
     @Autowired
     private CardsRepositories cardsRepositories;
-
     @Autowired
     private UsersRepositories usersRepositories;
-
     @Autowired
     private CardsForSaleRepositories cardsForSaleRepositories;
+    @Autowired
+    private CardRepository cardRepository;
     @Autowired
     private CardMapper cardMapper;
     @Autowired
     private UserMapper userMapper;
-
 
     @Override
     public void createCard(CardDTO cardDTO) {
         CardEntity card = cardMapper.toEntity(cardDTO);
         cardsRepositories.save(card);
     }
-//    override fun getPaged(
-//    filter: DocumentFilterFormModel,
-//    authorizationResult: BasicAuthorizationResult
-//    ): PagedViewModel<DocumentViewModel> {
-//
-//        val q = QDocumentEntity.documentEntity
-//        return documentRepository
-//                .findAll(filter.pagination.toPageable(q.documentId.asc()))
-//                .map(mapper::toViewModel)
-//                .toModel()
-//    }
     @Override
-    public Page<CardDTO> getAll(Pageable pageable) {
+    public Page<CardDTO> getAll(Pageable pageable, CardFilter filter) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        List<CardEntity> cardEntities = (List<CardEntity>) cardsRepositories.findAll();
+        List<CardEntity> cardEntities = cardRepository.findAll(filter);
         List<CardDTO> cardDTOS;
-
         if (cardEntities.size() < startItem) cardDTOS = Collections.emptyList();
         else {
             int toIndex = Math.min(startItem + pageSize, cardEntities.size());
