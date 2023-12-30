@@ -55,12 +55,11 @@ public class CardServiceImpl implements CardService {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        List<CardEntity> cardEntities = cardRepository.findAll(filter);
+        List<CardEntity> cardEntities = cardRepository.findAll(filter, pageable);
         List<CardDTO> cardDTOS;
         if (cardEntities.size() < startItem) cardDTOS = Collections.emptyList();
         else {
-            int toIndex = Math.min(startItem + pageSize, cardEntities.size());
-            cardDTOS = cardEntities.subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
+            cardDTOS = cardEntities.stream().map(c -> cardMapper.toDTO(c)).toList();
         }
         return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }

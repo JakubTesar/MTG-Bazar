@@ -62,6 +62,55 @@
                 <label for="toughness">Toughness</label>
                 <input class="form-control w-25" id="toughness" type="number" th:name="toughness">
             </div>
+            <div class="gap-3 d-flex flex-column">
+                <label for="mountain">Mountain</label>
+                <input type="checkbox"
+                       id="mountain"
+                       name="R"
+                       th:checked="${R}"/>
+
+                <label for="swamp">Swamp</label>
+                <input type="checkbox"
+                       id="swamp"
+                       name="B"
+                       th:checked="${B}"/>
+
+                <label for="plains">Plains</label>
+                <input type="checkbox"
+                       id="plains"
+                       name="W"
+                       th:checked="${W}"/>
+                <label for="forest">Forest</label>
+                <input type="checkbox"
+                       id="forest"
+                       name="G"
+                       th:checked="${G}"/>
+
+                <label for="island">Island</label>
+                <input type="checkbox"
+                       id="island"
+                       name="U"
+                       th:checked="${U}"/>
+            </div>
+            <div class="gap-3">
+                <label for="frame">Year</label>
+                <input class="form-control w-25" id="frame" type="number" th:name="frame">
+                <label for="set">Set</label>
+                <input class="form-control w-25" id="set" type="number" th:name="set">
+            </div>
+            <div class="gap-3">
+                <label for="keywords">Year</label>
+                <input class="form-control w-25" id="keywords" type="number" th:name="keywords">
+                <label for="rarity">Rarity</label>
+                <select id="rarity" th:name="rarity">
+                    <option value="common">Common</option>
+                    <option value="uncommon">Uncommon</option>
+                    <option value="rare">Rare</option>
+                    <option value="mythic">Mythic</option>
+                    <option value="bonus">Bonus</option>
+                    <option value="special">Special</option>
+                </select>
+            </div>
         </div>
 
         <div class="d-flex justify-content-center">
@@ -91,15 +140,15 @@
         </div>
     </div>
 </div>
-<!--<div class="d-flex justify-content-center flex-wrap gap-1 mt-5">-->
-<!--    <form method="get" class="btn btn-success " th:action="@{/cards}+${(size=${cardsPage.size}, page=${1})}"-->
-<!--          th:text=${'<<'}>-->
-<!--        <div class="pagination" th:each="pageNumber : ${pageNumbers}">-->
-<!--            <a class="btn btn-primary " th:href="@{/cards(size=${cardsPage.size}, page=${pageNumber})}"-->
-<!--               th:text=${pageNumber}></a>-->
-<!--        </div>-->
-<!--        <a class="btn btn-danger " th:href="@{/cards(size=${cardsPage.size}, page=${totalPages})}" th:text=${'>>'}></a>-->
-<!--</div>-->
+<div class="d-flex justify-content-center flex-wrap gap-1 mt-5">
+    <a class="btn btn-success " th:href="@{/cards(size=${cardsPage.size}, page=${1})}" th:text=${'<<'}></a>
+    <div class="pagination" th:each="pageNumber : ${pageNumbers}">
+        <a class="btn btn-primary " th:href="@{/cards(size=${cardsPage.size}, page=${pageNumber})}" th:text=${pageNumber}></a>
+    </div>
+
+
+    <a class="btn btn-danger " th:href="@{/cards(size=${cardsPage.size}, page=${totalPages})}" th:text=${'>>'}></a>
+</div>
 
 
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>

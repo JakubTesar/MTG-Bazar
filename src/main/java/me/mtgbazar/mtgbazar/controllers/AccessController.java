@@ -61,7 +61,6 @@ public class AccessController {
 
     @PostMapping("/logout")
     public String performLogout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
-        // perform logout
         this.logoutHandler.logout(request, response, authentication);
         return "redirect:../cards";
     }
