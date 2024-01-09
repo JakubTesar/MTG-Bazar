@@ -2,44 +2,69 @@
 <html lang="en">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
-<body class="bg-dark mx-3 text-white">
+<body class="bg-dark text-white">
 <header th:replace="~{fragments/layout.html :: header}"></header>
-
-<h1>MTG Cards</h1>
-
-<div class="d-flex flex-column justify-content-center m-5 gap-2">
-    <div class="d-flex gap-1 justify-content-center">
-        <h2>Name: </h2>
-        <h2 th:text="${card.getName()}"></h2>
-    </div>
-    <div class="d-flex justify-content-center">
-        <img class="img-size w-25 h-50" th:src="${card.imageUri}" alt="Card image cap">
-    </div>
-    <div class="d-flex justify-content-center">
-        <table class="table table-striped table-dark">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">User</th>
-                <th scope="col">Cost</th>
-                <th scope="col">Quality</th>
-                <th scope="col">Buy</th>
-            </tr>
-            </thead>
+<div class="mx-3 mb-5">
+    <div class="d-flex flex-column justify-content-center m-5 gap-3">
+        <div class="d-flex gap-5">
+            <img class="img-size w-25 h-50" th:src="${card.imageUri}" alt="Card image cap">
+            <div class="d-flex flex-column justify-content-between w-100">
+                <div>
+                    <div class="d-flex gap-2 justify-content-start">
+                        <h1 th:text="${card.getName()}"></h1>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <table class="table table-striped table-dark">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Cost</th>
+                                <th scope="col">Quality</th>
+                                <th scope="col">Buy</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="c, i: ${card.getCardForSale()} ">
+                                <th scope="row" th:text="${i.count}"></th>
+                                <td th:text="${c.sellingUser.username}"></td>
+                                <td th:text="${c.getCost()}"></td>
+                                <td th:text="${c.getQuality()}"></td>
+                                <td><a th:href="@{'../trade/buy/'+${card.getCardId()}}" class="btn btn-primary">Buy</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-danger">Zvoneček</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table class="table border-white text-white">
             <tbody>
-            <tr th:each="c, i: ${card.getCardForSale()} ">
-                <th scope="row" th:text="${i.count}"></th>
-                <td th:text="${c.sellingUser.username}"></td>
-                <td th:text="${c.getCost()}"></td>
-                <td th:text="${c.getQuality()}"></td>
-                <td><a th:href="@{'../trade/buy/'+${card.getCardId()}}" class="btn btn-primary">Buy</a></td>
+            <tr>
+                <td>Card name</td>
+                <td class="card-title text-break" th:text="${card.name}"></td>
+            </tr>
+            <tr>
+                <td>Colors</td>
+                <td class="card-title text-break" th:text="${card.colors}"></td>
+            </tr>
+            <tr>
+                <td>Keywords</td>
+                <td class="card-title text-break" th:text="${card.keywords}"></td>
+            </tr>
+            <tr>
+                <td>Foil</td>
+                <td class="card-title text-break" th:text="${card.foil}"></td>
             </tr>
             </tbody>
-        </table>
+        </table></div>
     </div>
-
 </div>
-
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>
 
 </body>

@@ -9,16 +9,16 @@ public class CardFilter {
     private Boolean nonFoil = null;
     private Boolean reprint = null;
     private Boolean textLess = null;
-    private Boolean R = null;
-    private Boolean G = null;
-    private Boolean U = null; // blue
-    private Boolean B = null;
-    private Boolean W = null;
+    private String R = "";
+    private String G = "";
+    private String U = ""; // blue
+    private String B = "";
+    private String W = "";
     //private Boolean Colorless;
-    private String cardName;
-    private String artistName;
-    private String frame; //year
-    private String set;
-    private String keywords;
-    private Rarity rarity;
+    private String cardName = "";
+    private String artistName = "";
+    private String frame = ""; //year
+    private String set = "";
+    private String keywords = "";
+    private Rarity rarity ;
 }

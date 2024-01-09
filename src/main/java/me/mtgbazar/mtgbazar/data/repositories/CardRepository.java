@@ -55,8 +55,8 @@ public class CardRepository {
 
         return queryFactory.selectFrom(c)
                 .where(predicate)
-                .offset(pageable.getPageNumber() * 20L)
-                .limit(36)
+//                .offset(pageable.getPageNumber() * 20L)
+//                .limit(12)
                 .fetch();
     }
 }

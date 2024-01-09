@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a th:fragment="paging(pageNum, label, tooltip)" class="page-link"
+   th:href="@{'/cards?' + ${'cardName=' + f.cardName + '&'}
+     + ${'artistName=' + f.artistName + '&'}
+      + ${f.power != null ? 'power=' + f.power + '&' : 'power=&'}
+      + ${f.toughness != null ? 'toughness=' + f.toughness + '&' : 'toughness=&'}
+      + ${'R=' + f.r + '&'}
+      + ${'B=' + f.b + '&'}
+      + ${'W=' + f.w + '&'}
+      + ${'G=' + f.g + '&'}
+      + ${'U=' + f.u + '&'}
+      + ${'frame=' + f.frame + '&'}
+      + ${'set=' + f.set + '&'}
+      + ${'keywords=' + f.keywords + '&'}
+      + ${f.rarity != null ? 'rarity=' + f.rarity + '&' : 'rarity=&'}
+      + 'page=' + ${pageNum} + '&size=' + ${pageSize}}"
+   th:title="${tooltip}" rel="tooltip">
+    [[${label}]]
+</a>
+</body>
+</html>

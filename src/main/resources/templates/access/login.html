@@ -2,33 +2,33 @@
 <html lang="en">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
-<body class="bg-dark mx-3 text-white">
+<body class="bg-dark text-white d-flex flex-column justify-content-between vh-100">
 <header th:replace="~{fragments/layout.html :: header}"></header>
+<div class="mx-3">
 
-<h1>Login</h1>
-<div class="d-flex justify-content-center">
-    <form th:action="@{/access/login}" method="post">
-        <div class="form-outline mb-4">
-            <input type="email" id="form2Example1" class="form-control" name="email"/>
-            <label class="form-label" for="form2Example1">Email address</label>
-        </div>
-        <div class="form-outline mb-4">
-            <input type="password" id="form2Example2" class="form-control" name="password"/>
-            <label class="form-label" for="form2Example2">Password</label>
-        </div>
-        <div class="row mb-4">
-            <div class="col d-flex gap-2">
-                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-                <div class="d-flex align-items-center">
-                    <a href="#">Forgot password?</a>
+    <div class="d-flex justify-content-center align-items-center flex-column w-100">
+        <h1 class="m-3">Login</h1>
+        <form th:action="@{/access/login}" method="post">
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form2Example1">Email address</label>
+
+                <input type="email" id="form2Example1" class="form-control" name="email"/>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form2Example2">Password</label>
+                <input type="password" id="form2Example2" class="form-control" name="password"/>
+            </div>
+            <div class="row mb-4">
+                <div class="col d-flex gap-2">
+                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
                 </div>
             </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <p>Not a member? </p>
-            <a th:href="@{/account/register}">Register</a>
-        </div>
-    </form>
+            <div class="d-flex justify-content-between">
+                <p>Not a member? </p>
+                <a class="text-decoration-none text text-white btn-info" th:href="@{/account/register}">Register</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>

@@ -2,36 +2,38 @@
 <html lang="en">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
-<body class="bg-dark mx-3 text-white">
+<body class="bg-dark  text-white d-flex flex-column justify-content-between vh-100">
 <header th:replace="~{fragments/layout.html :: header}"></header>
+<div class="mx-3">
 
-<h1>Register</h1>
-<div class="d-flex justify-content-center">
-
-    <form th:action="@{/access/register}" th:object="${userAccessDTO}" method="post" class="d-flex flex-column gap-2">
-        <div class="form-group">
-            <label for="username">User username</label>
-            <input id="username" name="username" th:field="*{username}" class="form-control"/>
-            <small class="text-danger" th:errors="*{username}"></small>
-        </div>
-        <div class="form-group">
-            <label for="email">User email</label>
-            <input id="email" name="email" th:field="*{email}" class="form-control"/>
-            <small class="text-danger" th:errors="*{email}"></small>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" th:field="*{password}" class="form-control"/>
-            <small class="text-danger" th:errors="*{password}"></small>
-        </div>
-        <div class="form-group">
-            <div class="d-flex gap-3">
-                <button type="submit" class="btn btn-success align-self-start">Register</button>
-                <a class="btn btn-primary" th:href="@{/account/login}">Login</a>
-
+    <div class="d-flex justify-content-center flex-column align-items-center">
+        <h1 class="m-3">Register</h1>
+        <form th:action="@{/access/register}" th:object="${userAccessDTO}" method="post"
+              class="d-flex flex-column gap-2">
+            <div class="form-group">
+                <label for="username">User username</label>
+                <input id="username" name="username" th:field="*{username}" class="form-control"/>
+                <small class="text-danger" th:errors="*{username}"></small>
             </div>
-        </div>
-    </form>
+            <div class="form-group">
+                <label for="email">User email</label>
+                <input id="email" name="email" th:field="*{email}" class="form-control"/>
+                <small class="text-danger" th:errors="*{email}"></small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" th:field="*{password}" class="form-control"/>
+                <small class="text-danger" th:errors="*{password}"></small>
+            </div>
+            <div class="form-group">
+                <div class="d-flex gap-3">
+                    <button type="submit" class="btn btn-success align-self-start">Register</button>
+                    <a class="btn btn-primary" th:href="@{/account/login}">Login</a>
+
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>
 

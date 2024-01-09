@@ -31,23 +31,17 @@ public class CardsController {
     public String getAllCards(
             Model model,
             @RequestParam("page") Optional<Integer> page,
-            @RequestParam("size") Optional<Integer> size,
             CardFilter filter
     ) throws IOException {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(36);
+        int pageSize = 36;
         Page<CardDTO> cardDTOPage = cardService.getAll(PageRequest.of(currentPage - 1, pageSize), filter);
         model.addAttribute("cardsPage", cardDTOPage);
+        //cardDTOPage.getTotalPages()
         int totalPages = cardDTOPage.getTotalPages();
         model.addAttribute("totalPages", totalPages);
-
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(currentPage > 1 ? (currentPage - 1 >= totalPages - 10 ? (currentPage == totalPages ? currentPage - 10 : (currentPage == totalPages - 1 ? currentPage - 9 : (currentPage == totalPages - 2 ? currentPage - 8 : (currentPage == totalPages - 3 ? currentPage - 7 : (currentPage == totalPages - 4 ? currentPage - 6 : (currentPage == totalPages - 5 ? currentPage - 5 : (currentPage == totalPages - 6 ? currentPage - 4 : (currentPage == totalPages - 7 ? currentPage - 3 : (currentPage == totalPages - 8 ? currentPage - 2 : (currentPage == totalPages - 9 ? currentPage - 1 : currentPage)))))))))) : currentPage - 1) : currentPage, (totalPages <= 10 ? totalPages : ((currentPage + 10) >= totalPages ? totalPages : currentPage + 10)))
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-            model.addAttribute("total", totalPages);
-        }
+        model.addAttribute("f", filter);
+        model.addAttribute("currentPage", cardDTOPage.getNumber() + 1);
         return "cards/allCards";
     }
 
