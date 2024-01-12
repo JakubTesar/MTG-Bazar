@@ -11,7 +11,7 @@ import java.util.List;
 public interface CardService {
     void createCard(CardDTO cardDTO);
     Page<CardDTO> getAll(Pageable pageable, CardFilter filter);
-    Page<CardDTO> getAllByOwnerId(Pageable pageable, UserDTO userDTO);
+    Page<CardDTO> getAllByOwnerId(Pageable pageable,CardFilter filter, UserDTO userDTO);
 
     CardDTO getCardById(long cardId);
     List<UserDTO> getCardOwnersByCardId(long cardId);

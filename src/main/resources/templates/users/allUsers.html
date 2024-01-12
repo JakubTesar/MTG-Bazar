@@ -5,11 +5,71 @@
 <body class="bg-dark mx-3 text-white">
 <header th:replace="~{fragments/layout.html :: header}"></header>
 
-<h1>MTG Cards</h1>
+<div class="mx-3">
+    <h1>All users</h1>
+    <div>
+        <form method="get" th:action="@{/users}">
+            <div class="d-flex justify-content-center gap-5">
+                <div class="gap-3">
+                    <label for="email">Email</label>
+                    <input class="form-control w-50" id="email" type="email" th:name="email" th:value="${f.email}">
+                    <label for="name">Name</label>
+                    <input class="form-control w-50" id="name" th:name="name" th:value="${f.name}">
+                </div>
+            </div>
 
-<div class="d-flex flex-wrap gap-3 justify-content-center">
+            <div class="d-flex justify-content-center my-4">
+                <button type="submit" class="btn btn-success text-white d-flex">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="d-flex flex-wrap gap-3 justify-content-center">
+        <div th:each="c: ${cardsPage.content}" id="card-border-and-bg" class="card"
+             style="width: 18rem; border: solid white 0px; background-color: #282828; border-radius: 0">
+            <div class="card-body d-flex flex-column align-content-between justify-content-between">
+                <div>
+                    <table class="table border-white text-white">
+                        <tbody>
+                        <tr>
+                            <td>Username</td>
+                            <td class="card-title text-break" th:text="${c.username}"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td class="card-title text-break" th:text="${c.email}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex gap-2">
+                    <a th:href="@{'users/profile/' + ${c.id}}" class="btn btn-primary">Detail</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center flex-wrap gap-1 mt-5">
 
-
+        <nav aria-label="Pagination" th:if="${totalPages > 0}">
+            <ul class="pagination bg-dark text-white justify-content-center">
+                <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                    <a th:replace="~{fragments/paging :: pagingUsers(1, '<<', 'First Page')}"></a>
+                </li>
+                <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+                    <a th:replace="~{fragments/paging :: pagingUsers(${(currentPage - 1)}, 'Prev', 'Previous Page')}"></a>
+                </li>
+                <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                    th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+                    <a th:replace="~{fragments/paging :: pagingUsers(${page}, ${page}, 'Page ' + ${page})}"></a>
+                </li>
+                <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                    <a th:replace="~{fragments/paging :: pagingUsers(${currentPage + 1},'Next', 'Next Page')}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                    <a th:replace="~{fragments/paging :: pagingUsers(${totalPages}, '>>', 'Last Page')}"></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>
 

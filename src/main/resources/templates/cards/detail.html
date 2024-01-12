@@ -42,27 +42,56 @@
                 </div>
             </div>
         </div>
-        <div>
-            <table class="table border-white text-white">
-            <tbody>
-            <tr>
-                <td>Card name</td>
-                <td class="card-title text-break" th:text="${card.name}"></td>
-            </tr>
-            <tr>
-                <td>Colors</td>
-                <td class="card-title text-break" th:text="${card.colors}"></td>
-            </tr>
-            <tr>
-                <td>Keywords</td>
-                <td class="card-title text-break" th:text="${card.keywords}"></td>
-            </tr>
-            <tr>
-                <td>Foil</td>
-                <td class="card-title text-break" th:text="${card.foil}"></td>
-            </tr>
-            </tbody>
-        </table></div>
+        <div class=" d-flex justify-content-center my-5">
+            <table class="table border-white text-white w-50">
+                <tbody>
+                <tr>
+                    <td>Card name</td>
+                    <td class="card-title text-break" th:text="${card.name}"></td>
+                </tr>
+                <tr>
+                    <td>Colors</td>
+                    <td class="card-title text-break" th:text="${card.colors}"></td>
+                </tr>
+                <tr>
+                    <td>Keywords</td>
+                    <td class="card-title text-break" th:text="${card.keywords}"></td>
+                </tr>
+                <tr>
+                    <td>Foil</td>
+                    <td class="card-title text-break" th:text="${card.foil}"></td>
+                </tr>
+                <tr>
+                    <td>Artist</td>
+                    <td class="card-title text-break" th:text="${card.artist}"></td>
+                </tr>
+                <tr>
+                    <td>Frame</td>
+                    <td class="card-title text-break" th:text="${card.frame}"></td>
+                </tr>
+                <tr>
+                    <td>Full art</td>
+                    <td class="card-title text-break" th:text="${card.fullArt}"></td>
+                </tr>
+                <tr>
+                    <td>Power</td>
+                    <td class="card-title text-break" th:text="${card.power}"></td>
+                </tr>
+                <tr>
+                    <td>Toughness</td>
+                    <td class="card-title text-break" th:text="${card.toughness}"></td>
+                </tr>
+                <tr>
+                    <td>Rarity</td>
+                    <td class="card-title text-break" th:text="${card.rarity}"></td>
+                </tr>
+                <tr>
+                    <td>Set</td>
+                    <td class="card-title text-break" th:text="${card.setS}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>

@@ -65,17 +65,15 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Page<CardDTO> getAllByOwnerId(Pageable pageable, UserDTO userDTO) {
+    public Page<CardDTO> getAllByOwnerId(Pageable pageable, CardFilter filter, UserDTO userDTO) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        List<CardDTO> cardDTOS = userDTO.getCards();
-
-        if (cardDTOS.size() < startItem) cardDTOS = Collections.emptyList();
-        else {
-            int toIndex = Math.min(startItem + pageSize, cardDTOS.size());
-            cardDTOS = cardDTOS.subList(startItem, toIndex);
-        }
+        List<CardEntity> cardEntities = cardRepository.findAllByOwner(filter, pageable, userMapper.toEntity(userDTO));
+        List<CardDTO> cardDTOS;
+        int toIndex = Math.min(startItem + pageSize, cardEntities.size());
+        if (cardEntities.size() < startItem) cardDTOS = Collections.emptyList();
+        else cardDTOS =  cardEntities.subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
         return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardDTOS.size());
     }
 

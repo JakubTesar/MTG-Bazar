@@ -9,60 +9,211 @@
 <html lang="en">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
-<body class="bg-dark mx-3 text-white">
+<body class="bg-dark text-white">
 <header th:replace="~{fragments/layout.html :: header}"></header>
+<div class="mx-3">
+    <div class="d-flex justify-content-center align-items-center my-5 flex-column">
+        <h1>User Detail</h1>
+        <table class="table border-white text-white w-50">
+            <tbody>
+            <tr>
+                <td>Username</td>
+                <td class="card-title text-break" th:text="${user.username}"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td class="card-title text-break" th:text="${user.email}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <form method="get" th:action="@{/users/myProfile}">
+            <div class="d-flex justify-content-center gap-5">
+                <div class="gap-5">
+                    <div class="d-flex flex-column">
+                        <label for="cardName">Card name</label>
+                        <input class="form-control" id="cardName" type="text" th:name="cardName"
+                               th:value="${f.cardName}">
+                    </div>
+                    <div class="d-flex flex-column">
+                        <label for="artistName">Artist name</label>
+                        <input class="form-control" id="artistName" type="text" th:name="artistName"
+                               th:value="${f.artistName}">
+                    </div>
+                </div>
+                <div class="gap-3">
+                    <label for="power">Power</label>
+                    <input class="form-control w-50" id="power" type="number" th:name="power" th:value="${f.power}">
+                    <label for="toughness">Toughness</label>
+                    <input class="form-control w-50" id="toughness" type="number" th:name="toughness"
+                           th:value="${f.toughness}">
+                </div>
+                <div class="d-flex flex-column">
+                    <div class="form-check">
+                        <input type="checkbox"
+                               id="mountain"
+                               name="R"
+                               class="form-check-input"
+                               th:value="${'R'}"
+                               th:checked="${f.r != null && f.r!= '' ? 'on' : 'off'}"/>
+                        <label for="mountain" class="form-check-label">Mountain</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox"
+                               id="swamp"
+                               name="B"
+                               class="form-check-input"
+                               th:value="${'B'}"
+                               th:checked="${f.b != null && f.b!= '' ? 'on' : 'off'}"/>
+                        <label for="swamp" class="form-check-label">Swamp</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox"
+                               id="plains"
+                               name="W"
+                               class="form-check-input"
+                               th:value="${'W'}"
+                               th:checked="${f.w != null && f.w!= '' ? 'on' : 'off'}"/>
 
-<h1>User Detail</h1>
-<div class="d-flex justify-content-center">
-    <div class="d-flex flex-column">
-        <h2>Inventory</h2>
-        <div class="d-flex flex-wrap gap-3 justify-content-center">
-            <div th:each="c: ${user.getCards()}" class="card bg-dark border-white" style="width: 18rem;">
-                <div class="card-body">
-                    <img class="card-img-top" th:src="${c.getImageUri()}" alt="Card image cap">
-                    <h5 class="card-title" th:text="${c.artist}"></h5>
-                    <h5 class="card-title" th:text="${c.name}"></h5>
-                    <h5 class="card-title" th:text="${c.keywords}"></h5>
-                    <p class="card-text" th:text="${c.cardId}"></p>
-                    <div class="d-flex gap-2">
-                        <a th:href="@{'../cards/' + ${c.cardId}}" class="btn btn-primary">Detail</a>
-                        <a th:href="@{'../trade/forSale/'+${c.cardId}}" class="btn btn-primary">Sell</a>
+                        <label for="plains" class="form-check-label">Plains</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox"
+                               id="forest"
+                               name="G"
+                               class="form-check-input"
+                               th:value="${'G'}"
+                               th:checked="${f.g != null && f.g!= '' ? 'on' : 'off'}"/>
+                        <label for="forest" class="form-check-label">Forest</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox"
+                               id="island"
+                               name="U"
+                               class="form-check-input"
+                               th:value="${'U'}"
+                               th:checked="${f.u != null && f.u!= '' ? 'on' : 'off'}"/>
+                        <label for="island" class="form-check-label">Island</label>
+                    </div>
+                </div>
+                <div class="gap-3">
+                    <label for="frame">Year</label>
+                    <input class="form-control w-50" id="frame" th:name="frame" th:value="${f.frame}">
+                    <label for="set">Set</label>
+                    <input class="form-control w-50" id="set" th:name="set" th:value="${f.set}">
+                </div>
+                <div class="gap-3">
+                    <label for="keywords">Keywords</label>
+                    <input class="form-control" id="keywords" th:name="keywords" th:value="${f.keywords}">
+                    <div class="d-flex flex-column">
+                        <label for="rarity">Rarity</label>
+                        <select id="rarity" class="form-select" th:field="*{f.rarity}" th:name="rarity">
+                            <option value="">All</option>
+                            <option value="common">Common</option>
+                            <option value="uncommon">Uncommon</option>
+                            <option value="rare">Rare</option>
+                            <option value="mythic">Mythic</option>
+                            <option value="bonus">Bonus</option>
+                            <option value="special">Special</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center my-4">
+                <button type="submit" class="btn btn-success text-white d-flex">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="d-flex flex-column">
+            <div class="d-flex " style="margin-left: 9rem">
+                <h2>Owned cards</h2>
+            </div>
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+                <div th:each="c: ${cardsPage.content}" id="card-border-and-bg" class="card"
+                     style="width: 18rem; border: solid white 0px; background-color: #282828; border-radius: 0">
+                    <div class="card-body  d-flex flex-column align-content-between justify-content-between">
+                        <div>
+                            <img class="card-img-top" th:src="${c.imageUri}" alt="Card image cap">
+                            <table class="table border-white text-white">
+                                <tbody>
+                                <tr>
+                                    <td>Card name</td>
+                                    <td class="card-title text-break" th:text="${c.name}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Colors</td>
+                                    <td class="card-title text-break" th:text="${c.colors}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Keywords</td>
+                                    <td class="card-title text-break" th:text="${c.keywords}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Foil</td>
+                                    <td class="card-title text-break" th:text="${c.foil}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a th:href="@{'../cards/' + ${c.cardId}}" class="btn btn-primary">Detail</a>
+                            <a th:href="@{'../trade/forSale/'+${c.cardId}}" class="btn btn-primary">Sell</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="d-flex flex-column">
-        <h2>Selling cards</h2>
-        <div class="d-flex flex-wrap gap-3 justify-content-center">
-            <div th:each="c: ${user.getCardsForSale()}" class="card bg-dark border-white" style="width: 18rem;">
-                <div class="card-body">
-                    <img class="card-img-top" th:src="${c.card.imageUri}" alt="Card image cap">
-                    <h5 class="card-title" th:text="${c.card.artist}"></h5>
-                    <h5 class="card-title" th:text="${c.card.name}"></h5>
-                    <h5 class="card-title" th:text="${c.card.keywords}"></h5>
-                    <p class="card-text" th:text="${c.card.cardId}"></p>
-                    <p class="card-text" th:text="${c.getCost()}"></p>
-                    <p class="card-text" th:text="${c.getQuality()}"></p>
-                    <p class="card-text" th:text="${user.getUsername()}"></p>
-                    <div class="d-flex gap-2">
-                        <a th:href="@{'../cards/' + ${c.card.cardId}}" class="btn btn-primary">Detail</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="d-flex justify-content-center flex-wrap gap-1 mt-5">
+        <nav aria-label="Pagination" th:if="${totalPages > 0}">
+            <ul class="pagination bg-dark text-white justify-content-center">
+                <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                    <a th:replace="~{fragments/paging :: pagingProfile(1, '<<', 'First Page')}"></a>
+                </li>
+                <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+                    <a th:replace="~{fragments/paging :: pagingProfile(${(currentPage - 1)}, 'Prev', 'Previous Page')}"></a>
+                </li>
+                <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                    th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+                    <a th:replace="~{fragments/paging :: pagingProfile(${page}, ${page}, 'Page ' + ${page})}"></a>
+                </li>
+                <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                    <a th:replace="~{fragments/paging :: pagingProfile(${currentPage + 1},'Next', 'Next Page')}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                    <a th:replace="~{fragments/paging :: pagingProfile(${totalPages}, '>>', 'Last Page')}"></a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
-</div>
-<div class="d-flex justify-content-center flex-wrap gap-1 mt-5">
-    <a class="btn btn-success " th:href="@{/users/myProfile(size=${cardsPage.size}, page=${1})}" th:text=${'<<'}></a>
-    <div class="pagination" th:each="pageNumber : ${pageNumbers}">
-        <a class="btn btn-primary " th:href="@{/users/myProfile(size=${cardsPage.size}, page=${pageNumber})}"
-           th:text=${pageNumber}></a>
-    </div>
-    <a class="btn btn-danger " th:href="@{/users/myProfile(size=${cardsPage.size}, page=${totalPages})}" th:text=${'>>'}></a>
 </div>
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>
 
 </body>
 </html>
+<!--<div class="d-flex flex-column">-->
+<!--    <h2>Selling cards</h2>-->
+<!--    <div class="d-flex flex-wrap gap-3 justify-content-center">-->
+<!--        <div th:each="c: ${user.getCardsForSale()}" class="card bg-dark border-white"-->
+<!--             style="width: 18rem;">-->
+<!--            <div class="card-body">-->
+<!--                <img class="card-img-top" th:src="${c.card.imageUri}" alt="Card image cap">-->
+<!--                <h5 class="card-title" th:text="${c.card.artist}"></h5>-->
+<!--                <h5 class="card-title" th:text="${c.card.name}"></h5>-->
+<!--                <h5 class="card-title" th:text="${c.card.keywords}"></h5>-->
+<!--                <p class="card-text" th:text="${c.card.cardId}"></p>-->
+<!--                <p class="card-text" th:text="${c.getCost()}"></p>-->
+<!--                <p class="card-text" th:text="${c.getQuality()}"></p>-->
+<!--                <p class="card-text" th:text="${user.getUsername()}"></p>-->
+<!--                <div class="d-flex gap-2">-->
+<!--                    <a th:href="@{'../cards/' + ${c.card.cardId}}"-->
+<!--                       class="btn btn-primary">Detail</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
