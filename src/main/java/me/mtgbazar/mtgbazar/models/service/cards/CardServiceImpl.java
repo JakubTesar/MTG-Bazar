@@ -69,11 +69,11 @@ public class CardServiceImpl implements CardService {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        List<CardEntity> cardEntities = cardRepository.findAllByOwner(filter, pageable, userMapper.toEntity(userDTO));
+        UserEntity user = cardRepository.findAllByOwner(filter, pageable, userMapper.toEntity(userDTO)).get(0);
         List<CardDTO> cardDTOS;
-        int toIndex = Math.min(startItem + pageSize, cardEntities.size());
-        if (cardEntities.size() < startItem) cardDTOS = Collections.emptyList();
-        else cardDTOS =  cardEntities.subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
+        int toIndex = Math.min(startItem + pageSize, user.getCards().size());
+        if (user.getCards().size() < startItem) cardDTOS = Collections.emptyList();
+        else cardDTOS =  user.getCards().subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
         return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardDTOS.size());
     }
 
@@ -103,14 +103,15 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<CardDTO> getSellingCardFromUserSellingListByCardId(long cardId, List<CardDTO> cards) {
-        List<CardDTO> sellingCards = new ArrayList<>();
-        sellingCards = cards.stream().filter(c -> c.getCardId() == cardId).toList();
-
-
-        return sellingCards;
-
+    public Page<CardDTO> getAllSellingByOwnerId(Pageable pageable, CardFilter filter, UserDTO userDTO) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        UserEntity user = cardRepository.findAllSellingByOwner(filter, pageable, userMapper.toEntity(userDTO)).get(0);
+        List<CardDTO> cardDTOS;
+        int toIndex = Math.min(startItem + pageSize, user.getCards().size());
+        if (user.getCards().size() < startItem) cardDTOS = Collections.emptyList();
+        else cardDTOS =  user.getCards().subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
+        return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardDTOS.size());
     }
-
-
 }

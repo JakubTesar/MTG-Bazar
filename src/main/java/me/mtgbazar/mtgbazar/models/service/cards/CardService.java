@@ -12,12 +12,12 @@ public interface CardService {
     void createCard(CardDTO cardDTO);
     Page<CardDTO> getAll(Pageable pageable, CardFilter filter);
     Page<CardDTO> getAllByOwnerId(Pageable pageable,CardFilter filter, UserDTO userDTO);
+    Page<CardDTO> getAllSellingByOwnerId(Pageable pageable,CardFilter filter, UserDTO userDTO);
 
     CardDTO getCardById(long cardId);
     List<UserDTO> getCardOwnersByCardId(long cardId);
 
     void addCardToAccount(long cardId);
 
-    List<CardDTO> getSellingCardFromUserSellingListByCardId(long cardId, List<CardDTO> cards);
 
 }

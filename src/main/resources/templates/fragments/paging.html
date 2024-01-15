@@ -23,8 +23,8 @@
    th:title="${tooltip}" rel="tooltip">
     [[${label}]]
 </a>
-<a th:fragment="pagingProfile(pageNum, label, tooltip)" class="page-link"
-   th:href="@{'/users/myProfile?' + ${'cardName=' + f.cardName + '&'}
+<a th:fragment="pagingProfile(pageNum, label, tooltip, userId)" class="page-link"
+   th:href="@{'/users/profile/'+${userId} + '&' + ${'cardName=' + f.cardName + '&'}
      + ${'artistName=' + f.artistName + '&'}
       + ${f.power != null ? 'power=' + f.power + '&' : 'power=&'}
       + ${f.toughness != null ? 'toughness=' + f.toughness + '&' : 'toughness=&'}
@@ -41,6 +41,7 @@
    th:title="${tooltip}" rel="tooltip">
     [[${label}]]
 </a>
+
 <a th:fragment="pagingUsers(pageNum, label, tooltip)" class="page-link"
    th:href="@{'/users/allUsers?' + ${'email=' + f.email + '&'}
      + ${'name=' + f.name + '&'}
