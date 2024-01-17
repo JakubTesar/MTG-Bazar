@@ -36,6 +36,10 @@ public class TradeServiceImpl implements TradeService {
         user.getCardsForSale().add(cardForSale);
         cardForSale.setSellingUser(user);
         cardsForSaleRepositories.save(cardForSale);
-        //usersRepositories.save(user);
+        card.getOwnedUsers().remove(user);
+        //user.getCards().remove(card);
+        usersRepositories.save(user);
+       // cardsRepositories.save(card);
+
     }
 }

@@ -24,7 +24,7 @@
     [[${label}]]
 </a>
 <a th:fragment="pagingProfile(pageNum, label, tooltip, userId)" class="page-link"
-   th:href="@{'/users/profile/'+${userId} + '&' + ${'cardName=' + f.cardName + '&'}
+   th:href="@{'/users/profile/'+${userId} + '?' + ${'cardName=' + f.cardName + '&'}
      + ${'artistName=' + f.artistName + '&'}
       + ${f.power != null ? 'power=' + f.power + '&' : 'power=&'}
       + ${f.toughness != null ? 'toughness=' + f.toughness + '&' : 'toughness=&'}
@@ -41,7 +41,24 @@
    th:title="${tooltip}" rel="tooltip">
     [[${label}]]
 </a>
-
+<a th:fragment="pagingProfileSell(pageNum, label, tooltip, userId)" class="page-link"
+   th:href="@{'/users/profile/'+${userId} + '/selling?' + ${'cardName=' + f.cardName + '&'}
+     + ${'artistName=' + f.artistName + '&'}
+      + ${f.power != null ? 'power=' + f.power + '&' : 'power=&'}
+      + ${f.toughness != null ? 'toughness=' + f.toughness + '&' : 'toughness=&'}
+      + ${'R=' + f.r + '&'}
+      + ${'B=' + f.b + '&'}
+      + ${'W=' + f.w + '&'}
+      + ${'G=' + f.g + '&'}
+      + ${'U=' + f.u + '&'}
+      + ${'frame=' + f.frame + '&'}
+      + ${'set=' + f.set + '&'}
+      + ${'keywords=' + f.keywords + '&'}
+      + ${f.rarity != null ? 'rarity=' + f.rarity + '&' : 'rarity=&'}
+      + 'page=' + ${pageNum} + '&size=' + ${pageSize}}"
+   th:title="${tooltip}" rel="tooltip">
+    [[${label}]]
+</a>
 <a th:fragment="pagingUsers(pageNum, label, tooltip)" class="page-link"
    th:href="@{'/users/allUsers?' + ${'email=' + f.email + '&'}
      + ${'name=' + f.name + '&'}

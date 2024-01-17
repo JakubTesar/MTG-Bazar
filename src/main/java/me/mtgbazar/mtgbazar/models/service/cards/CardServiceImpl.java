@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -73,12 +74,12 @@ public class CardServiceImpl implements CardService {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        UserEntity user = cardRepository.findAllByOwner(filter, pageable, userMapper.toEntity(userDTO)).get(0);
+        List<CardEntity> cardEntities = cardRepository.findAllByOwner(filter, pageable, userMapper.toEntity(userDTO));
         List<CardDTO> cardDTOS;
-        int toIndex = Math.min(startItem + pageSize, user.getCards().size());
-        if (user.getCards().size() < startItem) cardDTOS = Collections.emptyList();
-        else cardDTOS =  user.getCards().subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
-        return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardDTOS.size());
+        int toIndex = Math.min(startItem + pageSize, cardEntities.size());
+        if (cardEntities.size() < startItem) cardDTOS = Collections.emptyList();
+        else cardDTOS =  cardEntities.subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
+        return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
 
     @Override
@@ -111,11 +112,11 @@ public class CardServiceImpl implements CardService {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        UserEntity user = cardRepository.findAllSellingByOwner(filter, pageable, userMapper.toEntity(userDTO)).get(0);
+        List<CardForSaleEntity> cardEntities = cardRepository.findAllSellingByOwner(filter, pageable, userMapper.toEntity(userDTO));
         List<CardForSaleDTO> cardForSaleDTOS;
-        int toIndex = Math.min(startItem + pageSize, user.getCardsForSale().size());
-        if (user.getCardsForSale().size() < startItem) cardForSaleDTOS = Collections.emptyList();
-        else cardForSaleDTOS =  user.getCardsForSale().subList(startItem, toIndex).stream().map(c -> cardForSaleMapper.toDTO(c)).toList();
-        return new PageImpl<CardForSaleDTO>(cardForSaleDTOS, PageRequest.of(currentPage, pageSize), cardForSaleDTOS.size());
+        int toIndex = Math.min(startItem + pageSize, cardEntities.size());
+        if (cardEntities.size() < startItem) cardForSaleDTOS = Collections.emptyList();
+        else cardForSaleDTOS =  cardEntities.subList(startItem, toIndex).stream().map(c -> cardForSaleMapper.toDTO(c)).toList();
+        return new PageImpl<CardForSaleDTO>(cardForSaleDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
 }

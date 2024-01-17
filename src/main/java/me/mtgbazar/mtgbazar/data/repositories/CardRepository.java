@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import me.mtgbazar.mtgbazar.data.entities.*;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
+import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -48,11 +49,11 @@ public class CardRepository {
         if (f.getArtistName() != null)
             predicate = predicate.and(c.artist.like("%" + f.getArtistName() + "%"));
         if (f.getFrame() != null)
-            predicate = predicate.and(c.frame.like("%" +f.getFrame()+"%"));        //year
+            predicate = predicate.and(c.frame.like("%" + f.getFrame() + "%"));        //year
         if (f.getSet() != null)
-            predicate = predicate.and(c.setS.like("%" +f.getSet()+"%"));           //edition
+            predicate = predicate.and(c.setS.like("%" + f.getSet() + "%"));           //edition
         if (f.getKeywords() != null)
-            predicate = predicate.and(c.keywords.like("%" +f.getKeywords()+"%"));
+            predicate = predicate.and(c.keywords.like("%" + f.getKeywords() + "%"));
         if (f.getRarity() != null)
             predicate = predicate.and(c.rarity.like("%" + f.getRarity() + "%"));
 
@@ -62,13 +63,13 @@ public class CardRepository {
 //                .limit(12)
                 .fetch();
     }
-    public List<UserEntity> findAllByOwner(CardFilter f, Pageable pageable, UserEntity user) {
-        JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 
+    public List<CardEntity> findAllByOwner(CardFilter f, Pageable pageable, UserEntity user) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
         QUserEntity u = QUserEntity.userEntity;
         QCardEntity c = QCardEntity.cardEntity;
         var predicate = u.id.eq(user.getId());
-            predicate = predicate.and(c.name.like("%%"));
+        predicate = predicate.and(c.name.like("%%"));
         if (f.getCardName() != null)
             predicate = predicate.and(c.name.like("%" + f.getCardName() + "%"));
         if (f.getPower() != null)
@@ -88,22 +89,23 @@ public class CardRepository {
         if (f.getArtistName() != null)
             predicate = predicate.and(c.artist.like("%" + f.getArtistName() + "%"));
         if (f.getFrame() != null)
-            predicate = predicate.and(c.frame.like("%" +f.getFrame()+"%"));        //year
+            predicate = predicate.and(c.frame.like("%" + f.getFrame() + "%"));        //year
         if (f.getSet() != null)
-            predicate = predicate.and(c.setS.like("%" +f.getSet()+"%"));           //edition
+            predicate = predicate.and(c.setS.like("%" + f.getSet() + "%"));           //edition
         if (f.getKeywords() != null)
-            predicate = predicate.and(c.keywords.like("%" +f.getKeywords()+"%"));
+            predicate = predicate.and(c.keywords.like("%" + f.getKeywords() + "%"));
         if (f.getRarity() != null)
             predicate = predicate.and(c.rarity.like("%" + f.getRarity() + "%"));
 
         return queryFactory
-                .selectFrom(u)
-                .join(u.cards, c)
+                .selectFrom(c)
+                .join(c.ownedUsers, u)
                 .fetchJoin()
                 .where(predicate)
                 .fetch();
     }
-    public List<UserEntity> findAllSellingByOwner(CardFilter f, Pageable pageable, UserEntity user) {
+
+    public List<CardForSaleEntity> findAllSellingByOwner(CardFilter f, Pageable pageable, UserEntity user) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
         QUserEntity u = QUserEntity.userEntity;
         QCardEntity c = QCardEntity.cardEntity;
@@ -130,18 +132,18 @@ public class CardRepository {
         if (f.getArtistName() != null)
             predicate = predicate.and(c.artist.like("%" + f.getArtistName() + "%"));
         if (f.getFrame() != null)
-            predicate = predicate.and(c.frame.like("%" +f.getFrame()+"%"));        //year
+            predicate = predicate.and(c.frame.like("%" + f.getFrame() + "%"));        //year
         if (f.getSet() != null)
-            predicate = predicate.and(c.setS.like("%" +f.getSet()+"%"));           //edition
+            predicate = predicate.and(c.setS.like("%" + f.getSet() + "%"));           //edition
         if (f.getKeywords() != null)
-            predicate = predicate.and(c.keywords.like("%" +f.getKeywords()+"%"));
+            predicate = predicate.and(c.keywords.like("%" + f.getKeywords() + "%"));
         if (f.getRarity() != null)
             predicate = predicate.and(c.rarity.like("%" + f.getRarity() + "%"));
 
         return queryFactory
-                .selectFrom(u)
-                .join(u.cards, c)
-                .join(u.cardsForSale, cs)
+                .selectFrom(cs)
+                .join(cs.sellingUser, u)
+                .join(cs.card, c)
                 .fetchJoin()
                 .where(predicate)
                 .fetch();

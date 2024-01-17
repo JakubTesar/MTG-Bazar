@@ -79,7 +79,6 @@ public class UsersController {
         model.addAttribute("currentPage", cardDTOPage.getNumber() + 1);
         if (userId == loggedUser.getId()) model.addAttribute("myProfile", true);
         else model.addAttribute("myProfile", false);
-
         return "users/detailUser";
     }
 
