@@ -2,49 +2,27 @@
 <html lang="en">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
-<body class="bg-dark mx-3 text-white">
+<body class="bg-dark  text-white">
 <header th:replace="~{fragments/layout.html :: header}"></header>
-
-<h1>Sell your card</h1>
-<div class="d-flex justify-content-center">
-    <form th:action="@{'/trade/forSale/'+${cardId}}" method="post">
-        <!--    <div class="form-outline mb-4">-->
-        <!--      <input type="email" id="form2Example1" class="form-control" name="email"/>-->
-        <!--      <label class="form-label" for="form2Example1">Email address</label>-->
-        <!--    </div>-->
-        <div class="form-outline mb-4">
-            <input type="number" id="form2Example2" class="form-control" name="cost"/>
-            <label class="form-label" for="form2Example2">Cost</label>
-        </div>
-        <div class="form-outline mb-4">
-            <input type="text" id="form2Example3" class="form-control" name="quality"/>
-            <label class="form-label" for="form2Example3">Quality</label>
-        </div>
-        <div class="row mb-4">
-            <div class="col d-flex gap-2">
-                <button type="submit" class="btn btn-primary btn-block">Put card on a market</button>
-            </div>
-        </div>
-
-    </form>
-    <div class=" w-50">
-        <div class="d-flex justify-content-end pb-5 me-5">
-            <img class="napiste-nam-img" src="../../assets/Kontakt/Text/Napiste%20nam.png">
-            <form>
+<div class="mx-3 df">
+    <h1>Sell your card</h1>
+    <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-end pb-5">
+            <form class="d-flex flex-column gap-2">
                 <label class="mt-3" for="name">Name</label>
-                <input type="text" class="border-bottom bg-transparent text-main " id="name" name="name">
+                <input type="text" class="border-bottom  form-control" id="name" name="name">
                 <label class="mt-3" for="email">Email</label>
-                <input type="text" class="border-bottom bg-transparent text-main " id="email" name="email">
+                <input type="text" class="border-bottom  form-control" id="email" name="email">
                 <label class="mt-3" for="telefon">Phone number</label>
-                <input type="text" class="border-bottom bg-transparent text-main " id="telefon" name="telefon">
+                <input type="text" class="border-bottom  form-control" id="telefon" name="telefon">
                 <label for="zpráva" class="mt-3">Message</label>
-                <textarea type="text" class="border bg-transparent text-main my-3" id="zpráva"
+                <textarea type="text" class="my-3 form-control" id="zpráva"
                           name="zpráva"></textarea>
+                <button class="btn btn-success my-2" id="addStudentButtonModal">ODESLAT</button>
             </form>
-            <button class="modal-btn my-2 border bg-transparent text-main" id="addStudentButtonModal">ODESLAT
-            </button>
         </div>
     </div>
+
 </div>
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>
 
