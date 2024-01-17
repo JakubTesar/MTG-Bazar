@@ -3,6 +3,7 @@ package me.mtgbazar.mtgbazar.controllers;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
 import me.mtgbazar.mtgbazar.data.entities.filter.UserFilter;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
+import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 import me.mtgbazar.mtgbazar.models.service.cards.CardService;
 import me.mtgbazar.mtgbazar.models.service.users.UserService;
@@ -39,7 +40,6 @@ public class UsersController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("f", filter);
         model.addAttribute("currentPage", userDTOPage.getNumber() + 1);
-
         return "users/allUsers";
     }
 
@@ -58,7 +58,6 @@ public class UsersController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("f", filter);
         model.addAttribute("currentPage", cardDTOPage.getNumber() + 1);
-
         return "redirect:profile/" + loggedUser.getId();
     }
 
@@ -68,6 +67,7 @@ public class UsersController {
                                  @RequestParam("page") Optional<Integer> page,
                                  CardFilter filter) {
         UserDTO userDTO = userService.getUserById(userId);
+        UserDTO loggedUser = userService.getLoggedUser();
         model.addAttribute("user", userDTO);
         int currentPage = page.orElse(1);
         int pageSize = 36;
@@ -77,26 +77,28 @@ public class UsersController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("f", filter);
         model.addAttribute("currentPage", cardDTOPage.getNumber() + 1);
+        if (userId == loggedUser.getId()) model.addAttribute("myProfile", true);
+        else model.addAttribute("myProfile", false);
+
         return "users/detailUser";
     }
 
     @GetMapping("/profile/{userId}/selling")
     public String getLoggedUserSelling(Model model,
                                        @PathVariable long userId,
-                                @RequestParam("page") Optional<Integer> page,
-                                CardFilter filter
+                                       @RequestParam("page") Optional<Integer> page,
+                                       CardFilter filter
     ) throws IOException {
         UserDTO userDTO = userService.getUserById(userId);
         model.addAttribute("user", userDTO);
         int currentPage = page.orElse(1);
         int pageSize = 36;
-        Page<CardDTO> cardDTOPage = cardService.getAllSellingByOwnerId(PageRequest.of(currentPage - 1, pageSize), filter, userDTO);
+        Page<CardForSaleDTO> cardDTOPage = cardService.getAllSellingByOwnerId(PageRequest.of(currentPage - 1, pageSize), filter, userDTO);
         model.addAttribute("cardsPage", cardDTOPage);
         int totalPages = cardDTOPage.getTotalPages();
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("f", filter);
         model.addAttribute("currentPage", cardDTOPage.getNumber() + 1);
-
-        return "users/detailUser";
+        return "users/detailUserSell";
     }
 }

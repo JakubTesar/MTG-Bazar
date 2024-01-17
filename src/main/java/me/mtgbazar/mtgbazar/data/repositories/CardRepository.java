@@ -141,7 +141,6 @@ public class CardRepository {
         return queryFactory
                 .selectFrom(u)
                 .join(u.cards, c)
-                .fetchJoin()
                 .join(u.cardsForSale, cs)
                 .fetchJoin()
                 .where(predicate)

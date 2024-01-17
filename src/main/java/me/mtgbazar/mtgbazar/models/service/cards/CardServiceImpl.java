@@ -13,7 +13,9 @@ import me.mtgbazar.mtgbazar.data.repositories.CardsForSaleRepositories;
 import me.mtgbazar.mtgbazar.data.repositories.CardsRepositories;
 import me.mtgbazar.mtgbazar.data.repositories.UsersRepositories;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
+import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
+import me.mtgbazar.mtgbazar.models.DTO.mappers.CardForSaleMapper;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardMapper;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.UserMapper;
 import org.checkerframework.checker.units.qual.A;
@@ -42,6 +44,8 @@ public class CardServiceImpl implements CardService {
     private CardRepository cardRepository;
     @Autowired
     private CardMapper cardMapper;
+    @Autowired
+    private CardForSaleMapper cardForSaleMapper;
     @Autowired
     private UserMapper userMapper;
 
@@ -103,15 +107,15 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Page<CardDTO> getAllSellingByOwnerId(Pageable pageable, CardFilter filter, UserDTO userDTO) {
+    public Page<CardForSaleDTO> getAllSellingByOwnerId(Pageable pageable, CardFilter filter, UserDTO userDTO) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         UserEntity user = cardRepository.findAllSellingByOwner(filter, pageable, userMapper.toEntity(userDTO)).get(0);
-        List<CardDTO> cardDTOS;
-        int toIndex = Math.min(startItem + pageSize, user.getCards().size());
-        if (user.getCards().size() < startItem) cardDTOS = Collections.emptyList();
-        else cardDTOS =  user.getCards().subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
-        return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardDTOS.size());
+        List<CardForSaleDTO> cardForSaleDTOS;
+        int toIndex = Math.min(startItem + pageSize, user.getCardsForSale().size());
+        if (user.getCardsForSale().size() < startItem) cardForSaleDTOS = Collections.emptyList();
+        else cardForSaleDTOS =  user.getCardsForSale().subList(startItem, toIndex).stream().map(c -> cardForSaleMapper.toDTO(c)).toList();
+        return new PageImpl<CardForSaleDTO>(cardForSaleDTOS, PageRequest.of(currentPage, pageSize), cardForSaleDTOS.size());
     }
 }
