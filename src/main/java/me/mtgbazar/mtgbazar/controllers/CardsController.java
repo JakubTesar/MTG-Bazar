@@ -66,4 +66,6 @@ public class CardsController {
         model.addAttribute("sellingUsersForCard", sellingUsersForCard);
         return "cards/detail";
     }
+
+
 }
