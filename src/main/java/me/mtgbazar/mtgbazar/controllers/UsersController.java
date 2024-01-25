@@ -12,10 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -99,5 +96,12 @@ public class UsersController {
         model.addAttribute("f", filter);
         model.addAttribute("currentPage", cardDTOPage.getNumber() + 1);
         return "users/detailUserSell";
+    }
+
+    @PostMapping("/profile/{userId}/selling/delete/{cardId}")
+    public String deleteSellingCard(Model model,
+                                    @PathVariable long userId, @PathVariable long cardId){
+        cardService.deleteCard(cardId);
+        return "redirect: ../../../../selling" ;
     }
 }

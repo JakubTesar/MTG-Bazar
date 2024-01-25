@@ -15,11 +15,10 @@ public interface CardService {
     Page<CardDTO> getAll(Pageable pageable, CardFilter filter);
     Page<CardDTO> getAllByOwnerId(Pageable pageable,CardFilter filter, UserDTO userDTO);
     Page<CardForSaleDTO> getAllSellingByOwnerId(Pageable pageable, CardFilter filter, UserDTO userDTO);
-
     CardDTO getCardById(long cardId);
     List<UserDTO> getCardOwnersByCardId(long cardId);
-
     void addCardToAccount(long cardId);
+    void deleteCard(long cardId);
 
 
 }

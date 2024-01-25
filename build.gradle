@@ -26,6 +26,9 @@ dependencies {
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '0.11.0'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
+    // https://mvnrepository.com/artifact/com.sun.mail/javax.mail
+    implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+
     //Security
     implementation "org.springframework.boot:spring-boot-starter-security"
 

@@ -168,6 +168,9 @@
                         </div>
                         <div class="d-flex gap-2">
                             <a th:href="@{'../../../cards/' + ${c.card.cardId}}" class="btn btn-primary">Detail</a>
+                            <form method="post" th:action="@{/users/profile/} + ${user.id} + @{/selling/delete/} + ${c.card.cardId}">
+                                <button type="submit" class="btn btn-danger text-white d-flex">Delete</button>
+                            </form>
                         </div>
                     </div>
                 </div>

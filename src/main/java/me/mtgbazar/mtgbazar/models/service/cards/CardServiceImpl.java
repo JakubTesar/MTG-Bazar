@@ -119,4 +119,15 @@ public class CardServiceImpl implements CardService {
         else cardForSaleDTOS =  cardEntities.subList(startItem, toIndex).stream().map(c -> cardForSaleMapper.toDTO(c)).toList();
         return new PageImpl<CardForSaleDTO>(cardForSaleDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
+
+    @Override
+    public void deleteCard(long cardId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String singedUserEmail = authentication.getName();
+        UserEntity user = usersRepositories.findByEmail(singedUserEmail).orElseThrow();
+        CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
+        user.getCardsForSale().remove(card);
+        //cardsForSaleRepositories.findById();
+        usersRepositories.save(user);
+    }
 }
