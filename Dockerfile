@@ -11,7 +11,7 @@ RUN ./gradlew clean build
 # Create a smaller runtime image
 FROM eclipse-temurin:17-jdk-alpine
 VOLUME /tmp
-ARG DEPENDENCY=/workspace/app/build/dependency
+COPY --from=build /workspace/app/build/libs/*.jar app.jar
 
 # Set the entry point for the application
-ENTRYPOINT ["java", "-cp", "app:app/lib/*", "me.mtgbazar.mtgbazar.MtgBazarApplication"]
+ENTRYPOINT ["java","-jar","/app.jar"]
