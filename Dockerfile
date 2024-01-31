@@ -3,8 +3,7 @@ FROM ubuntu:latest AS build
 RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
 COPY . .
-RUN "chmod 755 gradlew"
-RUN ./gradlew bootJar --no-daemon
+RUN sudo ./gradlew bootJar --no-daemon
 
 FROM openjdk:17-jdk-slim
 EXPOSE 8080
