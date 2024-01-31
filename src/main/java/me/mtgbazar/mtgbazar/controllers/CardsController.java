@@ -6,6 +6,8 @@ import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 import me.mtgbazar.mtgbazar.models.service.cards.CardLoadService;
 import me.mtgbazar.mtgbazar.models.service.cards.CardService;
+import me.mtgbazar.mtgbazar.models.service.email.EmailService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +28,9 @@ public class CardsController {
     CardService cardService;
     @Autowired
     CardLoadService cardLoadService;
+
+    @Autowired
+    EmailService service;
 
     @GetMapping
     public String getAllCards(

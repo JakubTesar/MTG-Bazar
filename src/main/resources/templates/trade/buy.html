@@ -8,17 +8,19 @@
     <h1>Sell your card</h1>
     <div class="d-flex justify-content-center">
         <div class="d-flex justify-content-end pb-5">
-            <form class="d-flex flex-column gap-2">
+            <form th:action="@{'/trade/buy/'+${cardId}}" th:object="${emailDTO}" method="post" class="d-flex flex-column gap-2">
                 <label class="mt-3" for="name">Name</label>
-                <input type="text" class="border-bottom  form-control" id="name" name="name">
+                <input type="text" class="border-bottom  form-control" id="name" name="name" th:field="*{name}">
                 <label class="mt-3" for="email">Email</label>
-                <input type="text" class="border-bottom  form-control" id="email" name="email">
+                <input type="text" class="border-bottom  form-control" id="email" name="email" th:field="*{email}">
                 <label class="mt-3" for="telefon">Phone number</label>
-                <input type="text" class="border-bottom  form-control" id="telefon" name="telefon">
+                <input type="text" class="border-bottom  form-control" id="telefon" name="telefon" th:field="*{phoneNumber}">
                 <label for="zpráva" class="mt-3">Message</label>
                 <textarea type="text" class="my-3 form-control" id="zpráva"
-                          name="zpráva"></textarea>
-                <button class="btn btn-success my-2" id="addStudentButtonModal">ODESLAT</button>
+                          name="zpráva"
+                          th:field="*{message}"
+                ></textarea>
+                <button class="btn btn-success my-2" id="addStudentButtonModal" type="submit">ODESLAT</button>
             </form>
         </div>
     </div>
