@@ -14,4 +14,4 @@ VOLUME /tmp
 ARG DEPENDENCY=/workspace/app/build/dependency
 
 # Set the entry point for the application
-ENTRYPOINT ["java", "-cp", "app:app/lib/*", "MTGAY.Application"]
+ENTRYPOINT ["java", "-cp", "app:app/lib/*", "me.mtgbazar.mtgbazar.MtgBazarApplication"]
