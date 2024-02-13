@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:form="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+
+<body class="bg-dark text-white">
+<header th:replace="~{fragments/layout.html :: header}"></header>
+<div class="mx-3 mb-5">
+    <div class="d-flex flex-column justify-content-center m-5 gap-3">
+        <div><a class="text-decoration-none text-white mx-2" th:href="@{cards/createDBS}">Create DBS</a></div>
+
+
+        <h1 class="m-3">Upload</h1>
+        <form method="POST" th:action="@{/cards/upload}" enctype="multipart/form-data">
+                <input type="file" name="file"/>
+                <input type="submit" value="Submit"/>
+        </form>
+    </div>
+</div>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+
+</body>
+</html>
