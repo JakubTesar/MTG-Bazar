@@ -14,7 +14,7 @@ public class ApplicationSecurityConfiguration {
         http.authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/users", "/users/detail")
                         .authenticated()
-                        .requestMatchers("/cards","/cards**", "/access/register", "/access/login", "/access/logout", "/cards/**")
+                        .requestMatchers("/cards","/cards**", "/access/register", "/access/login","/login", "/access/logout", "/cards/**", "/users")
                         .permitAll()
                         .anyRequest() // Ostatní stránky jako např. `/articles/**` budou pouze pro přihlášené uživatele
                         .authenticated()
