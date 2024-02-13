@@ -35,8 +35,6 @@ out/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
-.vscode/
 resources/AllIdentifiers.json
 resources/cards.json
 resources/AllIdentifiers.json
