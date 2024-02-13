@@ -42,6 +42,6 @@ resources/cards.json
 resources/AllIdentifiers.json
 resources/AllIdentifiers.json
 resources/cardIdentifiers.csv
-resources/cards.json
+#resources/cards.json
 resources/cards_csv.csv
 src/main/resources/application.properties
