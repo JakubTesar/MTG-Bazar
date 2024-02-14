@@ -1,7 +1,6 @@
 package me.mtgbazar.mtgbazar.controllers;
 
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
@@ -47,9 +47,7 @@ public class AccessController {
     }
 
     @GetMapping("/login")
-    public String renderLoginForm(@ModelAttribute UserAccessDTO userDTO) {
-        return "/access/login";
-    }
+    public String renderLoginForm(@ModelAttribute UserAccessDTO userDTO) {return "/access/login";}
 
 //    @PostMapping("/login")
 //    public String login(@ModelAttribute("email") String email,

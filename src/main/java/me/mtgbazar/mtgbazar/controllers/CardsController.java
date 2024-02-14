@@ -46,7 +46,6 @@ public class CardsController {
         int pageSize = 36;
         Page<CardDTO> cardDTOPage = cardService.getAll(PageRequest.of(currentPage - 1, pageSize), filter);
         model.addAttribute("cardsPage", cardDTOPage);
-        //cardDTOPage.getTotalPages()
         int totalPages = cardDTOPage.getTotalPages();
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("f", filter);
@@ -54,25 +53,25 @@ public class CardsController {
         return "cards/allCards";
     }
 
-    @GetMapping("upload")
-    public String createCardsDBS() throws IOException {
-        return "cards/upload";
-    }
+//    @GetMapping("upload")
+//    public String createCardsDBS() throws IOException {
+//        return "cards/upload";
+//    }
     @GetMapping("createDBS")
     public String dbsCreate() throws IOException {
         cardLoadService.getAllCardsCSV();
         return "cards/allCards";
     }
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) throws IOException {
-        modelMap.addAttribute("file", file);
-            File path = new File("resources\\" + file.getOriginalFilename());
-            path.createNewFile();
-            FileOutputStream output = new FileOutputStream(path);
-            output.write(file.getBytes());
-            output.close();
-        return "redirect:../cards";
-    }
+//    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+//    public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) throws IOException {
+//        modelMap.addAttribute("file", file);
+//            File path = new File("resources\\" + file.getOriginalFilename());
+//            path.createNewFile();
+//            FileOutputStream output = new FileOutputStream(path);
+//            output.write(file.getBytes());
+//            output.close();
+//        return "redirect:../cards";
+//    }
     @PostMapping("{cardId}")
     @Transactional
     public String addCard(@PathVariable long cardId) {
