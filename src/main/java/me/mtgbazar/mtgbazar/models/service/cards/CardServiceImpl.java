@@ -121,13 +121,15 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public void deleteCard(long cardId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String singedUserEmail = authentication.getName();
-        UserEntity user = usersRepositories.findByEmail(singedUserEmail).orElseThrow();
-        CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
-        user.getCardsForSale().remove(card);
+    public void deleteCard(long cardForSaleId) {
+      //  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      //  String singedUserEmail = authentication.getName();
+       // UserEntity user = usersRepositories.findByEmail(singedUserEmail).orElseThrow();
+        //CardForSaleEntity card = cardsForSaleRepositories.findById(cardForSaleId).orElseThrow();
+        cardsForSaleRepositories.deleteById(cardForSaleId);
+        //user.getCardsForSale().remove(card);
+
         //cardsForSaleRepositories.findById();
-        usersRepositories.save(user);
+       // usersRepositories.save(user);
     }
 }

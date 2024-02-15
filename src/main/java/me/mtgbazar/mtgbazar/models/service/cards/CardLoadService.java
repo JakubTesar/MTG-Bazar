@@ -28,7 +28,6 @@ public class CardLoadService {
 
     public void getAllCardsCSV() throws IOException {
         String filePath = "resources/cards.json";
-
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         StringBuilder jsonBuilder = new StringBuilder();
         String line;
@@ -36,7 +35,6 @@ public class CardLoadService {
             jsonBuilder.append(line);
         }
         reader.close();
-
         Gson gson = new Gson();
         CardJSON[] cards = gson.fromJson(jsonBuilder.toString(), CardJSON[].class);
         // type var : array
@@ -63,11 +61,11 @@ public class CardLoadService {
             cE.setOracleText(c.getOracleText());
             cE.setPower(c.getPower());
             cE.setToughness(c.getToughness());
-            if (c.getColors() != null) cE.setColors(c.getColors().stream().map(i -> i + ",").collect(Collectors.joining()));
+            if (c.getColors() != null) cE.setColors(String.join(",", c.getColors()));
             else cE.setColors("Colorless");
-            if (c.getColorIdentity() != null) cE.setColorIdentity(c.getColorIdentity().stream().map(i -> i + ",").collect(Collectors.joining()));
+            if (c.getColorIdentity() != null) cE.setColorIdentity((String.join(",",c.getColorIdentity())));
             else cE.setColorIdentity("Colorless");
-            if (c.getKeywords() != null) cE.setKeywords(c.getKeywords().stream().map(i -> i + ",").collect(Collectors.joining()));
+            if (c.getKeywords() != null) cE.setKeywords((String.join(",",c.getKeywords())));
             else cE.setKeywords("");
             cE.setReserved(c.isReserved());
             cE.setFoil(c.isFoil());

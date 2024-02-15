@@ -22,11 +22,14 @@
                     <button type="submit" class="btn btn-primary btn-block">Sign in</button>
                 </div>
             </div>
-            <div class="d-flex justify-content-between">
-                <p>Not a member? </p>
-                <a class="text-decoration-none text text-white btn-info" th:href="@{/account/register}">Register</a>
-            </div>
         </form>
+        <ul class="list-unstyled">
+            <li><a class="text-decoration-none text-white mx-2" th:href="@{/access/register}"><span class="me-3">Not a member? </span>Register</a></li>
+        </ul>
+<!--        Tohle nefunguje, ale to nadtím ano. Proč? To ví jen bůh-->
+<!--        <div class="d-flex justify-content-center">-->
+<!--          <a class="text-decoration-none text-white btn-info d-flex" th:href="@{/account/register}"><span class="me-3">Not a member? </span>Register</a>-->
+<!--        </div>-->
     </div>
 </div>
 

@@ -86,6 +86,7 @@ public class UsersController {
                                        CardFilter filter
     ) throws IOException {
         UserDTO userDTO = userService.getUserById(userId);
+        UserDTO loggedUser = userService.getLoggedUser();
         model.addAttribute("user", userDTO);
         int currentPage = page.orElse(1);
         int pageSize = 36;
@@ -93,6 +94,7 @@ public class UsersController {
         model.addAttribute("cardsPage", cardDTOPage);
         int totalPages = cardDTOPage.getTotalPages();
         model.addAttribute("totalPages", totalPages);
+        if (userId == loggedUser.getId()) model.addAttribute("myProfile", true);
         model.addAttribute("f", filter);
         model.addAttribute("currentPage", cardDTOPage.getNumber() + 1);
         return "users/detailUserSell";

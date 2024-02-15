@@ -1,6 +1,7 @@
 package me.mtgbazar.mtgbazar.models.DTO;
 
 public class CardForSaleDTO {
+    private long cardForSaleId;
     private Double cost;
     private String quality;
     private BasicUserDTO sellingUser;
@@ -36,5 +37,13 @@ public class CardForSaleDTO {
 
     public void setCard(CardDTO card) {
         this.card = card;
+    }
+
+    public long getCardForSaleId() {
+        return cardForSaleId;
+    }
+
+    public void setCardForSaleId(long cardForSaleId) {
+        this.cardForSaleId = cardForSaleId;
     }
 }
