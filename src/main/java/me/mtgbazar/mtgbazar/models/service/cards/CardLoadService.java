@@ -1,14 +1,18 @@
 package me.mtgbazar.mtgbazar.models.service.cards;
 
 import com.google.gson.Gson;
+import me.mtgbazar.mtgbazar.data.entities.CardEntity;
 import me.mtgbazar.mtgbazar.data.json.CardJSON;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
+import me.mtgbazar.mtgbazar.models.DTO.mappers.CardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,6 +20,8 @@ public class CardLoadService {
 
     @Autowired
     CardService cardService;
+    @Autowired
+    CardMapper cardMapper;
     //artist,artistIds,asciiName,attractionLights,availability,boosterTypes,borderColor,cardParts,colorIdentity,
     // colorIndicator,colors,defense,duelDeck,edhrecRank,edhrecSaltiness,faceConvertedManaCost,faceFlavorName,
     // faceManaValue,faceName,finishes,flavorName,flavorText,frameEffects,frameVersion,hand,hasAlternativeDeckLimit,
@@ -30,6 +36,7 @@ public class CardLoadService {
         String filePath = "resources/cards.json";
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         StringBuilder jsonBuilder = new StringBuilder();
+        List<CardEntity> cardEntities = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
             jsonBuilder.append(line);
@@ -98,11 +105,9 @@ public class CardLoadService {
             cE.setStorySpotlight(c.isStorySpotlight());
             cE.setEdhrecRank(c.getEdhrecRank());
             cE.setPennyRank(c.getPennyRank());
-
-            // Add the CardDTO object to the list
-            cardService.createCard(cE);
+            cardEntities.add(cardMapper.toEntity(cE));
         }
-
+        cardService.createCard(cardEntities);
     }
 
 //        String fileName = "resources/cards_csv.csv";

@@ -46,16 +46,17 @@ public class UsersController {
                                 CardFilter filter
     ) throws IOException {
         UserDTO loggedUser = userService.getLoggedUser();
-        model.addAttribute("user", loggedUser);
+        UserDTO userDTO = userService.getUserById(loggedUser.getId());
+        model.addAttribute("user", userDTO);
         int currentPage = page.orElse(1);
         int pageSize = 36;
-        Page<CardDTO> cardDTOPage = cardService.getAllByOwnerId(PageRequest.of(currentPage - 1, pageSize), filter, loggedUser);
+        Page<CardDTO> cardDTOPage = cardService.getAllByOwnerId(PageRequest.of(currentPage - 1, pageSize), filter, userDTO);
         model.addAttribute("cardsPage", cardDTOPage);
         int totalPages = cardDTOPage.getTotalPages();
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("f", filter);
         model.addAttribute("currentPage", cardDTOPage.getNumber() + 1);
-        return "redirect:profile/" + loggedUser.getId();
+        return "redirect:profile/" + userDTO.getId();
     }
 
     @GetMapping("/profile/{userId}")

@@ -55,8 +55,8 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO getLoggedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String singedUserEmail = authentication.getName();
-        UserEntity user = usersRepositories.findByEmail(singedUserEmail).orElseThrow();
+        String singedUserUsername = authentication.getName();
+        UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
         return userMapper.toDTO(user);
     }
 }

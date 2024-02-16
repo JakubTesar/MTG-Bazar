@@ -51,9 +51,8 @@ public class CardServiceImpl implements CardService {
     private UserMapper userMapper;
 
     @Override
-    public void createCard(CardDTO cardDTO) {
-        CardEntity card = cardMapper.toEntity(cardDTO);
-        cardsRepositories.save(card);
+    public void createCard(List<CardEntity> cards) {
+        cardsRepositories.saveAll(cards);
     }
     @Override
     public Page<CardDTO> getAll(Pageable pageable, CardFilter filter) {
@@ -99,8 +98,8 @@ public class CardServiceImpl implements CardService {
     @Transactional
     public void addCardToAccount(long cardId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String singedUserEmail = authentication.getName();
-        UserEntity user = usersRepositories.findByEmail(singedUserEmail).orElseThrow();
+        String singedUserUsername= authentication.getName();
+        UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
         card.getOwnedUsers().add(user);
         //user.getCards().add(card);

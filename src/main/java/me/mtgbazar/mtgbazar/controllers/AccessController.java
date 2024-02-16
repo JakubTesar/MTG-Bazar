@@ -1,9 +1,12 @@
 package me.mtgbazar.mtgbazar.controllers;
 
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import me.mtgbazar.mtgbazar.data.repositories.UserRepository;
+import me.mtgbazar.mtgbazar.data.repositories.UsersRepositories;
 import me.mtgbazar.mtgbazar.models.DTO.UserAccessDTO;
 import me.mtgbazar.mtgbazar.models.service.access.AccessService;
 import me.mtgbazar.mtgbazar.models.service.access.DuplicateEmailException;
@@ -41,8 +44,10 @@ public class AccessController {
     ) throws IOException, DuplicateEmailException {
         if (result.hasErrors())
             return renderRegisterForm(userDTO);
+        
         redirectAttributes.addFlashAttribute("success", "User registered.");
         accessService.registerUser(userDTO);
+
         return "redirect:access/login";
     }
 
@@ -50,10 +55,10 @@ public class AccessController {
     public String renderLoginForm(@ModelAttribute UserAccessDTO userDTO) {return "/access/login";}
 
 //    @PostMapping("/login")
-//    public String login(@ModelAttribute("email") String email,
+//    public String login(@ModelAttribute("username") String username,
 //                        @ModelAttribute("password") String password,
 //                        HttpServletRequest req) throws ServletException {
-//        req.login(email, password);
+//        req.login(username, password);
 //        return "redirect:../cards";
 //    }
 
@@ -62,6 +67,7 @@ public class AccessController {
         this.logoutHandler.logout(request, response, authentication);
         return "redirect:../cards";
     }
+
 
 //    @GetMapping("/logout")
 //    public String logout() {

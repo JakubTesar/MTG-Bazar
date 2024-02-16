@@ -28,8 +28,8 @@ public class TradeServiceImpl implements TradeService {
     @Override
     public void forSaleCard(long cardId, CardForSaleDTO cardForSaleDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String singedUserEmail = authentication.getName();
-        UserEntity user = usersRepositories.findByEmail(singedUserEmail).orElseThrow();
+        String singedUserUsername = authentication.getName();
+        UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
         CardForSaleEntity cardForSale = cardForSaleMapper.toEntity(cardForSaleDTO);
         cardForSale.setCard(card);

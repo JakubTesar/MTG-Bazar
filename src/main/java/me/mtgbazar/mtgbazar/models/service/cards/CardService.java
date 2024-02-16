@@ -1,5 +1,6 @@
 package me.mtgbazar.mtgbazar.models.service.cards;
 
+import me.mtgbazar.mtgbazar.data.entities.CardEntity;
 import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
@@ -11,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface CardService {
-    void createCard(CardDTO cardDTO);
+    void createCard(List<CardEntity> cards);
     Page<CardDTO> getAll(Pageable pageable, CardFilter filter);
     Page<CardDTO> getAllByOwnerId(Pageable pageable,CardFilter filter, UserDTO userDTO);
     Page<CardForSaleDTO> getAllSellingByOwnerId(Pageable pageable, CardFilter filter, UserDTO userDTO);

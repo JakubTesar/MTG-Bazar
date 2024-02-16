@@ -15,17 +15,17 @@ public class ApplicationSecurityConfiguration {
                         .requestMatchers("/users", "/users/detail")
                         .authenticated()
                         .requestMatchers(
-                                "/cards","/cards**", "/access/register", "/access/login","/login",
+                                "/cards", "/cards**", "/access/register", "/access/login", "/login",
                                 "/login**", "/access/logout", "/cards/**", "/users", "/access**")
                         .permitAll()
                         .anyRequest() // Ostatní stránky jako např. `/articles/**` budou pouze pro přihlášené uživatele
                         .authenticated())
                 .formLogin((form) -> form
-                                .loginPage("/access/login")
-                                .loginProcessingUrl("/access/login")
-                                .defaultSuccessUrl("/cards", true)
-                                .usernameParameter("email")
-                                .permitAll())
+                        .usernameParameter("username")
+                        .loginPage("/access/login")
+                        .loginProcessingUrl("/access/login")
+                        .defaultSuccessUrl("/cards", true)
+                        .permitAll())
                 .logout((logout -> logout
                         .permitAll()
                         .logoutUrl("/access/logout")
