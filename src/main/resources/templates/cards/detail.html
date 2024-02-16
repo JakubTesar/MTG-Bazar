@@ -30,7 +30,7 @@
                                 <td th:text="${c.sellingUser.username}"></td>
                                 <td th:text="${c.getCost()}"></td>
                                 <td th:text="${c.getQuality()}"></td>
-                                <td><a th:href="@{'../trade/buy/'+${card.getCardId()}}" class="btn btn-primary">Buy</a>
+                                <td><a th:href="@{'../trade/buy/'+${c.getCardForSaleId()}}" class="btn btn-primary">Buy</a>
                                 </td>
                             </tr>
                             </tbody>

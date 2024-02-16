@@ -1,6 +1,8 @@
 package me.mtgbazar.mtgbazar.controllers;
 
 import jakarta.validation.Valid;
+import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
+import me.mtgbazar.mtgbazar.data.repositories.CardsForSaleRepositories;
 import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.EmailDTO;
 import me.mtgbazar.mtgbazar.models.service.access.DuplicateEmailException;
@@ -21,6 +23,8 @@ public class TradeController {
     @Autowired
     TradeService tradeService;
 
+    @Autowired
+    private CardsForSaleRepositories cardsForSaleRepositories;
     @Autowired
     EmailService emailService;
 
@@ -48,18 +52,19 @@ public class TradeController {
         return "trade/buy";
     }
 
-    @PostMapping("/buy/{cardId}")
+    @PostMapping("/buy/{cardForBuyId}")
     public String buyCard(@Valid @ModelAttribute EmailDTO emailDTO, CardForSaleDTO cardForSaleDTO,
-                          @PathVariable long cardId,
+                          @PathVariable long cardForBuyId,
                           BindingResult result,
                           RedirectAttributes redirectAttributes,
                           Model model
     ) throws IOException, DuplicateEmailException {
         if (result.hasErrors())
-            return renderForSaleForm(cardForSaleDTO, cardId);
-        model.addAttribute("c",cardId);
+            return renderForSaleForm(cardForSaleDTO, cardForBuyId);
+        model.addAttribute("c", cardForBuyId);
         redirectAttributes.addFlashAttribute("success", "Card placed on a market.");
-        emailService.sendEmail(emailDTO);
+        CardForSaleEntity card = cardsForSaleRepositories.findById(cardForBuyId).orElseThrow();
+        emailService.sendEmail(emailDTO, card);
         return "redirect: /../../../cards";
     }
 }
