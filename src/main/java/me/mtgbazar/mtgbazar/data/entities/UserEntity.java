@@ -1,6 +1,7 @@
 package me.mtgbazar.mtgbazar.data.entities;
 
 import jakarta.persistence.*;
+import org.checkerframework.common.aliasing.qual.Unique;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,7 +14,8 @@ public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
+    @Unique
     private String username;
     @Column(nullable = false, unique = true)
     private String email;

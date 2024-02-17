@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,11 +46,14 @@ public class AccessController {
     ) throws IOException, DuplicateEmailException {
         if (result.hasErrors())
             return renderRegisterForm(userDTO);
-        
-        redirectAttributes.addFlashAttribute("success", "User registered.");
-        accessService.registerUser(userDTO);
+       try {
+           accessService.registerUser(userDTO);
+           return "redirect:access/login";
+       } catch (DuplicateEmailException uaeEx) {
+          redirectAttributes.addFlashAttribute("message", "An account for that username/email already exists.");
+         return renderRegisterForm(userDTO);
+       }
 
-        return "redirect:access/login";
     }
 
     @GetMapping("/login")
