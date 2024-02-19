@@ -8,5 +8,4 @@ import org.mapstruct.Mapper;
 public interface CardMapper {
     CardEntity toEntity(CardDTO source);
     CardDTO toDTO(CardEntity source);
-
 }

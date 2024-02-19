@@ -12,7 +12,17 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface CardService {
-    void createCard(List<CardEntity> cards);
+    /**
+     * Retrieves a page of CardDTO objects based on
+     * the provided pagination and filtering criteria.
+     *
+     * @param pageable The pagination information including
+     *                page number, page size, and sorting criteria.
+     * @param filter   The filtering criteria to apply
+     *                 to the retrieved CardDTO objects.
+     * @return A Page object containing a list of CardDTO objects
+     * based on the provided pagination and filtering criteria.
+     */
     Page<CardDTO> getAll(Pageable pageable, CardFilter filter);
     Page<CardDTO> getAllByOwnerId(Pageable pageable,CardFilter filter, UserDTO userDTO);
     Page<CardForSaleDTO> getAllSellingByOwnerId(Pageable pageable, CardFilter filter, UserDTO userDTO);
@@ -20,6 +30,6 @@ public interface CardService {
     List<UserDTO> getCardOwnersByCardId(long cardId);
     void addCardToAccount(long cardId);
     void deleteCard(long cardId);
-
+    void createCard(List<CardEntity> cards);
 
 }

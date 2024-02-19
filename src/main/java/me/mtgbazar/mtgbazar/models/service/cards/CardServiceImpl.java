@@ -49,7 +49,6 @@ public class CardServiceImpl implements CardService {
     private CardForSaleMapper cardForSaleMapper;
     @Autowired
     private UserMapper userMapper;
-
     @Override
     public void createCard(List<CardEntity> cards) {
         cardsRepositories.saveAll(cards);
@@ -67,7 +66,6 @@ public class CardServiceImpl implements CardService {
 
         return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
-
     @Override
     public Page<CardDTO> getAllByOwnerId(Pageable pageable, CardFilter filter, UserDTO userDTO) {
         int pageSize = pageable.getPageSize();
@@ -80,20 +78,16 @@ public class CardServiceImpl implements CardService {
         else cardDTOS =  cardEntities.subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
         return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
-
     @Override
     public CardDTO getCardById(long cardId) {
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
         return cardMapper.toDTO(card);
     }
-
     @Override
     public List<UserDTO> getCardOwnersByCardId(long cardId) {
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
         return card.getOwnedUsers().stream().filter(u -> u.getCards().contains(card)).map(i -> userMapper.toDTO(i)).toList();
     }
-
-
     @Override
     @Transactional
     public void addCardToAccount(long cardId) {
@@ -102,7 +96,6 @@ public class CardServiceImpl implements CardService {
         UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
         card.getOwnedUsers().add(user);
-        //user.getCards().add(card);
         usersRepositories.save(user);
     }
 
@@ -121,14 +114,6 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public void deleteCard(long cardForSaleId) {
-      //  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      //  String singedUserEmail = authentication.getName();
-       // UserEntity user = usersRepositories.findByEmail(singedUserEmail).orElseThrow();
-        //CardForSaleEntity card = cardsForSaleRepositories.findById(cardForSaleId).orElseThrow();
         cardsForSaleRepositories.deleteById(cardForSaleId);
-        //user.getCardsForSale().remove(card);
-
-        //cardsForSaleRepositories.findById();
-       // usersRepositories.save(user);
     }
 }

@@ -32,16 +32,10 @@ public class CardsController {
     CardService cardService;
     @Autowired
     CardLoadService cardLoadService;
-
     @Autowired
     EmailService service;
-
     @GetMapping
-    public String getAllCards(
-            Model model,
-            @RequestParam("page") Optional<Integer> page,
-            CardFilter filter
-    ) throws IOException {
+    public String getAllCards(Model model, @RequestParam("page") Optional<Integer> page, CardFilter filter) throws IOException {
         int currentPage = page.orElse(1);
         int pageSize = 36;
         Page<CardDTO> cardDTOPage = cardService.getAll(PageRequest.of(currentPage - 1, pageSize), filter);
@@ -52,33 +46,17 @@ public class CardsController {
         model.addAttribute("currentPage", cardDTOPage.getNumber() + 1);
         return "cards/allCards";
     }
-
-//    @GetMapping("upload")
-//    public String createCardsDBS() throws IOException {
-//        return "cards/upload";
-//    }
     @GetMapping("createDBS")
     public String dbsCreate() throws IOException {
         cardLoadService.getAllCardsCSV();
         return "cards/allCards";
     }
-//    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-//    public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) throws IOException {
-//        modelMap.addAttribute("file", file);
-//            File path = new File("resources\\" + file.getOriginalFilename());
-//            path.createNewFile();
-//            FileOutputStream output = new FileOutputStream(path);
-//            output.write(file.getBytes());
-//            output.close();
-//        return "redirect:../cards";
-//    }
     @PostMapping("{cardId}")
     @Transactional
     public String addCard(@PathVariable long cardId) {
         cardService.addCardToAccount(cardId);
         return "redirect: /../../cards";
     }
-
     @GetMapping("{cardId}")
     public String getCardDetail(@PathVariable long cardId, Model model) {
         CardDTO cardDTO = cardService.getCardById(cardId);
@@ -87,6 +65,4 @@ public class CardsController {
         model.addAttribute("sellingUsersForCard", sellingUsersForCard);
         return "cards/detail";
     }
-
-
 }
