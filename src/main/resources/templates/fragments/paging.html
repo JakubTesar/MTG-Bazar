@@ -66,10 +66,9 @@
    th:title="${tooltip}" rel="tooltip">
     [[${label}]]
 </a>
-
-<a th:fragment="pagingCardDetail(pageNum, label, tooltip)" class="page-link"
-   th:href="@{'/users/allUsers?'
-      + 'page=' + ${pageNum} + '&size=' + ${pageSize}}"
+<!--/cards/'/cards/'$%7BcardId%7D%20+%20'?%27%20+%20%20%20%20%20%20+%20%27page=%27%20+%20${pageNum}%20+%20%27&size=%27%20+%20${pageSize}-->
+<a th:fragment="pagingCardDetail(pageNum, label, tooltip,  cardId)" class="page-link"
+   th:href="@{'/cards/'+${cardId} + '?page=' + ${pageNum} + '&size=' + ${pageSize}}"
    th:title="${tooltip}" rel="tooltip">
     [[${label}]]
 </a>

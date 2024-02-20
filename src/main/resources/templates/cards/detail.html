@@ -25,9 +25,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="c, i: ${card.getCardForSale()} ">
+                            <tr th:each="c, i: ${cardForSalePage.getContent()} ">
                                 <th scope="row" th:text="${i.count}"></th>
-                                <td th:text="${c.sellingUser.username}"></td>
+                                    <td th:text="${c.sellingUser.username}"></td>
                                 <td th:text="${c.getCost()}"></td>
                                 <td th:text="${c.getQuality()}"></td>
                                 <td><a th:href="@{'../trade/buy/'+${c.getCardForSaleId()}}"
@@ -52,26 +52,23 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center flex-wrap gap-1 mt-5">
-
                     <nav aria-label="Pagination" th:if="${totalPages > 0}">
                         <ul class="pagination bg-dark text-white justify-content-center">
                             <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-                                <a th:replace="~{fragments/paging :: paging(1, '<<', 'First Page')}"></a>
+                                <a th:replace="~{fragments/paging :: pagingCardDetail(1, '<<', 'First Page',${card.cardId})}"></a>
                             </li>
                             <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
-                                <a th:replace="~{fragments/paging :: paging(${(currentPage - 1)}, 'Prev', 'Previous Page')}"></a>
+                                <a th:replace="~{fragments/paging :: pagingCardDetail(${(currentPage - 1)}, 'Prev', 'Previous Page',${card.cardId})}"></a>
                             </li>
-
-
                             <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
                                 th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
-                                <a th:replace="~{fragments/paging :: paging(${page}, ${page}, 'Page ' + ${page})}"></a>
+                                <a th:replace="~{fragments/paging :: pagingCardDetail(${page}, ${page}, 'Page ' + ${page},${card.cardId})}"></a>
                             </li>
                             <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                                <a th:replace="~{fragments/paging :: paging(${currentPage + 1},'Next', 'Next Page')}"></a>
+                                <a th:replace="~{fragments/paging :: pagingCardDetail(${currentPage + 1},'Next', 'Next Page', ${card.cardId})}"></a>
                             </li>
                             <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                                <a th:replace="~{fragments/paging :: paging(${totalPages}, '>>', 'Last Page')}"></a>
+                                <a th:replace="~{fragments/paging :: pagingCardDetail(${totalPages}, '>>', 'Last Page',  ${card.cardId})}"></a>
                             </li>
                         </ul>
                     </nav>

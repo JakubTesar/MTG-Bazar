@@ -7,6 +7,7 @@ import me.mtgbazar.mtgbazar.data.entities.UserEntity;
 import me.mtgbazar.mtgbazar.data.entities.WatchlistEntity;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
 import me.mtgbazar.mtgbazar.data.repositories.*;
+import me.mtgbazar.mtgbazar.models.DTO.BasicCardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
 import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
@@ -83,18 +84,22 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Page<UserDTO> getCardOwnersByCardId(Pageable pageable ,long cardId) {
+    public List<UserDTO> getCardOwnersByCardId(long cardId) {
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
+        return card.getOwnedUsers().stream().filter(u -> u.getCards().contains(card)).map(i -> userMapper.toDTO(i)).toList();
+    }
+    @Override
+    public Page<BasicCardForSaleDTO> getPagedOffers(Pageable pageable, long cardId) {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        List<UserDTO> userDTOS = card.getOwnedUsers().stream().filter(u -> u.getCards().contains(card)).map(i -> userMapper.toDTO(i)).toList();
-        int toIndex = Math.min(startItem + pageSize, userDTOS.size());
-        if (userDTOS.size() < startItem) userDTOS = Collections.emptyList();
-        else userDTOS = userDTOS.subList(startItem, toIndex);
-        return new PageImpl<UserDTO>(userDTOS, PageRequest.of(currentPage, pageSize), userDTOS.size());
+        List<BasicCardForSaleDTO> cardForSaleDTOS = getCardById(cardId).getCardForSale();
+        List<BasicCardForSaleDTO> cardsSLegit;
+        int toIndex = Math.min(startItem + pageSize, cardForSaleDTOS.size());
+        if (cardForSaleDTOS.size() < startItem) cardsSLegit = Collections.emptyList();
+        else cardsSLegit = cardForSaleDTOS.subList(startItem, toIndex);
+        return new PageImpl<BasicCardForSaleDTO>(cardsSLegit, PageRequest.of(currentPage, pageSize), cardForSaleDTOS.size());
     }
-
     @Override
     @Transactional
     public void addCardToAccount(long cardId) {
