@@ -30,15 +30,51 @@
                                 <td th:text="${c.sellingUser.username}"></td>
                                 <td th:text="${c.getCost()}"></td>
                                 <td th:text="${c.getQuality()}"></td>
-                                <td><a th:href="@{'../trade/buy/'+${c.getCardForSaleId()}}" class="btn btn-primary">Buy</a>
+                                <td><a th:href="@{'../trade/buy/'+${c.getCardForSaleId()}}"
+                                       class="btn btn-primary">Buy</a>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div>
-                    <button class="btn btn-danger">Zvoneček</button>
+                <div class="">
+                    <div>
+                        <div class="d-flex flex-column gap-2 col-3" th:if="${toggle}">
+                            <a class="btn btn-danger text-decoration-none text-white" th:href="@{/cards/} + ${card.cardId} + @{/watchdog}"> Add watchdog 🔔🐕</a>
+                            <small>Notify you when new card is listed</small>
+
+                        </div>
+                        <div class="d-flex flex-column gap-2 col-3" th:if="${toggle == false}">
+                            <a class="btn btn-danger text-decoration-none text-white" th:href="@{/cards/} + ${card.cardId} + @{/watchdog}"> Already watching 🐕👀</a>
+                            <small>Remove watchdog</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center flex-wrap gap-1 mt-5">
+
+                    <nav aria-label="Pagination" th:if="${totalPages > 0}">
+                        <ul class="pagination bg-dark text-white justify-content-center">
+                            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                                <a th:replace="~{fragments/paging :: paging(1, '<<', 'First Page')}"></a>
+                            </li>
+                            <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+                                <a th:replace="~{fragments/paging :: paging(${(currentPage - 1)}, 'Prev', 'Previous Page')}"></a>
+                            </li>
+
+
+                            <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                                th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+                                <a th:replace="~{fragments/paging :: paging(${page}, ${page}, 'Page ' + ${page})}"></a>
+                            </li>
+                            <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                <a th:replace="~{fragments/paging :: paging(${currentPage + 1},'Next', 'Next Page')}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                <a th:replace="~{fragments/paging :: paging(${totalPages}, '>>', 'Last Page')}"></a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

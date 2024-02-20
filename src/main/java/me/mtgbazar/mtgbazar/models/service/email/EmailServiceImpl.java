@@ -16,7 +16,6 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender mailSender;
     @Autowired
     private UserService userService;
-
     public void sendEmail(EmailDTO emailDTO, CardForSaleEntity card) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(userService.getLoggedUser().getEmail());

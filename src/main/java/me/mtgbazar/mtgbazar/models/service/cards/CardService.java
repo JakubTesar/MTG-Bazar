@@ -1,7 +1,6 @@
 package me.mtgbazar.mtgbazar.models.service.cards;
 
 import me.mtgbazar.mtgbazar.data.entities.CardEntity;
-import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
 import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
@@ -27,9 +26,11 @@ public interface CardService {
     Page<CardDTO> getAllByOwnerId(Pageable pageable,CardFilter filter, UserDTO userDTO);
     Page<CardForSaleDTO> getAllSellingByOwnerId(Pageable pageable, CardFilter filter, UserDTO userDTO);
     CardDTO getCardById(long cardId);
-    List<UserDTO> getCardOwnersByCardId(long cardId);
+    Page<UserDTO> getCardOwnersByCardId(Pageable pageable,long cardId);
     void addCardToAccount(long cardId);
     void deleteCard(long cardId);
     void createCard(List<CardEntity> cards);
+    void toggleCardWatchlist(long cardId);
+    boolean isAlreadyWatched(long cardId);
 
 }

@@ -66,5 +66,12 @@
    th:title="${tooltip}" rel="tooltip">
     [[${label}]]
 </a>
+
+<a th:fragment="pagingCardDetail(pageNum, label, tooltip)" class="page-link"
+   th:href="@{'/users/allUsers?'
+      + 'page=' + ${pageNum} + '&size=' + ${pageSize}}"
+   th:title="${tooltip}" rel="tooltip">
+    [[${label}]]
+</a>
 </body>
 </html>

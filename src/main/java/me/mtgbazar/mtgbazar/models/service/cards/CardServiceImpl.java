@@ -1,24 +1,18 @@
 package me.mtgbazar.mtgbazar.models.service.cards;
 
-import com.querydsl.jpa.impl.JPAQuery;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import me.mtgbazar.mtgbazar.data.entities.CardEntity;
 import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
-import me.mtgbazar.mtgbazar.data.entities.QCardEntity;
 import me.mtgbazar.mtgbazar.data.entities.UserEntity;
+import me.mtgbazar.mtgbazar.data.entities.WatchlistEntity;
 import me.mtgbazar.mtgbazar.data.entities.filter.CardFilter;
-import me.mtgbazar.mtgbazar.data.repositories.CardRepository;
-import me.mtgbazar.mtgbazar.data.repositories.CardsForSaleRepositories;
-import me.mtgbazar.mtgbazar.data.repositories.CardsRepositories;
-import me.mtgbazar.mtgbazar.data.repositories.UsersRepositories;
+import me.mtgbazar.mtgbazar.data.repositories.*;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
 import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardForSaleMapper;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardMapper;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.UserMapper;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -28,10 +22,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -42,6 +34,8 @@ public class CardServiceImpl implements CardService {
     @Autowired
     private CardsForSaleRepositories cardsForSaleRepositories;
     @Autowired
+    private WatchlistRepositories watchlistRepositories;
+    @Autowired
     private CardRepository cardRepository;
     @Autowired
     private CardMapper cardMapper;
@@ -49,10 +43,12 @@ public class CardServiceImpl implements CardService {
     private CardForSaleMapper cardForSaleMapper;
     @Autowired
     private UserMapper userMapper;
+
     @Override
     public void createCard(List<CardEntity> cards) {
         cardsRepositories.saveAll(cards);
     }
+
     @Override
     public Page<CardDTO> getAll(Pageable pageable, CardFilter filter) {
         int pageSize = pageable.getPageSize();
@@ -66,6 +62,7 @@ public class CardServiceImpl implements CardService {
 
         return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
+
     @Override
     public Page<CardDTO> getAllByOwnerId(Pageable pageable, CardFilter filter, UserDTO userDTO) {
         int pageSize = pageable.getPageSize();
@@ -75,24 +72,34 @@ public class CardServiceImpl implements CardService {
         List<CardDTO> cardDTOS;
         int toIndex = Math.min(startItem + pageSize, cardEntities.size());
         if (cardEntities.size() < startItem) cardDTOS = Collections.emptyList();
-        else cardDTOS =  cardEntities.subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
+        else cardDTOS = cardEntities.subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
         return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
+
     @Override
     public CardDTO getCardById(long cardId) {
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
         return cardMapper.toDTO(card);
     }
+
     @Override
-    public List<UserDTO> getCardOwnersByCardId(long cardId) {
+    public Page<UserDTO> getCardOwnersByCardId(Pageable pageable ,long cardId) {
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
-        return card.getOwnedUsers().stream().filter(u -> u.getCards().contains(card)).map(i -> userMapper.toDTO(i)).toList();
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<UserDTO> userDTOS = card.getOwnedUsers().stream().filter(u -> u.getCards().contains(card)).map(i -> userMapper.toDTO(i)).toList();
+        int toIndex = Math.min(startItem + pageSize, userDTOS.size());
+        if (userDTOS.size() < startItem) userDTOS = Collections.emptyList();
+        else userDTOS = userDTOS.subList(startItem, toIndex);
+        return new PageImpl<UserDTO>(userDTOS, PageRequest.of(currentPage, pageSize), userDTOS.size());
     }
+
     @Override
     @Transactional
     public void addCardToAccount(long cardId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String singedUserUsername= authentication.getName();
+        String singedUserUsername = authentication.getName();
         UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
         card.getOwnedUsers().add(user);
@@ -108,12 +115,39 @@ public class CardServiceImpl implements CardService {
         List<CardForSaleDTO> cardForSaleDTOS;
         int toIndex = Math.min(startItem + pageSize, cardEntities.size());
         if (cardEntities.size() < startItem) cardForSaleDTOS = Collections.emptyList();
-        else cardForSaleDTOS =  cardEntities.subList(startItem, toIndex).stream().map(c -> cardForSaleMapper.toDTO(c)).toList();
+        else
+            cardForSaleDTOS = cardEntities.subList(startItem, toIndex).stream().map(c -> cardForSaleMapper.toDTO(c)).toList();
         return new PageImpl<CardForSaleDTO>(cardForSaleDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
 
     @Override
     public void deleteCard(long cardForSaleId) {
         cardsForSaleRepositories.deleteById(cardForSaleId);
+    }
+
+    @Override
+    public void toggleCardWatchlist(long cardId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String singedUserUsername = authentication.getName();
+        UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
+        List<WatchlistEntity> listAll = (List<WatchlistEntity>) watchlistRepositories.findAll();
+        List<WatchlistEntity> listFiltered = listAll.stream().filter(i -> i.getWatchedCard().getCardId() == cardId && i.getUserWatching().getId() == user.getId()).toList();
+        if (listFiltered.isEmpty()) {
+            WatchlistEntity entity = new WatchlistEntity();
+            entity.setWatchedCard(cardsRepositories.findById(cardId).orElseThrow());
+            entity.setUserWatching(user);
+            watchlistRepositories.save(entity);
+        } else {
+            watchlistRepositories.delete(listFiltered.get(0));
+        }
+    }
+    @Override
+    public boolean isAlreadyWatched(long cardId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String singedUserUsername = authentication.getName();
+        UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
+        List<WatchlistEntity> listAll = (List<WatchlistEntity>) watchlistRepositories.findAll();
+        List<WatchlistEntity> listFiltered = listAll.stream().filter(i -> i.getWatchedCard().getCardId() == cardId && i.getUserWatching().getId() == user.getId()).toList();
+        return listFiltered.isEmpty();
     }
 }

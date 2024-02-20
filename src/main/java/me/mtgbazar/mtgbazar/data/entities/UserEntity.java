@@ -23,7 +23,8 @@ public class UserEntity implements UserDetails {
     private String password;
     @ManyToMany(mappedBy = "ownedUsers")
     private List<CardEntity> cards;
-
+    @OneToMany(mappedBy = "userWatching")
+    private List<WatchlistEntity> watchlistEntities;
     @OneToMany(mappedBy = "sellingUser")
     private List<CardForSaleEntity> cardsForSale;
 
@@ -100,5 +101,13 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public List<WatchlistEntity> getWatchlistEntities() {
+        return watchlistEntities;
+    }
+
+    public void setWatchlistEntities(List<WatchlistEntity> watchlistEntities) {
+        this.watchlistEntities = watchlistEntities;
     }
 }
