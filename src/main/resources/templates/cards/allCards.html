@@ -152,8 +152,6 @@
                 <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
                     <a th:replace="~{fragments/paging :: paging(${(currentPage - 1)}, 'Prev', 'Previous Page')}"></a>
                 </li>
-
-
                 <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
                     th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
                     <a th:replace="~{fragments/paging :: paging(${page}, ${page}, 'Page ' + ${page})}"></a>

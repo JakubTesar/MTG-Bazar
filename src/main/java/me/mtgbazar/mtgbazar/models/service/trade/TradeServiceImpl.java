@@ -48,7 +48,7 @@ public class TradeServiceImpl implements TradeService {
         List<WatchlistEntity> listFiltered = listAll.stream().filter(i -> i.getWatchedCard().getCardId() == cardId).toList();
         for(WatchlistEntity entity : listFiltered) {
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setFrom("neco"); // TODO kdo to má posílat????
+                message.setFrom("noreplybazarmtg@gmail.com");
                 message.setTo(entity.getUserWatching().getEmail());
                 message.setSubject("Kartička je k dostání");
                 message.setText("Kartička " + card.getName() + " je k dostání na MTG - Bazar.");

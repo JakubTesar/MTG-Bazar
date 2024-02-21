@@ -18,12 +18,16 @@ public class EmailServiceImpl implements EmailService {
     private UserService userService;
     public void sendEmail(EmailDTO emailDTO, CardForSaleEntity card) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(userService.getLoggedUser().getEmail());
+        message.setFrom("noreplybazarmtg@gmail.com");
         message.setTo(card.getSellingUser().getEmail());
         message.setSubject("Rád bych Vaši kartičku " + userService.getLoggedUser().getUsername());
         message.setText("Rád bych Vaši kartičku " +
                 card.getCard().getName() + "\n" + "Za " + card.getCost() + " Kč a kvalitou "
-                + card.getQuality() + " (Tento text vygenerovala stránka).\n" + emailDTO.getMessage());
+                + card.getQuality() + " (Tento text vygenerovala stránka).\n" + emailDTO.getMessage()+ "\n" +
+                "Kontaktní údaje: " +"\n" +
+                "Email:" + emailDTO.getEmail() + "\n" +
+                "Tel. číslo:" + emailDTO.getPhoneNumber() + "\n"
+        );
         mailSender.send(message);
     }
 }
