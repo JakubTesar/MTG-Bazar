@@ -108,6 +108,11 @@ public class AccessServiceImpl implements AccessService, UserDetailsService {
 
     @Override
     public void sendVerification() {
+        UserDTO user = getLoggedUser();
+        if(user.getVerificationKey().isEmpty()){
+            user.setVerificationKey(UUID.randomUUID().toString());
+            usersRepositories.save(userMapper.toEntity(user));
+        }
         emailService.sendVerificationEmail(userMapper.toEntity(getLoggedUser()));
     }
 }
