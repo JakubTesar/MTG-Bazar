@@ -7,6 +7,6 @@ public interface AccessService {
     void registerUser(UserAccessDTO userDTO) throws DuplicateEmailException;
     UserDTO getUserById(long userId);
     boolean isThisUserLoggedNow(long userId);
-
     UserDTO getLoggedUser();
+    boolean verify(String key);
 }

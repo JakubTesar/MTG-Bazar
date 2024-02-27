@@ -28,6 +28,12 @@ public class UserEntity implements UserDetails {
     @OneToMany(mappedBy = "sellingUser")
     private List<CardForSaleEntity> cardsForSale;
 
+    @Column(unique = true)
+    private String verificationKey;
+
+    @Column(unique = false)
+    private boolean isVerified;
+
     public List<CardForSaleEntity> getCardsForSale() {
         return cardsForSale;
     }
@@ -43,6 +49,7 @@ public class UserEntity implements UserDetails {
     public void setId(long id) {
         this.id = id;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -109,5 +116,21 @@ public class UserEntity implements UserDetails {
 
     public void setWatchlistEntities(List<WatchlistEntity> watchlistEntities) {
         this.watchlistEntities = watchlistEntities;
+    }
+
+    public String getVerificationKey() {
+        return verificationKey;
+    }
+
+    public void setVerificationKey(String verificationKey) {
+        this.verificationKey = verificationKey;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
     }
 }

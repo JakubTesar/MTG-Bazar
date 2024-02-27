@@ -12,6 +12,7 @@ import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardForSaleMapper;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.UserMapper;
 import me.mtgbazar.mtgbazar.models.service.access.AccessService;
+import me.mtgbazar.mtgbazar.models.service.email.EmailService;
 import me.mtgbazar.mtgbazar.models.service.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -42,6 +43,8 @@ public class TradeServiceImpl implements TradeService {
     private UserMapper userMapper;
     @Autowired
     private AccessService accessService;
+    @Autowired
+    private EmailService emailService;
     @Override
     public void forSaleCard(long cardId, CardForSaleDTO cardForSaleDTO) {
         UserEntity user = userMapper.toEntity(accessService.getLoggedUser());
@@ -50,12 +53,7 @@ public class TradeServiceImpl implements TradeService {
         List<WatchlistEntity> listAll = (List<WatchlistEntity>) watchlistRepositories.findAll();
         List<WatchlistEntity> listFiltered = listAll.stream().filter(i -> i.getWatchedCard().getCardId() == cardId).toList();
         for(WatchlistEntity entity : listFiltered) {
-                SimpleMailMessage message = new SimpleMailMessage();
-                message.setFrom("noreplybazarmtg@gmail.com");
-                message.setTo(entity.getUserWatching().getEmail());
-                message.setSubject("Kartička je k dostání");
-                message.setText("Kartička " + card.getName() + " je k dostání na MTG - Bazar.");
-                mailSender.send(message);
+                emailService.sendWatchdogEmail(entity, card);
         }
         cardForSale.setCard(card);
         user.getCardsForSale().add(cardForSale);

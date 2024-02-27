@@ -9,6 +9,8 @@ import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardMapper;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.UserMapper;
 import me.mtgbazar.mtgbazar.models.exeptions.DuplicateUsernameException;
+import me.mtgbazar.mtgbazar.models.service.email.EmailService;
+import me.mtgbazar.mtgbazar.models.service.email.EmailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
@@ -24,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AccessServiceImpl implements AccessService, UserDetailsService {
@@ -35,6 +38,8 @@ public class AccessServiceImpl implements AccessService, UserDetailsService {
     private UserMapper userMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public void registerUser(UserAccessDTO user) throws DuplicateEmailException {
@@ -42,9 +47,12 @@ public class AccessServiceImpl implements AccessService, UserDetailsService {
         userEntity.setUsername(user.getUsername());
         userEntity.setEmail(user.getEmail());
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        userEntity.setVerified(false);
+        userEntity.setVerificationKey(UUID.randomUUID().toString());
 
         try {
             usersRepository.save(userEntity);
+            emailService.sendVerificationEmail(userEntity);
         } catch (DataIntegrityViolationException e) {
             Optional<UserEntity> usernameInput = usersRepository.findByUsername(user.getUsername());
             Optional<UserEntity> emailInput = usersRepository.findByEmail(user.getEmail());
@@ -85,5 +93,10 @@ public class AccessServiceImpl implements AccessService, UserDetailsService {
         String singedUserUsername = authentication.getName();
         UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
         return userMapper.toDTO(user);
+    }
+
+    @Override
+    public boolean verify(String key) {
+        return false;
     }
 }

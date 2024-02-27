@@ -38,7 +38,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5
     implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.9.RELEASE'
 
-
+//Sanitazer
+// https://mvnrepository.com/artifact/com.googlecode.owasp-java-html-sanitizer/owasp-java-html-sanitizer
+    implementation group: 'com.googlecode.owasp-java-html-sanitizer', name: 'owasp-java-html-sanitizer', version: '20220608.1'
 
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
