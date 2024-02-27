@@ -11,7 +11,7 @@
             <form th:action="@{'/trade/forSale/'+${cardId}}" method="post">
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form2Example2">Cost</label>
-                    <input type="number" id="form2Example2" class="form-control" name="cost"/>
+                    <input type="number" min="0" id="form2Example2" class="form-control" name="cost"/>
                 </div>
                 <div class="form-outline mb-4">
                     <!--                <input type="text" id="form2Example3" class="form-control" name="quality"/>-->

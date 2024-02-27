@@ -9,6 +9,7 @@ import me.mtgbazar.mtgbazar.models.DTO.BasicCardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.CardDTO;
 import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
+import me.mtgbazar.mtgbazar.models.service.access.AccessService;
 import me.mtgbazar.mtgbazar.models.service.cards.CardLoadService;
 import me.mtgbazar.mtgbazar.models.service.cards.CardService;
 import me.mtgbazar.mtgbazar.models.service.email.EmailService;
@@ -35,6 +36,8 @@ public class CardsController {
     CardLoadService cardLoadService;
     @Autowired
     EmailService service;
+    @Autowired
+    AccessService accessService;
 
     @GetMapping
     public String getAllCards(Model model, @RequestParam("page") Optional<Integer> page, CardFilter filter) throws IOException {
@@ -49,11 +52,11 @@ public class CardsController {
         return "cards/allCards";
     }
 
-    @GetMapping("createDBS")
-    public String dbsCreate() throws IOException {
-        cardLoadService.getAllCardsCSV();
-        return "cards/allCards";
-    }
+//    @GetMapping("createDBS")
+//    public String dbsCreate() throws IOException {
+//        cardLoadService.getAllCardsCSV();
+//        return "cards/allCards";
+//    }
 
     @PostMapping("{cardId}")
     @Transactional
@@ -68,6 +71,7 @@ public class CardsController {
         int pageSize = 10;
         Page<BasicCardForSaleDTO> cardForSaleDTOS = cardService.getPagedOffers(PageRequest.of(currentPage - 1, pageSize), cardId);
         model.addAttribute("cardForSalePage", cardForSaleDTOS);
+        model.addAttribute("isThisLogged", !accessService.isThisUserLoggedNow(accessService.getLoggedUser().getId()));
         int totalPages = cardForSaleDTOS.getTotalPages();
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", cardForSaleDTOS.getNumber() + 1);

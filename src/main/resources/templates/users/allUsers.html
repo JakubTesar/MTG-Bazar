@@ -2,7 +2,7 @@
 <html lang="en">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
-<body class="bg-dark mx-3 text-white">
+<body class="bg-dark mx-3 text-white  d-flex flex-column vh-100">
 <header th:replace="~{fragments/layout.html :: header}"></header>
 
 <div class="mx-3">
@@ -11,10 +11,8 @@
         <form method="get" th:action="@{/users}">
             <div class="d-flex justify-content-center gap-5">
                 <div class="gap-3">
-                    <label for="email">Email</label>
-                    <input class="form-control w-50" id="email" type="email" th:name="email" th:value="${f.email}">
                     <label for="name">Name</label>
-                    <input class="form-control w-50" id="name" th:name="name" th:value="${f.name}">
+                    <input class="form-control" id="name" th:name="name" th:value="${f.name}">
                 </div>
             </div>
 

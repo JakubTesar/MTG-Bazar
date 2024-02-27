@@ -9,7 +9,7 @@
 <html lang="en">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
-<body class="bg-dark text-white">
+<body class="bg-dark text-white d-flex flex-column vh-100">
 <header th:replace="~{fragments/layout.html :: header}"></header>
 <div class="mx-3">
     <div class="d-flex justify-content-center align-items-center my-5 flex-column">
@@ -146,7 +146,15 @@
                                 </tr>
                                 <tr>
                                     <td>Colors</td>
-                                    <td class="card-title text-break" th:text="${c.colors}"></td>
+                                    <td class="card-title text-break">
+                                        <i th:if="${c.colors.contains('W')}" class="ms ms-w text-warning"></i>
+                                        <i th:if="${c.colors.contains('U')}" class="ms ms-u text-primary"></i>
+                                        <i th:if="${c.colors.contains('B')}" class="ms ms-b"></i>
+                                        <i th:if="${c.colors.contains('R')}" class="ms ms-r text-danger"></i>
+                                        <i th:if="${c.colors.contains('G')}" class="ms ms-g text-success"></i>
+                                    </td>
+                                    <td th:if="${c.colors.length == 0}" class="card-title text-break">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Keywords</td>

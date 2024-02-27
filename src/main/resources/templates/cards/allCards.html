@@ -2,7 +2,7 @@
 <html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 <!--background-main -->
-<body class="bg-dark text-white">
+<body class="bg-dark text-white  d-flex flex-column vh-100">
 <header th:replace="~{fragments/layout.html :: header}"></header>
 <div class="mx-3">
     <h1>MTG Cards</h1>
@@ -31,24 +31,6 @@
                 <div class="d-flex flex-column">
                     <div class="form-check">
                         <input type="checkbox"
-                               id="mountain"
-                               name="R"
-                               class="form-check-input"
-                               th:value="${'R'}"
-                               th:checked="${f.r != null && f.r!= '' ? 'on' : 'off'}"/>
-                        <label for="mountain" class="form-check-label">Mountain</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox"
-                               id="swamp"
-                               name="B"
-                               class="form-check-input"
-                               th:value="${'B'}"
-                               th:checked="${f.b != null && f.b!= '' ? 'on' : 'off'}"/>
-                        <label for="swamp" class="form-check-label">Swamp</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox"
                                id="plains"
                                name="W"
                                class="form-check-input"
@@ -56,15 +38,7 @@
                                th:checked="${f.w != null && f.w!= '' ? 'on' : 'off'}"/>
 
                         <label for="plains" class="form-check-label">Plains</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox"
-                               id="forest"
-                               name="G"
-                               class="form-check-input"
-                               th:value="${'G'}"
-                               th:checked="${f.g != null && f.g!= '' ? 'on' : 'off'}"/>
-                        <label for="forest" class="form-check-label">Forest</label>
+                        <i class="ms ms-w text-warning"></i>
                     </div>
                     <div class="form-check">
                         <input type="checkbox"
@@ -74,6 +48,37 @@
                                th:value="${'U'}"
                                th:checked="${f.u != null && f.u!= '' ? 'on' : 'off'}"/>
                         <label for="island" class="form-check-label">Island</label>
+                        <i class="ms ms-u text-primary"></i>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox"
+                               id="swamp"
+                               name="B"
+                               class="form-check-input"
+                               th:value="${'B'}"
+                               th:checked="${f.b != null && f.b!= '' ? 'on' : 'off'}"/>
+                        <label for="swamp" class="form-check-label">Swamp</label>
+                        <i class="ms ms-b"></i>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox"
+                               id="mountain"
+                               name="R"
+                               class="form-check-input"
+                               th:value="${'R'}"
+                               th:checked="${f.r != null && f.r!= '' ? 'on' : 'off'}"/>
+                        <label for="mountain" class="form-check-label">Mountain</label>
+                        <i class="ms ms-r text-danger"></i>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox"
+                               id="forest"
+                               name="G"
+                               class="form-check-input"
+                               th:value="${'G'}"
+                               th:checked="${f.g != null && f.g!= '' ? 'on' : 'off'}"/>
+                        <label for="forest" class="form-check-label">Forest</label>
+                        <i class="ms ms-g text-success"></i>
                     </div>
                 </div>
                 <div class="gap-3">
@@ -119,7 +124,15 @@
                         </tr>
                         <tr>
                             <td>Colors</td>
-                            <td class="card-title text-break" th:text="${c.colors}"></td>
+                            <td class="card-title text-break">
+                                <i th:if="${c.colors.contains('W')}" class="ms ms-w text-warning"></i>
+                                <i th:if="${c.colors.contains('U')}" class="ms ms-u text-primary"></i>
+                                <i th:if="${c.colors.contains('B')}" class="ms ms-b"></i>
+                                <i th:if="${c.colors.contains('R')}" class="ms ms-r text-danger"></i>
+                                <i th:if="${c.colors.contains('G')}" class="ms ms-g text-success"></i>
+                            </td>
+                            <td th:if="${c.colors.length == 0}" class="card-title text-break">
+                            </td>
                         </tr>
                         <tr>
                             <td>Keywords</td>

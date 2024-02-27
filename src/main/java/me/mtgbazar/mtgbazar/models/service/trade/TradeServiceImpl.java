@@ -10,6 +10,8 @@ import me.mtgbazar.mtgbazar.data.repositories.UsersRepositories;
 import me.mtgbazar.mtgbazar.data.repositories.WatchlistRepositories;
 import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardForSaleMapper;
+import me.mtgbazar.mtgbazar.models.DTO.mappers.UserMapper;
+import me.mtgbazar.mtgbazar.models.service.access.AccessService;
 import me.mtgbazar.mtgbazar.models.service.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -36,12 +38,13 @@ public class TradeServiceImpl implements TradeService {
     private JavaMailSender mailSender;
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private AccessService accessService;
     @Override
     public void forSaleCard(long cardId, CardForSaleDTO cardForSaleDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String singedUserUsername = authentication.getName();
-        UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
+        UserEntity user = userMapper.toEntity(accessService.getLoggedUser());
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
         CardForSaleEntity cardForSale = cardForSaleMapper.toEntity(cardForSaleDTO);
         List<WatchlistEntity> listAll = (List<WatchlistEntity>) watchlistRepositories.findAll();

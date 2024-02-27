@@ -60,8 +60,7 @@
     [[${label}]]
 </a>
 <a th:fragment="pagingUsers(pageNum, label, tooltip)" class="page-link"
-   th:href="@{'/users/allUsers?' + ${'email=' + f.email + '&'}
-     + ${'name=' + f.name + '&'}
+   th:href="@{'/users/allUsers?' + ${'name=' + f.name + '&'}
       + 'page=' + ${pageNum} + '&size=' + ${pageSize}}"
    th:title="${tooltip}" rel="tooltip">
     [[${label}]]

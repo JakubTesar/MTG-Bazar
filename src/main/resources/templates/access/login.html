@@ -2,11 +2,13 @@
 <html lang="en">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
-<body class="bg-dark text-white d-flex flex-column justify-content-between vh-100">
+<body class="bg-dark text-white  justify-content-between d-flex flex-column vh-100">
 <header th:replace="~{fragments/layout.html :: header}"></header>
 <div class="mx-3">
 
     <div class="d-flex justify-content-center align-items-center flex-column w-100">
+        <div class="py-2 flash-message message-success" th:text="${success}" th:if="${success}"></div>
+        <div class="py-2 flash-message message-error text-danger" th:if="${param.error}">Not valid email or password</div>
         <h1 class="m-3">Login</h1>
         <form th:action="@{/access/login}" method="post">
             <div class="form-outline mb-4">

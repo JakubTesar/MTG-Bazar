@@ -14,6 +14,7 @@ import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardForSaleMapper;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.CardMapper;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.UserMapper;
+import me.mtgbazar.mtgbazar.models.service.access.AccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -44,6 +45,8 @@ public class CardServiceImpl implements CardService {
     private CardForSaleMapper cardForSaleMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private AccessService accessService;
 
     @Override
     public void createCard(List<CardEntity> cards) {
@@ -60,7 +63,6 @@ public class CardServiceImpl implements CardService {
         int toIndex = Math.min(startItem + pageSize, cardEntities.size());
         if (cardEntities.size() < startItem) cardDTOS = Collections.emptyList();
         else cardDTOS = cardEntities.subList(startItem, toIndex).stream().map(c -> cardMapper.toDTO(c)).toList();
-
         return new PageImpl<CardDTO>(cardDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
 
@@ -103,12 +105,9 @@ public class CardServiceImpl implements CardService {
     @Override
     @Transactional
     public void addCardToAccount(long cardId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String singedUserUsername = authentication.getName();
-        UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
-        card.getOwnedUsers().add(user);
-        usersRepositories.save(user);
+        card.getOwnedUsers().add(userMapper.toEntity(accessService.getLoggedUser()));
+        usersRepositories.save(userMapper.toEntity(accessService.getLoggedUser()));
     }
 
     @Override
@@ -120,8 +119,7 @@ public class CardServiceImpl implements CardService {
         List<CardForSaleDTO> cardForSaleDTOS;
         int toIndex = Math.min(startItem + pageSize, cardEntities.size());
         if (cardEntities.size() < startItem) cardForSaleDTOS = Collections.emptyList();
-        else
-            cardForSaleDTOS = cardEntities.subList(startItem, toIndex).stream().map(c -> cardForSaleMapper.toDTO(c)).toList();
+        else cardForSaleDTOS = cardEntities.subList(startItem, toIndex).stream().map(c -> cardForSaleMapper.toDTO(c)).toList();
         return new PageImpl<CardForSaleDTO>(cardForSaleDTOS, PageRequest.of(currentPage, pageSize), cardEntities.size());
     }
 
@@ -132,15 +130,13 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public void toggleCardWatchlist(long cardId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String singedUserUsername = authentication.getName();
-        UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
+
         List<WatchlistEntity> listAll = (List<WatchlistEntity>) watchlistRepositories.findAll();
-        List<WatchlistEntity> listFiltered = listAll.stream().filter(i -> i.getWatchedCard().getCardId() == cardId && i.getUserWatching().getId() == user.getId()).toList();
+        List<WatchlistEntity> listFiltered = listAll.stream().filter(i -> i.getWatchedCard().getCardId() == cardId && i.getUserWatching().getId() == accessService.getLoggedUser().getId()).toList();
         if (listFiltered.isEmpty()) {
             WatchlistEntity entity = new WatchlistEntity();
             entity.setWatchedCard(cardsRepositories.findById(cardId).orElseThrow());
-            entity.setUserWatching(user);
+            entity.setUserWatching(userMapper.toEntity(accessService.getLoggedUser()));
             watchlistRepositories.save(entity);
         } else {
             watchlistRepositories.delete(listFiltered.get(0));
@@ -148,11 +144,8 @@ public class CardServiceImpl implements CardService {
     }
     @Override
     public boolean isAlreadyWatched(long cardId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String singedUserUsername = authentication.getName();
-        UserEntity user = usersRepositories.findByUsername(singedUserUsername).orElseThrow();
         List<WatchlistEntity> listAll = (List<WatchlistEntity>) watchlistRepositories.findAll();
-        List<WatchlistEntity> listFiltered = listAll.stream().filter(i -> i.getWatchedCard().getCardId() == cardId && i.getUserWatching().getId() == user.getId()).toList();
+        List<WatchlistEntity> listFiltered = listAll.stream().filter(i -> i.getWatchedCard().getCardId() == cardId && i.getUserWatching().getId() == accessService.getLoggedUser().getId()).toList();
         return listFiltered.isEmpty();
     }
 }

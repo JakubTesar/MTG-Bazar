@@ -103,8 +103,8 @@ public class UsersController {
 
     @PostMapping("/profile/{userId}/selling/delete/{cardId}")
     public String deleteSellingCard(Model model,
-                                    @PathVariable long userId, @PathVariable long cardId){
+                                    @PathVariable long userId, @PathVariable long cardId) {
         cardService.deleteCard(cardId);
-        return "redirect: ../../../../selling" ;
+        return "redirect: ../../../../selling";
     }
 }

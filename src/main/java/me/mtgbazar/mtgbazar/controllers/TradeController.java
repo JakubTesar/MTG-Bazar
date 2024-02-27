@@ -5,6 +5,7 @@ import me.mtgbazar.mtgbazar.data.entities.CardForSaleEntity;
 import me.mtgbazar.mtgbazar.data.repositories.CardsForSaleRepositories;
 import me.mtgbazar.mtgbazar.models.DTO.CardForSaleDTO;
 import me.mtgbazar.mtgbazar.models.DTO.EmailDTO;
+import me.mtgbazar.mtgbazar.models.service.access.AccessService;
 import me.mtgbazar.mtgbazar.models.service.access.DuplicateEmailException;
 import me.mtgbazar.mtgbazar.models.service.email.EmailService;
 import me.mtgbazar.mtgbazar.models.service.trade.TradeService;
@@ -22,11 +23,12 @@ import java.io.IOException;
 public class TradeController {
     @Autowired
     TradeService tradeService;
-
     @Autowired
     private CardsForSaleRepositories cardsForSaleRepositories;
     @Autowired
     EmailService emailService;
+    @Autowired
+    AccessService accessService;
 
     @GetMapping("/forSale/{cardId}")
     public String renderForSaleForm(@ModelAttribute CardForSaleDTO cardForSaleDTO, @PathVariable long cardId) {
@@ -37,11 +39,9 @@ public class TradeController {
     public String forSaleCard(@Valid @ModelAttribute CardForSaleDTO cardForSaleDTO,
                               @PathVariable long cardId,
                               BindingResult result,
-                              RedirectAttributes redirectAttributes
-    ) throws IOException, DuplicateEmailException {
+                              RedirectAttributes redirectAttributes) {
         if (result.hasErrors())
             return renderForSaleForm(cardForSaleDTO, cardId);
-
         redirectAttributes.addFlashAttribute("success", "Card placed on a market.");
         tradeService.forSaleCard(cardId, cardForSaleDTO);
         return "redirect: /../../../cards";
@@ -57,8 +57,7 @@ public class TradeController {
                           @PathVariable long cardForBuyId,
                           BindingResult result,
                           RedirectAttributes redirectAttributes,
-                          Model model
-    ) throws IOException, DuplicateEmailException {
+                          Model model) {
         if (result.hasErrors())
             return renderForSaleForm(cardForSaleDTO, cardForBuyId);
         model.addAttribute("c", cardForBuyId);

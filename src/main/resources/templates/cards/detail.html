@@ -2,7 +2,7 @@
 <html lang="en">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
-<body class="bg-dark text-white">
+<body class="bg-dark text-white  d-flex flex-column vh-100">
 <header th:replace="~{fragments/layout.html :: header}"></header>
 <div class="mx-3 mb-5">
     <div class="d-flex flex-column justify-content-center m-5 gap-3">
@@ -30,7 +30,8 @@
                                     <td th:text="${c.sellingUser.username}"></td>
                                 <td th:text="${c.getCost()}"></td>
                                 <td th:text="${c.getQuality()}"></td>
-                                <td><a th:href="@{'../trade/buy/'+${c.getCardForSaleId()}}"
+                                <td>
+                                    <a th:if="${isThisLogged}" th:href="@{'../trade/buy/'+${c.getCardForSaleId()}}"
                                        class="btn btn-primary">Buy</a>
                                 </td>
                             </tr>
@@ -43,7 +44,6 @@
                         <div class="d-flex flex-column gap-2 col-3" th:if="${toggle}">
                             <a class="btn btn-danger text-decoration-none text-white" th:href="@{/cards/} + ${card.cardId} + @{/watchdog}"> Add watchdog 🔔🐕</a>
                             <small>Notify you when new card is listed</small>
-
                         </div>
                         <div class="d-flex flex-column gap-2 col-3" th:if="${toggle == false}">
                             <a class="btn btn-danger text-decoration-none text-white" th:href="@{/cards/} + ${card.cardId} + @{/watchdog}"> Already watching 🐕👀</a>
@@ -82,9 +82,17 @@
                     <td>Card name</td>
                     <td class="card-title text-break" th:text="${card.name}"></td>
                 </tr>
-                <tr>
+                <tr class="card-title text-break">
                     <td>Colors</td>
-                    <td class="card-title text-break" th:text="${card.colors}"></td>
+                    <td class="card-title text-break">
+                        <i th:if="${card.colors.contains('W')}" class="ms ms-w text-warning"></i>
+                        <i th:if="${card.colors.contains('U')}" class="ms ms-u text-primary"></i>
+                        <i th:if="${card.colors.contains('B')}" class="ms ms-b"></i>
+                        <i th:if="${card.colors.contains('R')}" class="ms ms-r text-danger"></i>
+                        <i th:if="${card.colors.contains('G')}" class="ms ms-g text-success"></i>
+                    </td>
+                    <td th:if="${card.colors.length == 0}" class="card-title text-break">
+                    </td>
                 </tr>
                 <tr>
                     <td>Keywords</td>
