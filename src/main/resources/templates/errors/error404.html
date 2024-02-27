@@ -2,18 +2,17 @@
 <html lang="en">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
-<body class=" d-flex flex-column vh-100">
+<body class=" d-flex flex-column vh-100 bg-dark text-white">
 <header th:replace="~{fragments/layout.html :: header}"></header>
-<div class="d-flex align-items-center justify-content-center mt-3">
+<div class="d-flex align-items-center justify-content-center mt-3 ">
     <div class="text-center">
         <h1 class="display-1 fw-bold">404 </h1>
         <p class="fs-3"> <span class="text-danger">Ups!</span> Page doesn't exist 😮</p>
         <p class="lead">
             Cannot find page 👀.
         </p>
-        <a th:href="@{/}" class="btn btn-primary">Home</a>
+        <a th:href="@{/cards}" class="btn btn-primary">Home</a>
     </div>
-
 </div>
 </body>
 </html>

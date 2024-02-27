@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+
+<body class="bg-dark text-white d-flex flex-column vh-100">
+<header th:replace="~{fragments/layout.html :: header}"></header>
+
+<div class="mx-3">
+    <h1>Verify your account</h1>
+    <div>
+        <form method="post" th:action="@{/access/verify}">
+            <div class="d-flex justify-content-center flex-column my-4 gap-2 w-25">
+                <div>Send verification email to verify your account</div>
+                <button type="submit" class="btn btn-success text-white d-flex justify-content-center">Send</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+
+</body>
+</html>

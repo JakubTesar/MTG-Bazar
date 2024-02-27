@@ -24,11 +24,18 @@
                 <td>Email</td>
                 <td class="card-title text-break">******</td>
             </tr>
+            <tr>
+                <td>Verified</td>
+                <td class="card-title text-break" th:text="${user.isVerified()}"></td>
+            </tr>
             </tbody>
         </table>
+        <div>
+            <a th:if="${myProfile}" th:href="@{'../../access/verify'}" class="btn btn-primary">Verify</a>
+        </div>
     </div>
     <div>
-        <form method="get" th:action="@{/users/profile/}+${user.id}">
+        <form method="get" th:action="@{/users/profile/} + ${user.id}">
             <div class="d-flex justify-content-center gap-5">
                 <div class="gap-5">
                     <div class="d-flex flex-column">
@@ -130,7 +137,7 @@
         <div class="d-flex flex-column w-100">
             <div class="d-flex justify-content-around w-100">
                 <h2><a>Inventory cards</a></h2>
-                <h2><a class="text-decoration-none btn btn-primary text-white" th:href="@{'/users/profile/' +${user.id}+'/selling'}">Selling cards</a></h2>
+                <h2><a class="text-decoration-none btn btn-primary text-white" th:href="@{'/users/profile/' +${user.id} +'/selling'}">Selling cards</a></h2>
             </div>
             <div class="d-flex flex-wrap gap-3 justify-content-center">
                 <div th:each="c: ${cardsPage.content}" id="card-border-and-bg" class="card"

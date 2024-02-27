@@ -17,7 +17,7 @@ public class MyErrorController implements ErrorController {
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());
             if (statusCode == HttpStatus.NOT_FOUND.value())
-                return "templates/errors/error404";
+                return "/errors/error404";
         }
         return "error";
     }

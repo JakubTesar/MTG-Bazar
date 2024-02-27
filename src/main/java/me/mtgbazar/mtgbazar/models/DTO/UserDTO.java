@@ -1,5 +1,7 @@
 package me.mtgbazar.mtgbazar.models.DTO;
 
+import jakarta.persistence.Column;
+
 import java.util.List;
 
 public class UserDTO {
@@ -8,8 +10,25 @@ public class UserDTO {
     private String email;
     private String password;
     private List<CardDTO> cards;
-
     private List<BasicCardForSaleDTO> cardsForSale;
+    private String verificationKey;
+    private boolean isVerified;
+
+    public String getVerificationKey() {
+        return verificationKey;
+    }
+
+    public void setVerificationKey(String verificationKey) {
+        this.verificationKey = verificationKey;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
 
     public List<BasicCardForSaleDTO> getCardsForSale() {
         return cardsForSale;

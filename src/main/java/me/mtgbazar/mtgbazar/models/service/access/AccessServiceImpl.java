@@ -97,6 +97,17 @@ public class AccessServiceImpl implements AccessService, UserDetailsService {
 
     @Override
     public boolean verify(String key) {
-        return false;
+        UserDTO user = getLoggedUser();
+        user.setVerified(true);
+        if (getLoggedUser().getVerificationKey().equals(key)) {
+            usersRepositories.save(userMapper.toEntity(user));
+            return true;
+        } else
+            return false;
+    }
+
+    @Override
+    public void sendVerification() {
+        emailService.sendVerificationEmail(userMapper.toEntity(getLoggedUser()));
     }
 }

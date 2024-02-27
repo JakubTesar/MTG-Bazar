@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,17 +23,13 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/access")
 public class AccessController {
-
     @Autowired
     AccessService accessService;
-
     SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
-
     @GetMapping("/register")
     public String renderRegisterForm(@ModelAttribute UserAccessDTO userDTO) throws IOException {
         return "access/register";
     }
-
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute UserAccessDTO userDTO,
                            BindingResult result,
@@ -50,17 +47,31 @@ public class AccessController {
             return "/access/register";
         }
         redirectAttributes.addFlashAttribute("success", "User registered");
-        return "redirect:access/login";
+        return "/access/verifyEmailSend";
     }
-
+    @GetMapping("/verify")
+    public String renderSendVerification(){
+        return "/access/sendVerification";
+    }
+    @PostMapping("/verify")
+    public String sendVerification(){
+        accessService.sendVerification();
+        return "/access/verifyEmailSend";
+    }
+    @GetMapping("/verify/{key}")
+    public String renderVerifyUser(@PathVariable String key, Model model){
+        model.addAttribute("msg", "");
+        return "/access/verify";
+    }
     @PostMapping("/verify/{key}")
-    public String verifyUser(@PathVariable String key){
+    public String verifyUser(@PathVariable String key, Model model){
         boolean valid = accessService.verify(key);
         if (valid) {
-            return "redirect: /../../cards";
+            model.addAttribute("msg", "Your account is verified");
         } else {
-            return "redirect: /verify";
+            model.addAttribute("msg", "Something went wrong");
         }
+        return "/access/verifyFinal";
     }
 
     @GetMapping("/login")

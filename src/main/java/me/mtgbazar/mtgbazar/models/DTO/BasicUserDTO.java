@@ -5,6 +5,25 @@ public class BasicUserDTO {
     private String username;
     private String email;
 
+    private String verificationKey;
+    private boolean isVerified;
+
+    public String getVerificationKey() {
+        return verificationKey;
+    }
+
+    public void setVerificationKey(String verificationKey) {
+        this.verificationKey = verificationKey;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
+
     public long getId() {
         return id;
     }

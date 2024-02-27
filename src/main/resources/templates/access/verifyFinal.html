@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+
+<body class="bg-dark text-white d-flex flex-column vh-100">
+<header th:replace="~{fragments/layout.html :: header}"></header>
+
+<div class="mx-3">
+    <h1>Verify your account</h1>
+    <div>
+            <div class="d-flex justify-content-center my-4">
+               <h2 th:text="${msg}"></h2>
+            </div>
+    </div>
+
+</div>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+
+</body>
+</html>

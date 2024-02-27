@@ -9,4 +9,6 @@ public interface AccessService {
     boolean isThisUserLoggedNow(long userId);
     UserDTO getLoggedUser();
     boolean verify(String key);
+
+    void sendVerification();
 }
