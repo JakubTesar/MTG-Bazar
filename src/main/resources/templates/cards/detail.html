@@ -31,7 +31,7 @@
                                 <td th:text="${c.getCost()}"></td>
                                 <td th:text="${c.getQuality()}"></td>
                                 <td>
-                                    <a th:if="${isThisLogged}" th:href="@{'../trade/buy/'+${c.getCardForSaleId()}}"
+                                    <a th:href="@{'../trade/buy/'+${c.getCardForSaleId()}}"
                                        class="btn btn-primary">Buy</a>
                                 </td>
                             </tr>

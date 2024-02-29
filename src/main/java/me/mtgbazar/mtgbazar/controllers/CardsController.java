@@ -71,7 +71,6 @@ public class CardsController {
         int pageSize = 10;
         Page<BasicCardForSaleDTO> cardForSaleDTOS = cardService.getPagedOffers(PageRequest.of(currentPage - 1, pageSize), cardId);
         model.addAttribute("cardForSalePage", cardForSaleDTOS);
-        model.addAttribute("isThisLogged", !accessService.isThisUserLoggedNow(accessService.getLoggedUser().getId()));
         int totalPages = cardForSaleDTOS.getTotalPages();
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", cardForSaleDTOS.getNumber() + 1);

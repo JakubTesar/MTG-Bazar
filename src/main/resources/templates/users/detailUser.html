@@ -31,7 +31,7 @@
             </tbody>
         </table>
         <div>
-            <a th:if="${myProfile}" th:href="@{'../../access/verify'}" class="btn btn-primary">Verify</a>
+            <a th:if="${myProfile && !user.isVerified()}" th:href="@{'../../access/verify'}" class="btn btn-primary">Verify</a>
         </div>
     </div>
     <div>
