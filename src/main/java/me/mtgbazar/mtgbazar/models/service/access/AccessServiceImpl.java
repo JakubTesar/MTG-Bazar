@@ -1,29 +1,21 @@
 package me.mtgbazar.mtgbazar.models.service.access;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import me.mtgbazar.mtgbazar.data.entities.UserEntity;
 import me.mtgbazar.mtgbazar.data.repositories.UsersRepositories;
 import me.mtgbazar.mtgbazar.models.DTO.UserAccessDTO;
 import me.mtgbazar.mtgbazar.models.DTO.UserDTO;
-import me.mtgbazar.mtgbazar.models.DTO.mappers.CardMapper;
 import me.mtgbazar.mtgbazar.models.DTO.mappers.UserMapper;
 import me.mtgbazar.mtgbazar.models.exeptions.DuplicateUsernameException;
 import me.mtgbazar.mtgbazar.models.service.email.EmailService;
-import me.mtgbazar.mtgbazar.models.service.email.EmailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -49,24 +41,16 @@ public class AccessServiceImpl implements AccessService, UserDetailsService {
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntity.setVerified(false);
         userEntity.setVerificationKey(UUID.randomUUID().toString());
-
         try {
             usersRepository.save(userEntity);
             emailService.sendVerificationEmail(userEntity);
         } catch (DataIntegrityViolationException e) {
             Optional<UserEntity> usernameInput = usersRepository.findByUsername(user.getUsername());
             Optional<UserEntity> emailInput = usersRepository.findByEmail(user.getEmail());
-            if (emailInput.isPresent()) {
+            if (emailInput.isPresent())
                 throw new DuplicateEmailException();
-            }
-            if (usernameInput.isPresent()) {
+            if (usernameInput.isPresent())
                 throw new DuplicateUsernameException();
-            }
-        }
-        try {
-            usersRepository.save(userEntity);
-        } catch (DataIntegrityViolationException e) {
-            throw new DuplicateEmailException();
         }
     }
 
@@ -108,11 +92,6 @@ public class AccessServiceImpl implements AccessService, UserDetailsService {
 
     @Override
     public void sendVerification() {
-        UserDTO user = getLoggedUser();
-        if(user.getVerificationKey().isEmpty()){
-            user.setVerificationKey(UUID.randomUUID().toString());
-            usersRepositories.save(userMapper.toEntity(user));
-        }
         emailService.sendVerificationEmail(userMapper.toEntity(getLoggedUser()));
     }
 }

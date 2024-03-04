@@ -57,14 +57,12 @@ public class CardsController {
 //        cardLoadService.getAllCardsCSV();
 //        return "cards/allCards";
 //    }
-
     @PostMapping("{cardId}")
     @Transactional
     public String addCard(@PathVariable long cardId) {
         cardService.addCardToAccount(cardId);
         return "redirect: /../../cards";
     }
-
     @GetMapping("{cardId}")
     public String getCardDetail(@PathVariable long cardId, @RequestParam("page") Optional<Integer> page, Model model) {
         int currentPage = page.orElse(1);
@@ -84,12 +82,9 @@ public class CardsController {
         return "cards/detail";
     }
 
-
-
     @GetMapping("{cardId}/watchdog")
     public String toggleWatchList(@PathVariable long cardId, Model model) {
         cardService.toggleCardWatchlist(cardId);
         return "redirect:../../cards/" + cardId;
     }
-
 }

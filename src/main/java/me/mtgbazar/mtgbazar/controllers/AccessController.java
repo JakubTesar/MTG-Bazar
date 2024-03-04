@@ -73,7 +73,6 @@ public class AccessController {
         }
         return "/access/verifyFinal";
     }
-
     @GetMapping("/login")
     public String renderLoginForm(@ModelAttribute UserAccessDTO userDTO) {
         return "/access/login";
