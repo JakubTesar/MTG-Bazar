@@ -28,7 +28,7 @@
                             <tr th:each="c, i: ${cardForSalePage.getContent()} ">
                                 <th scope="row" th:text="${i.count}"></th>
                                     <td th:text="${c.sellingUser.username}"></td>
-                                <td th:text="${c.getCost()}"></td>
+                                <td th:text="${c.getCost()} + ' Kč'"></td>
                                 <td th:text="${c.getQuality()}"></td>
                                 <td>
                                     <a th:href="@{'../trade/buy/'+${c.getCardForSaleId()}}"
