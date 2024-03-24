@@ -14,6 +14,7 @@ import me.mtgbazar.mtgbazar.models.DTO.mappers.UserMapper;
 import me.mtgbazar.mtgbazar.models.service.access.AccessService;
 import me.mtgbazar.mtgbazar.models.service.email.EmailService;
 import me.mtgbazar.mtgbazar.models.service.users.UserService;
+import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,6 +23,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.hibernate.annotations.CascadeType.DELETE_ORPHAN;
 
 @Service
 public class TradeServiceImpl implements TradeService {
@@ -53,13 +56,15 @@ public class TradeServiceImpl implements TradeService {
         List<WatchlistEntity> listAll = (List<WatchlistEntity>) watchlistRepositories.findAll();
         List<WatchlistEntity> listFiltered = listAll.stream().filter(i -> i.getWatchedCard().getCardId() == cardId).toList();
         for(WatchlistEntity entity : listFiltered) {
-                emailService.sendWatchdogEmail(entity, card);
+            emailService.sendWatchdogEmail(entity, card);
         }
+
         cardForSale.setCard(card);
         user.getCardsForSale().add(cardForSale);
         cardForSale.setSellingUser(user);
         cardsForSaleRepositories.save(cardForSale);
-        card.getOwnedUsers().remove(user);
+
+        user.removeCard(card);
         usersRepositories.save(user);
     }
 }

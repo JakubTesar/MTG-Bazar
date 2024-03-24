@@ -64,12 +64,12 @@ public class CardRepository {
                 .fetch();
     }
 
-    public List<CardEntity> findAllByOwner(CardFilter f, Pageable pageable, UserEntity user) {
+    public List<UserEntity> findAllByOwner(CardFilter f, Pageable pageable, UserEntity user) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
         QUserEntity u = QUserEntity.userEntity;
         QCardEntity c = QCardEntity.cardEntity;
         var predicate = u.id.eq(user.getId());
-        predicate = predicate.and(c.name.like("%%"));
+         predicate = predicate.and(c.name.like("%%"));
         if (f.getCardName() != null)
             predicate = predicate.and(c.name.like("%" + f.getCardName() + "%"));
         if (f.getPower() != null)
@@ -98,8 +98,9 @@ public class CardRepository {
             predicate = predicate.and(c.rarity.like("%" + f.getRarity() + "%"));
 
         return queryFactory
-                .selectFrom(c)
-                .join(c.ownedUsers, u)
+                .selectFrom(u)
+                .join(u.cards, c)
+                //.join(c.ownedUsers, u)
                 .fetchJoin()
                 .where(predicate)
                 .fetch();

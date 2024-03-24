@@ -2,11 +2,14 @@ package me.mtgbazar.mtgbazar.data.entities;
 
 import jakarta.persistence.*;
 import org.checkerframework.common.aliasing.qual.Unique;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+
+import static org.hibernate.annotations.CascadeType.DELETE_ORPHAN;
 
 @Entity
 @Table(name = "users")
@@ -21,7 +24,7 @@ public class UserEntity implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
-    @ManyToMany(mappedBy = "ownedUsers")
+    @ManyToMany(mappedBy = "ownedUsers" )
     private List<CardEntity> cards;
     @OneToMany(mappedBy = "userWatching")
     private List<WatchlistEntity> watchlistEntities;
@@ -33,7 +36,10 @@ public class UserEntity implements UserDetails {
 
     @Column(unique = false)
     private boolean isVerified;
-
+    public void removeCard(CardEntity card){
+        this.cards.remove(card);
+        card.getOwnedUsers().remove(this);
+    }
     public List<CardForSaleEntity> getCardsForSale() {
         return cardsForSale;
     }

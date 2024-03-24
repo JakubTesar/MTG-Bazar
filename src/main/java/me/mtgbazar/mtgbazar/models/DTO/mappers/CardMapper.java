@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface CardMapper {
+
     CardEntity toEntity(CardDTO source);
+
     CardDTO toDTO(CardEntity source);
 }

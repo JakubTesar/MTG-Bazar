@@ -15,10 +15,8 @@ public class CardForSaleEntity {
     private long cardForSaleId;
     @Column
     private double cost;
-
     @Column
     private String quality;
-
     @ManyToOne
     private UserEntity sellingUser;
     @ManyToOne

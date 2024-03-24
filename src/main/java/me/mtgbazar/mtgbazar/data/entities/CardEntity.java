@@ -3,8 +3,11 @@ package me.mtgbazar.mtgbazar.data.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import java.util.List;
+
+import static org.hibernate.annotations.CascadeType.DELETE_ORPHAN;
 
 //artist,artistIds,asciiName,attractionLights,availability,boosterTypes,borderColor,cardParts,colorIdentity,
 // colorIndicator,colors,defense,duelDeck,edhrecRank,edhrecSaltiness,faceConvertedManaCost,faceFlavorName,

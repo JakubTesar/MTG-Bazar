@@ -24,6 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -71,7 +72,11 @@ public class CardServiceImpl implements CardService {
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
-        List<CardEntity> cardEntities = cardRepository.findAllByOwner(filter, pageable, userMapper.toEntity(userDTO));
+        List<UserEntity> userEntities = cardRepository.findAllByOwner(filter, pageable, userMapper.toEntity(userDTO));
+        List<CardEntity> cardEntities = new ArrayList<>();
+        for (UserEntity userEntity : userEntities) {
+            cardEntities.addAll(userEntity.getCards());
+        }
         List<CardDTO> cardDTOS;
         int toIndex = Math.min(startItem + pageSize, cardEntities.size());
         if (cardEntities.size() < startItem) cardDTOS = Collections.emptyList();
