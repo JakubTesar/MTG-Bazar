@@ -50,7 +50,7 @@ public class TradeServiceImpl implements TradeService {
     private EmailService emailService;
     @Override
     public void forSaleCard(long cardId, CardForSaleDTO cardForSaleDTO) {
-        UserEntity user = userMapper.toEntity(accessService.getLoggedUser());
+        UserEntity user = usersRepositories.findById(accessService.getLoggedUser().getId()).get(); // userMapper.toEntity(accessService.getLoggedUser());
         CardEntity card = cardsRepositories.findById(cardId).orElseThrow();
         CardForSaleEntity cardForSale = cardForSaleMapper.toEntity(cardForSaleDTO);
         List<WatchlistEntity> listAll = (List<WatchlistEntity>) watchlistRepositories.findAll();
@@ -63,7 +63,7 @@ public class TradeServiceImpl implements TradeService {
         user.getCardsForSale().add(cardForSale);
         cardForSale.setSellingUser(user);
         cardsForSaleRepositories.save(cardForSale);
-
+        
         user.removeCard(card);
         usersRepositories.save(user);
     }
